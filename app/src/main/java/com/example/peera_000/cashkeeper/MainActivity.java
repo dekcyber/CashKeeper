@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked){
-                            Toast.makeText(MainActivity.this, "Click", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Click11111", Toast.LENGTH_SHORT).show();
                         }else {
                             Toast.makeText(MainActivity.this, "UnClick", Toast.LENGTH_SHORT).show();
                         }
