@@ -25,7 +25,9 @@
             android:checked="false"
             android:icon="@drawable/password"
             android:title="Password"
-            app:actionLayout="@layout/item_switch"/>
+            app:actionLayout="@layout/item_switch"
+            android:actionViewClass="android.support.v7.widget.SwitchCompat"
+            />
         <item
             android:id="@+id/Notification"
             android:checked="false"

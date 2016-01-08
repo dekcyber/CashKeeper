@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ActionMenuView;
@@ -87,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         //testAddValues();
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
-        switchPass = (SwitchCompat) findViewById(R.id.switchPass);
         OverV = (TextView) findViewById(R.id.TextHead);
         Typeface customFont = Typeface.createFromAsset(getAssets(), "font/paaymaay_regular.ttf");
         OverV.setTextColor(getResources().getColor(R.color.tabsScrollColor));
@@ -133,6 +133,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
+                switchPass = (SwitchCompat) findViewById(R.id.switchPass);
+                switchPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked){
+                            Toast.makeText(MainActivity.this, "Click", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(MainActivity.this, "UnClick", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
 
                 super.onDrawerOpened(drawerView);
@@ -149,8 +160,10 @@ public class MainActivity extends AppCompatActivity {
         nviewLmain.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
                                                          @Override
+
                                                          public boolean onNavigationItemSelected(MenuItem item) {
-                                                             if(item.isChecked()) item.setChecked(false);
+                                                             if (item.isChecked())
+                                                                 item.setChecked(false);
                                                              else item.setChecked(true);
 
                                                              //navigationL.closeDrawers();
@@ -160,20 +173,21 @@ public class MainActivity extends AppCompatActivity {
                                                                      Toast.makeText(MainActivity.this, "Click Budget", Toast.LENGTH_SHORT).show();
                                                                      return true;
                                                                  case R.id.Password:
-                                                                    switchPass.setChecked(true);
+
                                                                      return true;
 
                                                              }
 
 
-
-                                                            return false;
+                                                             return false;
                                                          }
 
 
                                                      }
 
+
         );
+
 
 
         //EndOfNavigationL
@@ -231,18 +245,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        switchPass = (SwitchCompat) menu.findItem(R.id.Password).getActionView().findViewById(R.id.switchPass);
-        Menu m = nviewLmain.getMenu();
-        MenuItem menuItem = m.findItem(R.id.Password);
-        View actionView = MenuItemCompat.getActionView(menuItem);
-        actionView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (switchPass.isChecked()){
-                    Toast.makeText(MainActivity.this, "Click Budget", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+
         return super.onPrepareOptionsMenu(menu);
     }
 
