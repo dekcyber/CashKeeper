@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="15dp">
+        <ImageView
+            android:id="@+id/Img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/TxtDate"
+            android:src="@drawable/ic_add_black_24dp"/>
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Money"
+    android:textSize="25dp"
+    android:id="@+id/TxtMoney"
+    android:layout_below="@+id/TxtDate"
+    android:layout_alignParentRight="true"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cate"
+        android:textSize="25dp"
+        android:id="@+id/TxtCate"
+        android:layout_below="@+id/TxtDate"
+        android:layout_toRightOf="@+id/Img"
+        android:paddingLeft="35dp"
+        />
+    <TextView
+        android:id="@+id/TxtDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DATE"
+        android:textSize="20dp"
+
+        android:layout_gravity="center_horizontal"
+       />
+</RelativeLayout>

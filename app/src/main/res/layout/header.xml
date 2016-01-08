@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="190dp"
+    android:orientation="vertical"
+    android:background="@drawable/rommanee_1">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="@dimen/Circle_width"
+        android:layout_height="@dimen/Circle_height"
+        android:src="@drawable/img1382456687827"
+        android:layout_marginLeft="24dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp"
+        android:id="@+id/ProfileMain"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Peerachai Intarakum"
+        android:textColor="@color/White"
+        android:textStyle="bold"
+        android:layout_below="@+id/ProfileMain"
+        android:layout_alignLeft="@+id/ProfileMain"
+        android:layout_alignStart="@+id/ProfileMain" />
+
+</RelativeLayout>

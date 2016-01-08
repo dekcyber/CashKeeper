@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group
+        android:id="@+id/MenuTop"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/Budget"
+            android:checked="false"
+            android:icon="@drawable/arrowup"
+            android:title="Budget" />
+        <item
+            android:id="@+id/Outcome"
+            android:checked="false"
+            android:icon="@drawable/arrowdown"
+            android:title="Outcome" />
+    </group>
+    <item android:title="Setting">
+        <menu>
+    <group
+        android:id="@+id/MenuBelow"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/Password"
+            android:checked="false"
+            android:icon="@drawable/password"
+            android:title="Password"
+            app:actionLayout="@layout/item_switch"/>
+        <item
+            android:id="@+id/Notification"
+            android:checked="false"
+            android:icon="@drawable/bell"
+            android:title="Notification"
+            app:actionLayout="@layout/item_switch"/>
+        <item
+            android:id="@+id/Export"
+            android:checked="false"
+            android:icon="@drawable/memorycard"
+            android:title="Export" />
+        <item
+            android:id="@+id/Language"
+            android:checked="false"
+            android:icon="@drawable/typography"
+            android:title="Language" />
+        <item
+            android:id="@+id/Currency"
+            android:checked="false"
+            android:icon="@drawable/currency"
+            android:title="Currency" />
+
+
+
+    </group>
+        </menu>
+    </item>
+</menu>
