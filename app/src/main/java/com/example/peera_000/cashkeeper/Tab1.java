@@ -77,9 +77,6 @@ public class Tab1 extends Fragment {
         RvRowdata.setAdapter(RowDataAdp);
         return v;
     }
-    public void ClickFAB(View view){
 
-
-    }
 
 }
