@@ -1,9 +1,12 @@
-package com.example.peera_000.cashkeeper;
+package com.example.peera_000.cashkeeper.Adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.widget.TextView;
+
+import com.example.peera_000.cashkeeper.Tab1;
+import com.example.peera_000.cashkeeper.Tab2;
 
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {

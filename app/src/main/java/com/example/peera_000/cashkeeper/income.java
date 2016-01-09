@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 /**
  * Created by peera_000 on 10/1/2559.
  */
-public class income extends Fragment {
+public class Income extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.income,container,false);
     }
 }
