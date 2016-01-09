@@ -3,10 +3,9 @@ package com.example.peera_000.cashkeeper.Adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.widget.TextView;
 
-import com.example.peera_000.cashkeeper.Tab1;
-import com.example.peera_000.cashkeeper.Tab2;
+import com.example.peera_000.cashkeeper.Overview;
+import com.example.peera_000.cashkeeper.Graph;
 
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -30,14 +29,14 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         if(position == 0) // if the position is 0 we are returning the First tab
         {
-            Tab1 tab1 = new Tab1();
+            Overview overview = new Overview();
 
-            return tab1;
+            return overview;
         }
         else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
         {
-            Tab2 tab2 = new Tab2();
-            return tab2;
+            Graph graph = new Graph();
+            return graph;
         }
 
 

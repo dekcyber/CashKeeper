@@ -10,22 +10,18 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.peera_000.cashkeeper.Adapter.BitmapUtility;
 import com.example.peera_000.cashkeeper.Adapter.RowDataAdp;
 import com.example.peera_000.cashkeeper.Rowdata.RowData;
 
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Tab1 extends Fragment {
+public class Overview extends Fragment {
 
     //Explicit
      private RecyclerView RvRowdata;
@@ -34,13 +30,13 @@ public class Tab1 extends Fragment {
      private FloatingActionButton  fabAd;
 
 
-    public static Tab1 newInstance(){
-            Tab1 TabFrag1 = new Tab1();
+    public static Overview newInstance(){
+            Overview TabFrag1 = new Overview();
 
             return TabFrag1;
 
         }
-    public Tab1(){
+    public Overview(){
 
     }
     @Override
