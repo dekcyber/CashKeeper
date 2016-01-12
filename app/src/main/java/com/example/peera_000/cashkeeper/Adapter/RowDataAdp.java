@@ -1,18 +1,24 @@
 package com.example.peera_000.cashkeeper.Adapter;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.peera_000.cashkeeper.R;
 import com.example.peera_000.cashkeeper.Rowdata.RowData;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -45,13 +51,14 @@ public class RowDataAdp extends RecyclerView.Adapter<RowDataAdp.RowDataHolder> {
 
     @Override
     public void onBindViewHolder(RowDataHolder holder, int position) {
-
                 RowData rwRowData = lRowData.get(position);
+                //Context context = holder.Img.getContext();
                 holder.Img.setImageBitmap(rwRowData.getPhoto());
+                //Picasso.with(context).load().into(holder.Img);
                 holder.TxDate.setText(rwRowData.getDate());
                 holder.TxMoney.setText(rwRowData.getMoney());
                 holder.TxCate.setText(rwRowData.getCate());
-        Log.d("RecyblerView", "Blinding"+ position);
+        Log.d("RecyblerView", "Blinding" + position);
     }
 
     @Override

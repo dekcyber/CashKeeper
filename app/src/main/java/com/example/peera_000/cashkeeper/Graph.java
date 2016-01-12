@@ -17,7 +17,7 @@ public class Graph extends Fragment {
     public Graph(){}
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.tab_2,container,false);
+        View v = inflater.inflate(R.layout.graph,container,false);
 
 
         return v;

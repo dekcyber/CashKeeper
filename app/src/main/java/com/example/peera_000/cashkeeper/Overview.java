@@ -41,7 +41,7 @@ public class Overview extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v =inflater.inflate(R.layout.tab_1, container, false);
+        View v =inflater.inflate(R.layout.overview, container, false);
         fabAd = (FloatingActionButton) v.findViewById(R.id.fabAd);
         fabAd.setOnClickListener(new View.OnClickListener() {
             @Override
