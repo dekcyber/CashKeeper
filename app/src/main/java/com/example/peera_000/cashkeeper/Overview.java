@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.peera_000.cashkeeper.Adapter.RowDataAdp;
 import com.example.peera_000.cashkeeper.Rowdata.RowData;
@@ -66,11 +67,14 @@ public class Overview extends Fragment {
             Bitmap bitmapPhoto  = BitmapFactory.decodeByteArray(bytePhoto,0,bytePhoto.length);
             lRowdata.add(new RowData(bitmapPhoto,strMoney,strDate,strCate));
         }
-        RowDataAdp = new RowDataAdp(lRowdata);
+        RowDataAdp = new RowDataAdp(lRowdata,getContext());
         RvRowdata = (RecyclerView) v.findViewById(R.id.RvRowdata);
         RvRowdata.setLayoutManager(new LinearLayoutManager(getContext()));
         RvRowdata.setHasFixedSize(true);
         RvRowdata.setAdapter(RowDataAdp);
+
+
+
         return v;
     }
 

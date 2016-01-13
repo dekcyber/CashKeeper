@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/income_img"
+        android:id="@+id/outcome_img"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -15,12 +15,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/income_img"
+        android:layout_below="@+id/outcome_img"
         android:gravity="center"
         android:text="Name"
         android:textSize="14dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/income_txt"/>
+        android:id="@+id/outcome_txt"/>
 
 
 

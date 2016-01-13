@@ -3,28 +3,29 @@ package com.example.peera_000.cashkeeper.Rowdata;
 /**
  * Created by peera_000 on 13/1/2559.
  */
-public class income_data {
-    String incomePic;
-    String incomeName;
+public class Income_data {
+    private int IncomePic;
 
-    public income_data(String incomePic, String incomeName) {
-        this.incomePic = incomePic;
-        this.incomeName = incomeName;
+    public Income_data(int incomePic, String incomeName) {
+        IncomePic = incomePic;
+        IncomeName = incomeName;
     }
 
-    public String getIncomePic() {
-        return incomePic;
+    private String IncomeName;
+
+    public int getIncomePic() {
+        return IncomePic;
     }
 
-    public void setIncomePic(String incomePic) {
-        this.incomePic = incomePic;
+    public void setIncomePic(int incomePic) {
+        IncomePic = incomePic;
     }
 
     public String getIncomeName() {
-        return incomeName;
+        return IncomeName;
     }
 
     public void setIncomeName(String incomeName) {
-        this.incomeName = incomeName;
+        IncomeName = incomeName;
     }
 }

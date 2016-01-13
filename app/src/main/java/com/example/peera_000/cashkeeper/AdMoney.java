@@ -79,8 +79,9 @@ public class AdMoney extends AppCompatActivity {
         income.setCustomView(IncomeView);
         outcome.setCustomView(OutcomeView);
 
-        TabAdmoney.addTab(income, 0);
-        TabAdmoney.addTab(outcome,1);
+        TabAdmoney.addTab(outcome,0);
+        TabAdmoney.addTab(income, 1);
+
 
         /*
         Setting Title text for our tabs respectively

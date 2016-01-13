@@ -8,10 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 
 import com.example.peera_000.cashkeeper.Adapter.Income_Adapter;
-import com.example.peera_000.cashkeeper.Rowdata.income_data;
+import com.example.peera_000.cashkeeper.Rowdata.Income_data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,35 +20,30 @@ import java.util.List;
  */
 public class Income extends Fragment {
     //Explicit
-    RecyclerView rvIncome;
+    private RecyclerView rvIncome;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View v =inflater.inflate(R.layout.income,container,false);
-        Income_Adapter adpIncome = new Income_Adapter(AddlistIncome(),getContext());
+       View v = inflater.inflate(R.layout.income,container,false);
+        Income_Adapter income_adapter = new Income_Adapter(AddListIncome(),getContext());
         rvIncome = (RecyclerView) v.findViewById(R.id.income_rv);
         rvIncome.setHasFixedSize(true);
         rvIncome.setLayoutManager(new GridLayoutManager(getContext(), 4));
-        rvIncome.setAdapter(adpIncome);
-
+        rvIncome.setAdapter(income_adapter);
         return v;
-
-
-
     }
 
-    public List<income_data> AddlistIncome(){
-        List<income_data> incomelist = new ArrayList<>();
-        String[] incomeName ={"Food","Travel","Bill","Car","Entertainment","Love","Shopping","Transport"};
-        String[] incomePic = {"R.drawable.food","R.drawable.category_airplane","R.drawable.category_bill"
-                ,"R.drawable.category_car","R.drawable.category_entertainment","R.drawable.category_love"
-                ,"R.drawable.category_shopping","R.drawable.category_transport"};
+    //AddDataIncome
+    public List<Income_data> AddListIncome(){
+        List<Income_data> income_datas = new ArrayList<>();
+        String[] incomeName = {"Business","Extra income","Gifts","Salary"};
+        int[] incomePic = {R.drawable.category_extramoney,R.drawable.category_business,R.drawable.category_gift
+        ,R.drawable.category_salary};
         for (int i=0;i<incomeName.length;i++){
-            income_data in_data = new income_data(incomePic[i],incomeName[i]);
-            incomelist.add(in_data);
+            Income_data incomeAdddata = new Income_data(incomePic[i],incomeName[i]);
+            income_datas.add(incomeAdddata);
         }
-
-        return incomelist;
+        return income_datas;
     }
 }

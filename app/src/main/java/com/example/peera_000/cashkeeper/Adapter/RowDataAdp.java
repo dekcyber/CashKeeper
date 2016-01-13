@@ -30,10 +30,12 @@ import java.util.List;
 public class RowDataAdp extends RecyclerView.Adapter<RowDataAdp.RowDataHolder> {
     //Explicit
     private List<RowData> lRowData;
+    private Context context;
 
-    public RowDataAdp(List<RowData> lRow) {
+    public RowDataAdp(List<RowData> lRow, Context context) {
         lRowData = lRow;
 
+        this.context = context;
     }//Constructor
 
     public void AddListRowData(RowData rowdata){
@@ -52,7 +54,6 @@ public class RowDataAdp extends RecyclerView.Adapter<RowDataAdp.RowDataHolder> {
     @Override
     public void onBindViewHolder(RowDataHolder holder, int position) {
                 RowData rwRowData = lRowData.get(position);
-                //Context context = holder.Img.getContext();
                 holder.Img.setImageBitmap(rwRowData.getPhoto());
                 //Picasso.with(context).load().into(holder.Img);
                 holder.TxDate.setText(rwRowData.getDate());
@@ -86,6 +87,7 @@ public class RowDataAdp extends RecyclerView.Adapter<RowDataAdp.RowDataHolder> {
             TxMoney.setTypeface(customFont);
             TxCate.setTypeface(customFont);
             TxDate.setTypeface(customFont);
+
 
         }
     }
