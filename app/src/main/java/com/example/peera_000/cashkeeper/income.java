@@ -1,5 +1,7 @@
 package com.example.peera_000.cashkeeper;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -37,16 +39,22 @@ public class Income extends Fragment {
         rvIncome.setAdapter(income_adapter);
         income_adapter.SetOnClickListener(new Income_Adapter.OnItemClickListener() {
             //Explicit to getValue
-            String Name;
-            int position;
+            public String strNameIncome;
+            public int intPositionIncome;
+
             @Override
-            public void onItemClick(View view, int position,String Name) {
-                 this.Name= Name;
-                 this.position=position;
+            public void onItemClick(View view, int position, String Name) {
+                this.strNameIncome = Name;
+                this.intPositionIncome = position;
 
-                    Toast.makeText(getContext(),Name+position,Toast.LENGTH_SHORT).show();
+                SharedPreferences sp = getActivity().getSharedPreferences("IncomeData", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
 
-                Log.d("IncomeItemClick","Item:"+position);
+                editor.putInt("IncomePosition", position);
+                editor.putString("IncomeName", Name);
+                editor.commit();
+
+                Log.d("IncomeItemClick", "Item:" + position);
             }
         });
         return v;
@@ -61,7 +69,9 @@ public class Income extends Fragment {
         for (int i=0;i<incomeName.length;i++){
             Income_data incomeAdddata = new Income_data(incomePic[i],incomeName[i]);
             income_datas.add(incomeAdddata);
+
         }
+
         return income_datas;
     }
 }//MainClass

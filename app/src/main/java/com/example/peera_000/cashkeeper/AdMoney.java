@@ -1,6 +1,9 @@
 package com.example.peera_000.cashkeeper;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.peera_000.cashkeeper.Adapter.AdapterAdmoney;
+import com.example.peera_000.cashkeeper.Adapter.Income_Adapter;
+import com.example.peera_000.cashkeeper.Rowdata.Income_data;
+
+import java.util.List;
 
 public class AdMoney extends AppCompatActivity {
     //Explicit
@@ -25,12 +33,19 @@ public class AdMoney extends AppCompatActivity {
     private TabLayout TabAdmoney;
     private ViewPager VPAdmoney;
     private AdapterAdmoney VPaAdmoney;
-    @Override
+    private String EdtText;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad_money);
+        sp = getSharedPreferences("IncomeData", Context.MODE_PRIVATE);
+        editor = sp.edit();
         toolbarAd = (Toolbar) findViewById(R.id.toolbarAdmoney);
         edtAdmoney = (EditText) findViewById(R.id.edtAdmoney);
+        EdtText = edtAdmoney.getText().toString();
+        editor.putString("EdtMoney", EdtText);
+        editor.commit();
         TabAdmoney = (TabLayout) findViewById(R.id.TabAdMoney);
         VPAdmoney = (ViewPager) findViewById(R.id.VPAdmoney);
         VPaAdmoney = new AdapterAdmoney(getSupportFragmentManager());
@@ -164,7 +179,6 @@ public class AdMoney extends AppCompatActivity {
                     }
                 });
 
-
     }//OnCreate
 
     @Override
@@ -175,10 +189,25 @@ public class AdMoney extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        edtAdmoney = (EditText) findViewById(R.id.edtAdmoney);
+        EdtText = edtAdmoney.getText().toString();
+        editor.putString("MoneyIncome", EdtText);
+        editor.commit();
         int menuId = item.getItemId();
         if (menuId==R.id.AddmoneyNext){
-            Toast.makeText(AdMoney.this,"111",Toast.LENGTH_SHORT).show();
+
+            int Position = sp.getInt("IncomePosition", 0);
+
+            if (Position == 1) {
+                Toast.makeText(getApplicationContext(), "Extra income", Toast.LENGTH_SHORT).show();
+                Log.d("SharedPreferences", "YouCommit:" + Position);
+                Log.d("EditText", "YouCommit:" + EdtText);
+                Intent In = new Intent(AdMoney.this, AddDescript.class);
+                startActivity(In);
+            }
+
         }
+
 
         return super.onOptionsItemSelected(item);
     }
