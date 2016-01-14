@@ -32,6 +32,7 @@ public class Outcome extends Fragment {
         rvOutcome.setLayoutManager(new GridLayoutManager(getContext(), 4));
         rvOutcome.setAdapter(adpOutcome);
 
+
         return v;
 
 

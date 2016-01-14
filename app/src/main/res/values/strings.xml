@@ -8,4 +8,13 @@
     </string-array>
     <string name="closeDrawer">Navigation View</string>
     <string name="openDrawer">Navigation View Closed</string>
+    <string name="Budget">Budget</string>
+    <string name="Outcome">Outcome</string>
+    <string name="Setting">Setting</string>
+    <string name="Password">Password</string>
+    <string name="Notification">Notification</string>
+    <string name="Export">Export</string>
+    <string name="Currency">Currency</string>
+    <string name="Language">Language</string>
+    <string name="Next">Next</string>
 </resources>

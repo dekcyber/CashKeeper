@@ -8,14 +8,14 @@
             android:id="@+id/Budget"
             android:checked="false"
             android:icon="@drawable/arrowup"
-            android:title="Budget" />
+            android:title="@string/Budget" />
         <item
             android:id="@+id/Outcome"
             android:checked="false"
             android:icon="@drawable/arrowdown"
-            android:title="Outcome" />
+            android:title="@string/Outcome" />
     </group>
-    <item android:title="Setting">
+    <item android:title="@string/Setting">
         <menu>
     <group
         android:id="@+id/MenuBelow"
@@ -24,7 +24,7 @@
             android:id="@+id/Password"
             android:checked="false"
             android:icon="@drawable/password"
-            android:title="Password"
+            android:title="@string/Password"
             app:actionLayout="@layout/item_switch"
             android:actionViewClass="android.support.v7.widget.SwitchCompat"
             />
@@ -32,23 +32,23 @@
             android:id="@+id/Notification"
             android:checked="false"
             android:icon="@drawable/bell"
-            android:title="Notification"
+            android:title="@string/Notification"
             app:actionLayout="@layout/item_switch"/>
         <item
             android:id="@+id/Export"
             android:checked="false"
             android:icon="@drawable/memorycard"
-            android:title="Export" />
+            android:title="@string/Export" />
         <item
             android:id="@+id/Language"
             android:checked="false"
             android:icon="@drawable/typography"
-            android:title="Language" />
+            android:title="@string/Language" />
         <item
             android:id="@+id/Currency"
             android:checked="false"
             android:icon="@drawable/currency"
-            android:title="Currency" />
+            android:title="@string/Currency" />
 
 
 

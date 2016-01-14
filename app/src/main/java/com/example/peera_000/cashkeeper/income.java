@@ -5,9 +5,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.example.peera_000.cashkeeper.Adapter.Income_Adapter;
 import com.example.peera_000.cashkeeper.Rowdata.Income_data;
@@ -24,15 +28,29 @@ public class Income extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
        View v = inflater.inflate(R.layout.income,container,false);
-        Income_Adapter income_adapter = new Income_Adapter(AddListIncome(),getContext());
+        final Income_Adapter income_adapter = new Income_Adapter(AddListIncome(),getContext());
         rvIncome = (RecyclerView) v.findViewById(R.id.income_rv);
         rvIncome.setHasFixedSize(true);
         rvIncome.setLayoutManager(new GridLayoutManager(getContext(), 4));
         rvIncome.setAdapter(income_adapter);
+        income_adapter.SetOnClickListener(new Income_Adapter.OnItemClickListener() {
+            //Explicit to getValue
+            String Name;
+            int position;
+            @Override
+            public void onItemClick(View view, int position,String Name) {
+                 this.Name= Name;
+                 this.position=position;
+
+                    Toast.makeText(getContext(),Name+position,Toast.LENGTH_SHORT).show();
+
+                Log.d("IncomeItemClick","Item:"+position);
+            }
+        });
         return v;
-    }
+    }//OnCreate
 
     //AddDataIncome
     public List<Income_data> AddListIncome(){
@@ -46,4 +64,4 @@ public class Income extends Fragment {
         }
         return income_datas;
     }
-}
+}//MainClass

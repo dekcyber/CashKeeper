@@ -8,10 +8,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.peera_000.cashkeeper.Adapter.AdapterAdmoney;
 
@@ -36,6 +39,7 @@ public class AdMoney extends AppCompatActivity {
         edtAdmoney.setTypeface(customFont);
         setSupportActionBar(toolbarAd);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -113,6 +117,7 @@ public class AdMoney extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
+                VPAdmoney.setCurrentItem(tab.getPosition());
 
                if(position==0){
                    TxIn.setTextColor(getResources().getColorStateList(R.color.selector));
@@ -160,7 +165,24 @@ public class AdMoney extends AppCompatActivity {
                 });
 
 
+    }//OnCreate
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_admoney,menu);
+        return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int menuId = item.getItemId();
+        if (menuId==R.id.AddmoneyNext){
+            Toast.makeText(AdMoney.this,"111",Toast.LENGTH_SHORT).show();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     public static String POSITION = "POSITION";
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -173,6 +195,6 @@ public class AdMoney extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         VPAdmoney.setCurrentItem(savedInstanceState.getInt(POSITION));
     }
-}
+}//MainClass
 
 
