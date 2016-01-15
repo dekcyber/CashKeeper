@@ -23,7 +23,8 @@
         android:hint="AddNote....."
         android:layout_alignBottom="@+id/ImgNote"
         android:layout_toRightOf="@+id/ImgNote"
-        android:layout_toEndOf="@+id/ImgNote" />
+        android:layout_toEndOf="@+id/ImgNote"
+        android:background="#00000000" />
 
     <ImageView
         android:layout_width="@dimen/Category_width"
@@ -40,6 +41,7 @@
         android:id="@+id/TxtDatePicker"
         android:layout_toRightOf="@+id/ImgCalendar"
         android:layout_alignBottom="@+id/ImgCalendar"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:onClick="ShowDialog" />
 
 </RelativeLayout>
