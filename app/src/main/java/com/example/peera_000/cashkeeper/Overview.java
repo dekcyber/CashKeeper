@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class Overview extends Fragment {
      private RowDataAdp RowDataAdp;
      private CK_TABLE objCK_TABLE;
      private FloatingActionButton  fabAd;
+    String A;
 
 
     public static Overview newInstance(){
@@ -58,14 +60,20 @@ public class Overview extends Fragment {
         while (CurData.moveToNext()){
            int MoneyIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_Income);
             String strMoney = CurData.getString(MoneyIndex);
+
             int CateIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_Cate);
             String strCate = CurData.getString(CateIndex);
+            if (strCate.equals("Food")) {
+                Log.d("StrCate", "strcate =" + strCate);
+            }
             int DateIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_InputDate);
             String strDate = CurData.getString(DateIndex);
+
             int PhotoIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_Photo);
             byte[] bytePhoto = CurData.getBlob(PhotoIndex);
+
             Bitmap bitmapPhoto  = BitmapFactory.decodeByteArray(bytePhoto,0,bytePhoto.length);
-            lRowdata.add(new RowData(bitmapPhoto,strMoney,strDate,strCate));
+            lRowdata.add(new RowData(bitmapPhoto, strMoney, strDate, strCate));
         }
         RowDataAdp = new RowDataAdp(lRowdata,getContext());
         RvRowdata = (RecyclerView) v.findViewById(R.id.RvRowdata);

@@ -183,7 +183,9 @@ public class AdMoney extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_admoney,menu);
+        getMenuInflater().inflate(R.menu.toolbar_admoney, menu);
+        MenuItem item = menu.findItem(R.id.OK);
+        item.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 

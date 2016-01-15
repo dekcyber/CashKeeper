@@ -8,6 +8,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.zip.Inflater;
 
 import javax.xml.transform.dom.DOMLocator;
 
@@ -65,6 +69,14 @@ public class AddDescript extends AppCompatActivity {
             }
         };
     }//OnCreate
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_admoney, menu);
+        MenuItem item = menu.findItem(R.id.AddmoneyNext);
+        item.setVisible(false);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     protected Dialog onCreateDialog(int id) {

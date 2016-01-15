@@ -78,7 +78,7 @@ public class RowDataAdp extends RecyclerView.Adapter<RowDataAdp.RowDataHolder> {
 
         public RowDataHolder(View itemView) {
             super(itemView);
-            Log.d("RecyblerViewOverview", "Matching"+getPosition());
+            Log.d("RecyblerViewOverview", "Matching" + getLayoutPosition());
             Typeface customFont = Typeface.createFromAsset(itemView.getContext().getAssets(),"font/paaymaay_regular.ttf");
             //Matching
             Img = (ImageView) itemView.findViewById(R.id.Img);
@@ -90,11 +90,12 @@ public class RowDataAdp extends RecyclerView.Adapter<RowDataAdp.RowDataHolder> {
             TxCate.setTypeface(customFont);
             TxDate.setTypeface(customFont);
             TxCate.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(context,"You click:"+getPosition()+" "+TxCate.getText()+" ",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "You click:" + getLayoutPosition() + " " + TxCate.getText() + " ", Toast.LENGTH_SHORT).show();
         }
     }
 }//MainClass
