@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/income_img"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/Category_width"
+        android:layout_height="@dimen/Category_height"
         android:layout_marginTop="20dp"
         android:src="@drawable/category_airplane"
         android:layout_centerHorizontal="true" />
@@ -18,7 +18,7 @@
         android:layout_below="@+id/income_img"
         android:gravity="center"
         android:text="Name"
-        android:textSize="14dp"
+        android:textSize="@dimen/NameCategory"
         android:layout_centerHorizontal="true"
         android:id="@+id/income_txt"/>
 

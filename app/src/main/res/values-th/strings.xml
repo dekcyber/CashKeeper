@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CashKeeper</string>
+    <string name="Budget">รายรับ</string>
+    <string name="Export">ส่งออก</string>
+    <string name="Language">ภาษา</string>
+    <string name="Next">ถัดไป</string>
+    <string name="Notification">แจ้งเตือน</string>
+    <string name="Currency">สกุลเงิน</string>
+    <string name="Outcome">รายจ่าย</string>
+    <string name="Password">พาสเวิร์ด</string>
+    <string name="Setting">ตั้งค่า</string>
+    <string name="closeDrawer">เมนูการนำทาง</string>
+    <string name="openDrawer">ปิดเมนูการนำทาง</string>
+    <string name="title_activity_main">CashKeeper</string>
+</resources>

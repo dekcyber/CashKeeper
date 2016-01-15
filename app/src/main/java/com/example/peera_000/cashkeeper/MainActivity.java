@@ -1,5 +1,7 @@
 package com.example.peera_000.cashkeeper;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -30,6 +32,8 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -120,10 +124,21 @@ public class MainActivity extends AppCompatActivity {
                 switchPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        String Language;
                         if (isChecked){
-                            Toast.makeText(MainActivity.this, "ClickTest", Toast.LENGTH_SHORT).show();
+
+                               /* Language = "th";
+                            Locale locale = new Locale(Language);
+                            Locale.setDefault(locale);
+                            Configuration config = new Configuration();
+                            config.locale = locale;
+                            getBaseContext().getResources().updateConfiguration(config,
+                                    getBaseContext().getResources().getDisplayMetrics());
+                            this.setContentView(R.layout.activity_main,R.menu.navigation_menu);*/
+
+
                         }else {
-                            Toast.makeText(MainActivity.this, "UnClick", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
@@ -158,6 +173,9 @@ public class MainActivity extends AppCompatActivity {
                                                                  case R.id.Password:
 
                                                                      return true;
+                                                                 case R.id.Language:
+                                                                     //Intent Int = new Intent(getApplicationContext(),LanguageChange.class);
+                                                                     //startActivity(Int);
 
                                                              }
 

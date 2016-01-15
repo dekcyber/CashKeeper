@@ -5,4 +5,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="Circle_height">76dp</dimen>
     <dimen name="Circle_width">76dp</dimen>
+    <dimen name="NameCategory">14dp</dimen>
+    <dimen name="Category_height">50dp</dimen>
+    <dimen name="Category_width">50dp</dimen>
 </resources>

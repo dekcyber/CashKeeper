@@ -3,10 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.peera_000.cashkeeper.AddDescript">
+
+    <include
+        android:id="@+id/Toobar_Descrip"
+        layout="@layout/tool_bar_admoney" />
+
+    <ImageView
+        android:layout_width="@dimen/Category_width"
+        android:layout_height="@dimen/Category_height"
+        android:id="@+id/ImgNote"
+        android:src="@drawable/ic_action_edit"
+        android:layout_below="@+id/Toobar_Descrip"
+        android:layout_margin="20dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="AddNote....."
+        android:layout_alignBottom="@+id/ImgNote"
+        android:layout_toRightOf="@+id/ImgNote"
+        android:layout_toEndOf="@+id/ImgNote" />
 
 </RelativeLayout>
