@@ -193,21 +193,12 @@ public class AdMoney extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         edtAdmoney = (EditText) findViewById(R.id.edtAdmoney);
         EdtText = edtAdmoney.getText().toString();
-        editor.putString("MoneyIncome", EdtText);
+        editor.putString("Money", EdtText);
         editor.commit();
         int menuId = item.getItemId();
         if (menuId==R.id.AddmoneyNext){
-
-            int Position = sp.getInt("IncomePosition", 0);
-
-            if (Position == 1) {
-                Toast.makeText(getApplicationContext(), "Extra income", Toast.LENGTH_SHORT).show();
-                Log.d("SharedPreferences", "YouCommit:" + Position);
-                Log.d("EditText", "YouCommit:" + EdtText);
                 Intent In = new Intent(AdMoney.this, AddDescript.class);
                 startActivity(In);
-            }
-
         }
 
 

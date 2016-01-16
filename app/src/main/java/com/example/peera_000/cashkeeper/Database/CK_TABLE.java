@@ -1,12 +1,11 @@
-package com.example.peera_000.cashkeeper;
+package com.example.peera_000.cashkeeper.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
-import java.sql.Blob;
+import com.example.peera_000.cashkeeper.Database.CK_OpHelper;
 
 /**
  * Created by peera_000 on 31/12/2558.
@@ -38,13 +37,13 @@ public class CK_TABLE {
         return objCursor;
     }
     //Add NewValues
-    public long addNewValues(String strInputdate,String strCate,String strName,Double douIncome,byte[] bPhoto){
+    public long addNewValues(String strInputdate, String strCate, String strName, Double douIncome, String strPhoto) {
         ContentValues objContentValues = new ContentValues();
         objContentValues.put(COLUMN_InputDate,strInputdate);
         objContentValues.put(COLUMN_Name,strName);
         objContentValues.put(COLUMN_Cate,strCate);
         objContentValues.put(COLUMN_Income,douIncome);
-        objContentValues.put(COLUMN_Photo,bPhoto);
+        objContentValues.put(COLUMN_Photo, strPhoto);
         return writerDB.insert(TABLE_CK,null,objContentValues);
     }//Add NewValues
 

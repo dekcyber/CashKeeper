@@ -2,8 +2,6 @@ package com.example.peera_000.cashkeeper;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,9 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.peera_000.cashkeeper.Adapter.RowDataAdp;
+import com.example.peera_000.cashkeeper.Database.CK_TABLE;
 import com.example.peera_000.cashkeeper.Rowdata.RowData;
 
 import java.util.ArrayList;
@@ -30,7 +28,7 @@ public class Overview extends Fragment {
      private RowDataAdp RowDataAdp;
      private CK_TABLE objCK_TABLE;
      private FloatingActionButton  fabAd;
-    String A;
+
 
 
     public static Overview newInstance(){
@@ -53,6 +51,7 @@ public class Overview extends Fragment {
                 startActivity(objintent);
             }
         });
+        //int Draw = getResources().getIdentifier("bell","drawable",getContext().getPackageName());
         List<RowData> lRowdata = new ArrayList<>();
         objCK_TABLE = new CK_TABLE(getActivity());
         Cursor CurData = objCK_TABLE.readAllData();
@@ -64,25 +63,23 @@ public class Overview extends Fragment {
             int CateIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_Cate);
             String strCate = CurData.getString(CateIndex);
             if (strCate.equals("Food")) {
+                Log.d("Drawable", "pathDrawable=");
                 Log.d("StrCate", "strcate =" + strCate);
             }
             int DateIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_InputDate);
             String strDate = CurData.getString(DateIndex);
 
             int PhotoIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_Photo);
-            byte[] bytePhoto = CurData.getBlob(PhotoIndex);
-
-            Bitmap bitmapPhoto  = BitmapFactory.decodeByteArray(bytePhoto,0,bytePhoto.length);
-            lRowdata.add(new RowData(bitmapPhoto, strMoney, strDate, strCate));
+            String strPhoto = CurData.getString(PhotoIndex);
+            int Photo = Integer.valueOf(strPhoto);
+            //Bitmap bitmapPhoto  = BitmapFactory.decodeByteArray(bytePhoto,0,bytePhoto.length);
+            lRowdata.add(new RowData(Photo, strMoney, strDate, strCate));
         }
         RowDataAdp = new RowDataAdp(lRowdata,getContext());
         RvRowdata = (RecyclerView) v.findViewById(R.id.RvRowdata);
         RvRowdata.setLayoutManager(new LinearLayoutManager(getContext()));
         RvRowdata.setHasFixedSize(true);
         RvRowdata.setAdapter(RowDataAdp);
-
-
-
         return v;
     }
 

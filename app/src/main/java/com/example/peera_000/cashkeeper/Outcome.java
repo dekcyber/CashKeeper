@@ -1,5 +1,6 @@
 package com.example.peera_000.cashkeeper;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.peera_000.cashkeeper.Adapter.Outcome_Adapter;
+import com.example.peera_000.cashkeeper.Database.CK_TABLE;
+import com.example.peera_000.cashkeeper.Database.INCOME_TABLE;
+import com.example.peera_000.cashkeeper.Database.OUTCOME_TABLE;
 import com.example.peera_000.cashkeeper.Rowdata.Outcome_data;
 
 import java.util.ArrayList;
@@ -20,36 +24,25 @@ import java.util.List;
  */
 public class Outcome extends Fragment {
     //Explicit
-    RecyclerView rvOutcome;
+    private RecyclerView rvOutcome;
+    private OUTCOME_TABLE outcomeTable;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v =inflater.inflate(R.layout.outcome,container,false);
-        Outcome_Adapter adpOutcome = new Outcome_Adapter(AddListOutcome(),getContext());
+        List<Outcome_data> OutcomeList = new ArrayList<>();
+        outcomeTable = new OUTCOME_TABLE(getActivity());
+        Cursor objCursor = outcomeTable.readAllDataOutcome();
+        objCursor.moveToPosition(-1);
+        Outcome_Adapter adpOutcome = new Outcome_Adapter(OutcomeList, getContext());
         rvOutcome = (RecyclerView) v.findViewById(R.id.outcome_rv);
         rvOutcome.setHasFixedSize(true);
         rvOutcome.setLayoutManager(new GridLayoutManager(getContext(), 4));
         rvOutcome.setAdapter(adpOutcome);
-
-
         return v;
 
 
 
-    }
-
-    public List<Outcome_data> AddListOutcome(){
-        List<Outcome_data> OutcomeList = new ArrayList<>();
-        String[] OutcomeName ={"Bill","Car","Entertainment","Food","Love","Shopping","Transport","Travel"};
-        int[] OutcomePic = {R.drawable.category_bill,R.drawable.category_car,R.drawable.category_entertainment
-                ,R.drawable.category_food,R.drawable.category_love,R.drawable.category_shopping
-                ,R.drawable.category_transport,R.drawable.category_airplane};
-        for (int i=0;i<OutcomeName.length;i++){
-            Outcome_data out_data = new Outcome_data(OutcomePic[i],OutcomeName[i]);
-            OutcomeList.add(out_data);
-        }
-
-        return OutcomeList;
     }
 }

@@ -55,8 +55,8 @@ public class RowDataAdp extends RecyclerView.Adapter<RowDataAdp.RowDataHolder> {
     @Override
     public void onBindViewHolder(RowDataHolder holder, final int position) {
                 RowData rwRowData = lRowData.get(position);
-                holder.Img.setImageBitmap(rwRowData.getPhoto());
-                //Picasso.with(context).load().into(holder.Img);
+        //holder.Img.setImageResource(rwRowData.getPhoto());
+        Picasso.with(context).load(rwRowData.getPhoto()).into(holder.Img);
                 holder.TxDate.setText(rwRowData.getDate());
                 holder.TxMoney.setText(rwRowData.getMoney());
                 holder.TxCate.setText(rwRowData.getCate());

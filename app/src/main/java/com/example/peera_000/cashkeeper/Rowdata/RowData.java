@@ -6,23 +6,23 @@ import android.graphics.Bitmap;
  * Created by peera_000 on 31/12/2558.
  */
 public class RowData {
-    private Bitmap Photo;
+    private int Photo;
     private String Money;
     private String Date;
     private String Cate;
 
-    public RowData(Bitmap photo, String money, String date, String cate) {
+    public RowData(int photo, String money, String date, String cate) {
         Photo = photo;
         Money = money;
         Date = date;
         Cate = cate;
     }//Constructor
 
-    public Bitmap getPhoto() {
+    public int getPhoto() {
         return Photo;
     }
 
-    public void setPhoto(Bitmap photo) {
+    public void setPhoto(int photo) {
         Photo = photo;
     }
 

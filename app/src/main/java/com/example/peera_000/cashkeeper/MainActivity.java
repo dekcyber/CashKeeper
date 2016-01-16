@@ -1,10 +1,7 @@
 package com.example.peera_000.cashkeeper;
 
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.BitmapFactory;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -22,10 +19,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.peera_000.cashkeeper.Adapter.BitmapUtility;
 import com.example.peera_000.cashkeeper.Adapter.ViewPagerAdapter;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
+import com.example.peera_000.cashkeeper.Database.CK_TABLE;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -33,12 +28,11 @@ import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-import java.util.Locale;
-
 
 public class MainActivity extends AppCompatActivity {
 
     //Explicit
+    private SharedPreferences sp;
     private CK_TABLE objCK_TABLE;
     private TextView OverV;
     private Toolbar toolbar;
@@ -125,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         String Language;
-                        if (isChecked){
+                        if (isChecked) {
 
                                /* Language = "th";
                             Locale locale = new Locale(Language);
@@ -137,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                             this.setContentView(R.layout.activity_main,R.menu.navigation_menu);*/
 
 
-                        }else {
+                        } else {
 
                         }
                     }
@@ -190,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
         );
 
 
-
         //EndOfNavigationL
 
         navigationR = new DrawerBuilder()
@@ -228,7 +221,23 @@ public class MainActivity extends AppCompatActivity {
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        //client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        /*int Draw = getResources().getIdentifier("category_bill","drawable",getPackageName());
+        Log.d("category_business","="+Draw);
+        int Draw1 = getResources().getIdentifier("category_car","drawable",getPackageName());
+        Log.d("category_business","="+Draw1);
+        int Draw2 = getResources().getIdentifier("category_entertainment","drawable",getPackageName());
+        Log.d("category_business","="+Draw2);
+        int Draw3 = getResources().getIdentifier("category_food","drawable",getPackageName());
+        Log.d("category_business","="+Draw3);
+        int Draw4 = getResources().getIdentifier("category_love","drawable",getPackageName());
+        Log.d("category_business","="+Draw4);
+        int Draw5 = getResources().getIdentifier("category_shopping","drawable",getPackageName());
+        Log.d("category_business","="+Draw5);
+        int Draw6 = getResources().getIdentifier("category_transport","drawable",getPackageName());
+        Log.d("category_business","="+Draw6);
+        int Draw7 = getResources().getIdentifier("category_travel","drawable",getPackageName());
+        Log.d("category_business","="+Draw7);*/
     }//OnCreate
 
     @Override
@@ -252,8 +261,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void testAddValues() {
 
-        byte[] Barray = BitmapUtility.getBytes(BitmapFactory.decodeResource(getResources(), R.drawable.food));
-        objCK_TABLE.addNewValues("31/12/2558", "Food", "Dekcyber", 234.00, Barray);
+        //byte[] Barray = BitmapUtility.getBytes(BitmapFactory.decodeResource(getResources(), R.drawable.food));
+        int Draw = getResources().getIdentifier("category_entertainment", "drawable", getPackageName());
+
+        objCK_TABLE.addNewValues("31/12/2558", "Entertainment", "Dekcyber", 350.00, String.valueOf(Draw));
         Log.d("AddIncome", "AddIncome SuccessFul");
     }//TestAddValues
 
@@ -261,44 +272,4 @@ public class MainActivity extends AppCompatActivity {
         objCK_TABLE = new CK_TABLE(this);
     }//ConnectDB
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.example.peera_000.cashkeeper/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.example.peera_000.cashkeeper/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-    }
 }//Main Class
