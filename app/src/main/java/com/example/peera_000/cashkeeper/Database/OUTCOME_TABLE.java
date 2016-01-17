@@ -12,10 +12,10 @@ public class OUTCOME_TABLE {
     //Explicit
     private CK_OpHelper objCK_Ophelper;
     private SQLiteDatabase writeDatabase, readDatabase;
-    private static final String TABLE_OUTCOME = "OUTCOME_TABLE";
-    private static final String COLUMN_ID = "_id";
-    private static final String COLUMN_NAME = "Name";
-    private static final String COLUMN_Phote = "Photo";
+    public static final String TABLE_OUTCOME = "OUTCOME_TABLE";
+    public static final String COLUMNOUTCOME_ID = "_id";
+    public static final String COLUMNOUTCOME_NAME = "Name";
+    public static final String COLUMNOUTCOME_Photo = "Photo";
 
     public OUTCOME_TABLE(Context context) {
         objCK_Ophelper = new CK_OpHelper(context);
@@ -24,17 +24,17 @@ public class OUTCOME_TABLE {
     }//Constructor
 
     public Cursor readAllDataOutcome() {
-        Cursor cursorReadAll = readDatabase.query(TABLE_OUTCOME, new String[]{COLUMN_ID, COLUMN_NAME, COLUMN_Phote}, null, null, null, null, null);
+        Cursor cursorReadAll = readDatabase.query(TABLE_OUTCOME, new String[]{COLUMNOUTCOME_ID, COLUMNOUTCOME_NAME, COLUMNOUTCOME_Photo}, null, null, null, null, null);
         if (cursorReadAll != null) {
             cursorReadAll.moveToFirst();
         }
         return cursorReadAll;
     }
 
-    public long AddCateIncome(String strName, String strPhoto) {
+    public long AddCateOutcome(String strName, String strPhoto) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_NAME, strName);
-        contentValues.put(COLUMN_Phote, strPhoto);
+        contentValues.put(COLUMNOUTCOME_NAME, strName);
+        contentValues.put(COLUMNOUTCOME_Photo, strPhoto);
         return writeDatabase.insert(TABLE_OUTCOME, null, contentValues);
     }//AddNewValueIncome
 

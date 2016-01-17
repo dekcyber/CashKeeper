@@ -5,13 +5,13 @@ package com.example.peera_000.cashkeeper.Rowdata;
  */
 public class Income_data {
     private int IncomePic;
+    private String IncomeName;
 
     public Income_data(int incomePic, String incomeName) {
         IncomePic = incomePic;
         IncomeName = incomeName;
     }
 
-    private String IncomeName;
 
     public int getIncomePic() {
         return IncomePic;

@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,10 +61,9 @@ public class Overview extends Fragment {
 
             int CateIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_Cate);
             String strCate = CurData.getString(CateIndex);
-            if (strCate.equals("Food")) {
-                Log.d("Drawable", "pathDrawable=");
-                Log.d("StrCate", "strcate =" + strCate);
-            }
+
+            int NoteIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_Note);
+            String strNote = CurData.getString(NoteIndex);
             int DateIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_InputDate);
             String strDate = CurData.getString(DateIndex);
 
@@ -73,7 +71,7 @@ public class Overview extends Fragment {
             String strPhoto = CurData.getString(PhotoIndex);
             int Photo = Integer.valueOf(strPhoto);
             //Bitmap bitmapPhoto  = BitmapFactory.decodeByteArray(bytePhoto,0,bytePhoto.length);
-            lRowdata.add(new RowData(Photo, strMoney, strDate, strCate));
+            lRowdata.add(new RowData(Photo, strMoney, strDate, strCate, strNote));
         }
         RowDataAdp = new RowDataAdp(lRowdata,getContext());
         RvRowdata = (RecyclerView) v.findViewById(R.id.RvRowdata);

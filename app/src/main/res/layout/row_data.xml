@@ -29,6 +29,16 @@
         android:paddingLeft="35dp"
         />
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="note"
+        android:id="@+id/TxtNote"
+        android:layout_below="@+id/TxtCate"
+        android:textSize="20dp"
+        android:layout_toRightOf="@+id/Img"
+        android:paddingLeft="35dp" />
+
+    <TextView
         android:id="@+id/TxtDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,4 +47,12 @@
 
         android:layout_gravity="center_horizontal"
        />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="2px"
+        android:background="@color/colorPrimary"
+        android:layout_toRightOf="@+id/Img"
+        android:layout_below="@+id/TxtNote"
+        android:layout_marginTop="7dp" />
 </RelativeLayout>

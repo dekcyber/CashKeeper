@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,10 +42,10 @@ public class AdMoney extends AppCompatActivity {
         setContentView(R.layout.activity_ad_money);
         sp = getSharedPreferences("IncomeData", Context.MODE_PRIVATE);
         editor = sp.edit();
-        toolbarAd = (Toolbar) findViewById(R.id.toolbarAdmoney);
+        toolbarAd = (Toolbar) findViewById(R.id.Toolbar_Admoney);
         edtAdmoney = (EditText) findViewById(R.id.edtAdmoney);
         EdtText = edtAdmoney.getText().toString();
-        editor.putString("EdtMoney", EdtText);
+        editor.putString("Money", EdtText);
         editor.commit();
         TabAdmoney = (TabLayout) findViewById(R.id.TabAdMoney);
         VPAdmoney = (ViewPager) findViewById(R.id.VPAdmoney);
@@ -197,8 +198,12 @@ public class AdMoney extends AppCompatActivity {
         editor.commit();
         int menuId = item.getItemId();
         if (menuId==R.id.AddmoneyNext){
+            if (EdtText.equals("")) {
+                Toast.makeText(getApplicationContext(), "กรุณากรอกจำนวนเงิน", Toast.LENGTH_SHORT).show();
+            } else {
                 Intent In = new Intent(AdMoney.this, AddDescript.class);
                 startActivity(In);
+            }
         }
 
 

@@ -10,13 +10,23 @@ public class RowData {
     private String Money;
     private String Date;
     private String Cate;
+    private String Note;
 
-    public RowData(int photo, String money, String date, String cate) {
+    public RowData(int photo, String money, String date, String cate, String note) {
         Photo = photo;
         Money = money;
         Date = date;
         Cate = cate;
+        Note = note;
     }//Constructor
+
+    public String getNote() {
+        return Note;
+    }
+
+    public void setNote(String note) {
+        Note = note;
+    }
 
     public int getPhoto() {
         return Photo;

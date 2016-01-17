@@ -60,6 +60,7 @@ public class RowDataAdp extends RecyclerView.Adapter<RowDataAdp.RowDataHolder> {
                 holder.TxDate.setText(rwRowData.getDate());
                 holder.TxMoney.setText(rwRowData.getMoney());
                 holder.TxCate.setText(rwRowData.getCate());
+        holder.TxNote.setText(rwRowData.getNote());
 
         Log.d("RecyblerViewOverview", "BlindingOverview" + position);
     }
@@ -75,6 +76,7 @@ public class RowDataAdp extends RecyclerView.Adapter<RowDataAdp.RowDataHolder> {
         private TextView TxMoney;
         private TextView TxDate;
         private TextView TxCate;
+        private TextView TxNote;
 
         public RowDataHolder(View itemView) {
             super(itemView);
@@ -85,10 +87,12 @@ public class RowDataAdp extends RecyclerView.Adapter<RowDataAdp.RowDataHolder> {
             TxMoney = (TextView) itemView.findViewById(R.id.TxtMoney);
             TxDate = (TextView) itemView.findViewById(R.id.TxtDate);
             TxCate = (TextView) itemView.findViewById(R.id.TxtCate);
+            TxNote = (TextView) itemView.findViewById(R.id.TxtNote);
             //SetFont
             TxMoney.setTypeface(customFont);
             TxCate.setTypeface(customFont);
             TxDate.setTypeface(customFont);
+            TxNote.setTypeface(customFont);
             TxCate.setOnClickListener(this);
 
         }

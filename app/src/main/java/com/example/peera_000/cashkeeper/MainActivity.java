@@ -222,14 +222,14 @@ public class MainActivity extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         //client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-        /*int Draw = getResources().getIdentifier("category_bill","drawable",getPackageName());
+        /*int Draw = getResources().getIdentifier("category_business","drawable",getPackageName());
         Log.d("category_business","="+Draw);
-        int Draw1 = getResources().getIdentifier("category_car","drawable",getPackageName());
-        Log.d("category_business","="+Draw1);
-        int Draw2 = getResources().getIdentifier("category_entertainment","drawable",getPackageName());
-        Log.d("category_business","="+Draw2);
-        int Draw3 = getResources().getIdentifier("category_food","drawable",getPackageName());
-        Log.d("category_business","="+Draw3);
+        int Draw1 = getResources().getIdentifier("category_extramoney","drawable",getPackageName());
+        Log.d("category_extramoney","="+Draw1);
+        int Draw2 = getResources().getIdentifier("category_gift","drawable",getPackageName());
+        Log.d("category_gift","="+Draw2);
+        int Draw3 = getResources().getIdentifier("category_salary","drawable",getPackageName());
+        Log.d("category_salary","="+Draw3);
         int Draw4 = getResources().getIdentifier("category_love","drawable",getPackageName());
         Log.d("category_business","="+Draw4);
         int Draw5 = getResources().getIdentifier("category_shopping","drawable",getPackageName());
@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
         //byte[] Barray = BitmapUtility.getBytes(BitmapFactory.decodeResource(getResources(), R.drawable.food));
         int Draw = getResources().getIdentifier("category_entertainment", "drawable", getPackageName());
 
-        objCK_TABLE.addNewValues("31/12/2558", "Entertainment", "Dekcyber", 350.00, String.valueOf(Draw));
+        //objCK_TABLE.addNewValues("31/12/2558", "Entertainment", "Dekcyber", 350.00, String.valueOf(Draw));
         Log.d("AddIncome", "AddIncome SuccessFul");
     }//TestAddValues
 

@@ -18,7 +18,8 @@ public class CK_TABLE {
     public static final String COLUMN_ID="_id";
     public static final String COLUMN_InputDate="inputDate";
     public static final String COLUMN_Name="name";
-    public static final String COLUMN_Cate="Cate";
+    public static final String COLUMN_Cate = "cate";
+    public static final String COLUMN_Note = "note";
     public static final String COLUMN_Income="income";
     public static final String COLUMN_Outcome="outcome";
     public static final String COLUMN_Photo="photo";
@@ -30,18 +31,19 @@ public class CK_TABLE {
     }//Constructor
 
     public Cursor readAllData(){
-            Cursor objCursor = readDB.query(TABLE_CK,new String[]{COLUMN_ID,COLUMN_InputDate,COLUMN_Name,COLUMN_Cate,COLUMN_Income,COLUMN_Outcome,COLUMN_Photo},null,null,null,null,null);
+        Cursor objCursor = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_Photo}, null, null, null, null, null);
         if (objCursor !=null){
             objCursor.moveToFirst();
         }
         return objCursor;
     }
     //Add NewValues
-    public long addNewValues(String strInputdate, String strCate, String strName, Double douIncome, String strPhoto) {
+    public long addNewValues(String strInputdate, String strCate, String strName, String strNote, Double douIncome, String strPhoto) {
         ContentValues objContentValues = new ContentValues();
         objContentValues.put(COLUMN_InputDate,strInputdate);
         objContentValues.put(COLUMN_Name,strName);
         objContentValues.put(COLUMN_Cate,strCate);
+        objContentValues.put(COLUMN_Note, strNote);
         objContentValues.put(COLUMN_Income,douIncome);
         objContentValues.put(COLUMN_Photo, strPhoto);
         return writerDB.insert(TABLE_CK,null,objContentValues);

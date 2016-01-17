@@ -2,6 +2,8 @@ package com.example.peera_000.cashkeeper.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -73,7 +75,7 @@ public class Income_Adapter extends RecyclerView.Adapter<Income_Adapter.IncomeHo
         }
     }
     public interface OnItemClickListener{
-        public void onItemClick(View view ,int position,String Name);
+        void onItemClick(View view, int position, String Name);
     }
     public void SetOnClickListener(final OnItemClickListener ItemClickListener){
         this.IncomeItemClick=ItemClickListener;
