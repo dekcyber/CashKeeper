@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pocket Management</string>
+    <string name="Budget">กระเป๋าเงิน</string>
+    <string name="Currency">สกุลเงิน</string>
+    <string name="Export">ส่งออก</string>
+    <string name="Graph">กราฟ</string>
+    <string name="Language">ภาษา</string>
+    <string name="Next">ถัดไป</string>
+    <string name="Notification">แจ้งเตือน</string>
+    <string name="Outcome">รายจ่าย</string>
+    <string name="Overview">ภาพรวม</string>
+    <string name="Password">รหัสผ่าน</string>
+    <string name="Setting">ตั้งค่า</string>
+    <string name="closeDrawer">เมนูการนำทาง</string>
+    <string name="openDrawer">เมนูการนำทางเมือปิด</string>
+    <string name="title_activity_main">Pocket Management</string>
+</resources>

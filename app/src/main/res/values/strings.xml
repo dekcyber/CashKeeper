@@ -17,4 +17,6 @@
     <string name="Currency">Currency</string>
     <string name="Language">Language</string>
     <string name="Next">Next</string>
+    <string name="Overview">Overview</string>
+    <string name="Graph">Graph</string>
 </resources>

@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView nviewLmain;
     private DrawerLayout navigationL;
     private Drawer navigationR;
-    private CharSequence Titles[] = {"OverView", "Graph"};
+    private CharSequence Titles[] = {"Overview","Graph"};
     private int Numboftabs = 2;
     private SwitchCompat switchPass;
     private OnCheckedChangeListener OnCheckChangeL = new OnCheckedChangeListener() {

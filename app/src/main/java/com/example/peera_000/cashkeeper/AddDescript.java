@@ -152,6 +152,8 @@ public class AddDescript extends AppCompatActivity {
             case R.id.OK:
                 ck_table = new CK_TABLE(getApplicationContext());
                 ck_table.addNewValues(Date, Category, "Dekcyber", Note, douMoney, strImgPhoto);
+                Intent In  =new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(In);
                 Log.d("Date", "=" + Date);
                 Log.d("Note", "=" + Note);
                 Log.d("photo", "=" + imgPhoto);

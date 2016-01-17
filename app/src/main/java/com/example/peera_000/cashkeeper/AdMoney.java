@@ -37,11 +37,16 @@ public class AdMoney extends AppCompatActivity {
     private String EdtText;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
+    private SharedPreferences Outsp;
+    private SharedPreferences.Editor Outeditor;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad_money);
         sp = getSharedPreferences("IncomeData", Context.MODE_PRIVATE);
+        Outsp = getSharedPreferences("OutcomeData", Context.MODE_PRIVATE);
         editor = sp.edit();
+        Outeditor = Outsp.edit();
         toolbarAd = (Toolbar) findViewById(R.id.Toolbar_Admoney);
         edtAdmoney = (EditText) findViewById(R.id.edtAdmoney);
         EdtText = edtAdmoney.getText().toString();
@@ -208,6 +213,15 @@ public class AdMoney extends AppCompatActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPause() {
+        Outeditor.remove("OutcomePhoto");
+        Outeditor.commit();
+        editor.remove("IncomePhoto");
+        editor.commit();
+        super.onPause();
     }
 
     public static String POSITION = "POSITION";
