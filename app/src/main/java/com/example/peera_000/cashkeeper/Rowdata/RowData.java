@@ -11,13 +11,16 @@ public class RowData {
     private String Date;
     private String Cate;
     private String Note;
+    private String MoneyOut;
 
-    public RowData(int photo, String money, String date, String cate, String note) {
+    public RowData(int photo, String money, String date, String cate, String note, String moneyOut) {
         Photo = photo;
         Money = money;
         Date = date;
         Cate = cate;
         Note = note;
+
+        MoneyOut = moneyOut;
     }//Constructor
 
     public String getNote() {
@@ -58,5 +61,13 @@ public class RowData {
 
     public void setCate(String cate) {
         Cate = cate;
+    }
+
+    public String getMoneyOut() {
+        return MoneyOut;
+    }
+
+    public void setMoneyOut(String moneyOut) {
+        MoneyOut = moneyOut;
     }
 }//Main Class

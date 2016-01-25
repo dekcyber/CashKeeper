@@ -53,6 +53,8 @@ public class AddDescript extends AppCompatActivity {
     private String Date;
     private int imgPhoto;
     private CK_TABLE ck_table;
+    double douMoney;
+    private String Nameid;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_descript);
@@ -63,20 +65,11 @@ public class AddDescript extends AppCompatActivity {
         Outeditor = Outsp.edit();
         Money = sp.getString("Money", null);
         img = (ImageView) findViewById(R.id.SelectImg);
-        int photoOut = Outsp.getInt("OutcomePhoto", -1);
+        //int photoOut = Outsp.getInt("OutcomePhoto", -1);
         int photoIn = sp.getInt("IncomePhoto", -1);
-        Log.d("Photo", "=" + photoOut);
         Log.d("Photo", "=" + photoIn);
-        if (photoIn != -1) {
             img.setImageResource(photoIn);
             imgPhoto = photoIn;
-            Log.d("Photo", "=" + photoIn);
-        }
-        if (photoOut != -1) {
-            imgPhoto = photoOut;
-            img.setImageResource(photoOut);
-            Log.d("Photo", "=" + photoOut);
-        }
 
         edtMonney = (EditText) findViewById(R.id.edtAdmoney);
         edtMonney.setTypeface(customFont);
@@ -129,34 +122,50 @@ public class AddDescript extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Note = edtNote.getText().toString();
         Date = TxtDatepicker.getText().toString();
+        Money = edtMonney.getText().toString();
         String strImgPhoto = Integer.toString(imgPhoto);
         int CheckIncome = sp.getInt("IncomePosition", -1);
+        int CheckTab = sp.getInt("CheckTab", 0);
+
+        ck_table = new CK_TABLE(getApplicationContext());
         if (MoneyComp.equals(Money)) {
             Money = sp.getString("Money", null);
-            Log.d("Money", "=" + Money);
-        } else {
-            Money = edtMonney.getText().toString();
             Log.d("Money", "=" + Money);
         }
         if (CheckIncome == -1) {
             Category = Outsp.getString("OutcomeName", null);
+            Nameid = Outsp.getString("OutcomeNameId", null);
             Log.d("Name", "=" + Category);
         } else {
             Category = sp.getString("IncomeName", null);
+            Nameid = sp.getString("IncomeNameId", null);
             Log.d("Name", "=" + Category);
         }
-        double douMoney = Double.parseDouble(Money);
+        douMoney = Double.parseDouble(Money);
+        Log.d("CheckTab", "=" + CheckTab);
         editor.clear();
         editor.commit();
         switch (item.getItemId()) {
             case R.id.OK:
-                ck_table = new CK_TABLE(getApplicationContext());
-                ck_table.addNewValues(Date, Category, "Dekcyber", Note, douMoney, strImgPhoto);
-                Intent In  =new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(In);
-                Log.d("Date", "=" + Date);
-                Log.d("Note", "=" + Note);
-                Log.d("photo", "=" + imgPhoto);
+
+                if (CheckTab == 2) {
+                    ck_table.addNewValuesIncome(Date, Category, Nameid, "Dekcyber", Note, douMoney, strImgPhoto);
+                    Intent In = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(In);
+                    Log.d("Date", "=" + Date);
+                    Log.d("Note", "=" + Note);
+                    Log.d("photo", "=" + imgPhoto);
+                    Log.d("CheckTab", "=" + CheckTab);
+                } else if (CheckTab == 0) {
+                    ck_table.addNewValuesOutcome(Date, Category, Nameid, "Dekcyber", Note, douMoney, strImgPhoto);
+                    Intent In = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(In);
+                    Log.d("Date", "=" + Date);
+                    Log.d("Note", "=" + Note);
+                    Log.d("photo", "=" + imgPhoto);
+                    Log.d("CheckTab", "=" + CheckTab);
+
+                }
 
         }
         return super.onOptionsItemSelected(item);
@@ -188,6 +197,12 @@ public class AddDescript extends AppCompatActivity {
         Outeditor.remove("OutcomePhoto");
         Outeditor.commit();
         editor.remove("IncomePhoto");
+        editor.commit();
+        editor.remove("CheckTab");
+        editor.commit();
+        Outeditor.remove("OutcomeNameId");
+        Outeditor.commit();
+        editor.remove("IncomeNameId");
         editor.commit();
         super.onPause();
     }

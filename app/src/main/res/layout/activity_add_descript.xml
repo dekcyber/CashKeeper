@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,40 +11,72 @@
         android:id="@+id/Toobar_Descrip"
         layout="@layout/tool_bar_admoney" />
 
-    <ImageView
-        android:layout_width="@dimen/Category_width"
-        android:layout_height="@dimen/Category_height"
-        android:id="@+id/ImgNote"
-        android:src="@drawable/note"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/Toobar_Descrip">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
         android:layout_below="@+id/Toobar_Descrip"
-        android:layout_margin="20dp" />
+            android:scrollbars="vertical">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="AddNote....."
-        android:id="@+id/edtNote"
-        android:layout_alignBottom="@+id/ImgNote"
-        android:layout_toRightOf="@+id/ImgNote"
-        android:layout_toEndOf="@+id/ImgNote"
-        android:background="#00000000" />
 
-    <ImageView
-        android:layout_width="@dimen/Category_width"
-        android:layout_height="@dimen/Category_height"
-        android:id="@+id/ImgCalendar"
-        android:src="@drawable/calendar"
-        android:layout_below="@+id/ImgNote"
-        android:layout_margin="20dp" />
+            <ImageView
+                android:id="@+id/ImgNote"
+                android:layout_width="@dimen/Category_width"
+                android:layout_height="@dimen/Category_height"
+                android:layout_margin="20dp"
+                android:src="@drawable/note" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Date"
-        android:id="@+id/TxtDatePicker"
-        android:layout_toRightOf="@+id/ImgCalendar"
-        android:layout_alignBottom="@+id/ImgCalendar"
-        android:textSize="20dp"
-        android:onClick="ShowDialog" />
+            <EditText
+                android:id="@+id/edtNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/ImgNote"
+                android:layout_toEndOf="@+id/ImgNote"
+                android:layout_toRightOf="@+id/ImgNote"
+                android:background="#00000000"
+                android:hint="AddNote....." />
 
+            <ImageView
+                android:id="@+id/ImgCalendar"
+                android:layout_width="@dimen/Category_width"
+                android:layout_height="@dimen/Category_height"
+                android:layout_below="@+id/ImgNote"
+                android:layout_margin="20dp"
+                android:src="@drawable/calendar" />
+
+            <TextView
+                android:id="@+id/TxtDatePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/ImgCalendar"
+                android:layout_toRightOf="@+id/ImgCalendar"
+                android:onClick="ShowDialog"
+                android:text="Date"
+                android:textSize="20dp" />
+
+            <View
+                android:id="@+id/ViewLocation"
+                android:layout_width="250dp"
+                android:layout_height="150dp"
+                android:layout_below="@+id/TxtDatePicker"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:background="@color/Gray" />
+
+            <View
+                android:id="@+id/ViewPhoto"
+                android:layout_width="250dp"
+                android:layout_height="150dp"
+                android:layout_below="@+id/ViewLocation"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:background="@color/Gray" />
+
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
+

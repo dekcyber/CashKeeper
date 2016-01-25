@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/switchPass"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        app:showText="false"
-        />
+        app:showText="false" />
 
 </LinearLayout>

@@ -15,4 +15,17 @@
     <string name="closeDrawer">เมนูการนำทาง</string>
     <string name="openDrawer">เมนูการนำทางเมือปิด</string>
     <string name="title_activity_main">Pocket Management</string>
+    <string name="Business">ธุรกิจ</string>
+    <string name="Extra_income">เงินพิเศษ</string>
+    <string name="Gifts">โบนัส</string>
+    <string name="Salary">เงินเดือน</string>
+    <string name="Income">รายรับ</string>
+    <string name="Car">ค่ารถ</string>
+    <string name="Entertain">ความบันเทิง</string>
+    <string name="Bill">ใบแจ้งหนี้</string>
+    <string name="Food">อาหาร</string>
+    <string name="Love">ความรัก</string>
+    <string name="Shopping">ซื้อของ</string>
+    <string name="Travel">ท่องเที่ยว</string>
+    <string name="Transport">ขนส่ง</string>
 </resources>

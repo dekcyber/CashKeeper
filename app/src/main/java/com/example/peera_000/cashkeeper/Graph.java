@@ -10,14 +10,18 @@ import android.widget.TextView;
 
 public class Graph extends Fragment {
     TextView Graph;
-    public static Overview newInstance(){
+
+    public static Overview newInstance() {
         Overview TabFrag2 = new Overview();
         return TabFrag2;
     }
-    public Graph(){}
+
+    public Graph() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.graph,container,false);
+        View v = inflater.inflate(R.layout.graph, container, false);
 
 
         return v;

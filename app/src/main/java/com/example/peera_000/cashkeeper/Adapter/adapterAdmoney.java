@@ -17,7 +17,7 @@ public class AdapterAdmoney extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        switch (position){
+        switch (position) {
             case 0:
                 return new Outcome();
             case 1:

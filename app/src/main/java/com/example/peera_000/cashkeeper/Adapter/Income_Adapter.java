@@ -2,6 +2,7 @@ package com.example.peera_000.cashkeeper.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
@@ -36,7 +37,7 @@ public class Income_Adapter extends RecyclerView.Adapter<Income_Adapter.IncomeHo
 
     @Override
     public IncomeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.income_customlayout,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.income_customlayout, parent, false);
 
         return new IncomeHolder(v);
     }
@@ -46,7 +47,8 @@ public class Income_Adapter extends RecyclerView.Adapter<Income_Adapter.IncomeHo
         Income_data income = IncomeList.get(position);
         holder.IncomeTxt.setText(income.getIncomeName());
         Picasso.with(context).load(income.getIncomePic()).into(holder.IncomeImg);
-
+        holder.IncomeidTxt.setText(income.getIncomeIDpic());
+        holder.IncomeNameid.setText(income.getIncomeNameId());
     }
 
     @Override
@@ -58,27 +60,33 @@ public class Income_Adapter extends RecyclerView.Adapter<Income_Adapter.IncomeHo
         //Explicit
         private ImageView IncomeImg;
         private TextView IncomeTxt;
-
+        private TextView IncomeidTxt;
+        private TextView IncomeNameid;
         public IncomeHolder(View itemView) {
             super(itemView);
             IncomeImg = (ImageView) itemView.findViewById(R.id.income_img);
             IncomeTxt = (TextView) itemView.findViewById(R.id.income_txt);
+            IncomeidTxt = (TextView) itemView.findViewById(R.id.income_id_txt);
+            IncomeNameid = (TextView) itemView.findViewById(R.id.income_name_id);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-         if (IncomeItemClick !=null){
-             IncomeItemClick.onItemClick(v, getLayoutPosition(), String.valueOf(IncomeTxt.getText()));
+            if (IncomeItemClick != null) {
+                IncomeItemClick.onItemClick(v, getLayoutPosition(), String.valueOf(IncomeTxt.getText()), String.valueOf(IncomeidTxt.getText())
+                        , String.valueOf(IncomeNameid.getText()));
 
-         }
+            }
         }
     }
-    public interface OnItemClickListener{
-        void onItemClick(View view, int position, String Name);
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position, String Name, String IDPhoto, String Nameid);
     }
-    public void SetOnClickListener(final OnItemClickListener ItemClickListener){
-        this.IncomeItemClick=ItemClickListener;
+
+    public void SetOnClickListener(final OnItemClickListener ItemClickListener) {
+        this.IncomeItemClick = ItemClickListener;
 
     }
 }

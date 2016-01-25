@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CashKeeper</string>
+    <string name="app_name">Pocket Management</string>
     <string name="title_activity_main">CashKeeper</string>
     <string-array name="tabs">
         <item>TAB 1</item>
@@ -19,4 +19,18 @@
     <string name="Next">Next</string>
     <string name="Overview">Overview</string>
     <string name="Graph">Graph</string>
+    <string name="Business">Business</string>
+    <string name="Extra_income">Extra income</string>
+    <string name="Gifts">Gifts</string>
+    <string name="Salary">Salary</string>
+    <string name="Income">INCOME</string>
+    <string name="Bill">Bill</string>
+    <string name="Car">Car</string>
+    <string name="Entertain">Entertainment</string>
+    <string name="Food">Food</string>
+    <string name="Love">Love</string>
+    <string name="Shopping">Shopping</string>
+    <string name="Transport">Transport</string>
+    <string name="Travel">Travel</string>
+
 </resources>

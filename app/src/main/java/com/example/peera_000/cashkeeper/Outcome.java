@@ -28,11 +28,12 @@ public class Outcome extends Fragment {
     //Explicit
     private RecyclerView rvOutcome;
     private OUTCOME_TABLE outcomeTable;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v =inflater.inflate(R.layout.outcome,container,false);
+        View v = inflater.inflate(R.layout.outcome, container, false);
         List<Outcome_data> OutcomeList = new ArrayList<>();
         outcomeTable = new OUTCOME_TABLE(getActivity());
         Cursor objCursor = outcomeTable.readAllDataOutcome();
@@ -40,10 +41,16 @@ public class Outcome extends Fragment {
         while (objCursor.moveToNext()) {
             int NameIndex = objCursor.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_NAME);
             String strName = objCursor.getString(NameIndex);
+            int NameIdIndex = objCursor.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_NameID);
+            String strNameId = objCursor.getString(NameIdIndex);
+            String ValueNameId = getString(Integer.parseInt(strNameId));
+            Log.d("NameID", "=" + strNameId);
             int PhotoIndex = objCursor.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_Photo);
             String strPhoto = objCursor.getString(PhotoIndex);
+
+            Log.d("PhotoID", "=" + strPhoto);
             int IntPhoto = Integer.parseInt(strPhoto);
-            OutcomeList.add(new Outcome_data(IntPhoto, strName));
+            OutcomeList.add(new Outcome_data(IntPhoto, ValueNameId, strPhoto, strNameId));
             Log.d("ReadData", "OUTCOME SUCCESS");
         }
         Outcome_Adapter adpOutcome = new Outcome_Adapter(OutcomeList, getContext());
@@ -57,54 +64,36 @@ public class Outcome extends Fragment {
             public int intPositionOutcome;
             public ImageView img;
             public int intPhoto;
+            public String strPhotoImg;
+            public String strNameid;
 
             @Override
-            public void onItemClick(View view, int position, String Name) {
+            public void onItemClick(View view, int position, String Name, String IdPic, String NameId) {
                 this.intPositionOutcome = position;
                 this.strNameOutcome = Name;
-                img = (ImageView) getActivity().findViewById(R.id.SelectImg);
-                switch (Name) {
-                    case "Bill":
-                        intPhoto = getResources().getIdentifier("category_bill", "drawable", getActivity().getPackageName());
-                        img.setImageResource(intPhoto);
-                        break;
-                    case "Car":
-                        intPhoto = getResources().getIdentifier("category_car", "drawable", getActivity().getPackageName());
-                        img.setImageResource(intPhoto);
-                        break;
-                    case "Entertainment":
-                        intPhoto = getResources().getIdentifier("category_entertainment", "drawable", getActivity().getPackageName());
-                        img.setImageResource(intPhoto);
-                        break;
-                    case "Food":
-                        intPhoto = getResources().getIdentifier("category_food", "drawable", getActivity().getPackageName());
-                        img.setImageResource(intPhoto);
-                        break;
-                    case "Love":
-                        intPhoto = getResources().getIdentifier("category_love", "drawable", getActivity().getPackageName());
-                        img.setImageResource(intPhoto);
-                        break;
-                    case "Shopping":
-                        intPhoto = getResources().getIdentifier("category_shopping", "drawable", getActivity().getPackageName());
-                        img.setImageResource(intPhoto);
-                        break;
-                    case "Transport":
-                        intPhoto = getResources().getIdentifier("category_transport", "drawable", getActivity().getPackageName());
-                        img.setImageResource(intPhoto);
-                        break;
-                    case "Travel":
-                        intPhoto = getResources().getIdentifier("category_travel", "drawable", getActivity().getPackageName());
-                        img.setImageResource(intPhoto);
-                        break;
+                this.strPhotoImg = IdPic;
+                this.strNameid = NameId;
 
-                }
+                img = (ImageView) getActivity().findViewById(R.id.SelectImg);
+
+                Log.d("Position", "is" + position);
+                Log.d("Name", "is" + Name);
+                Log.d("Photo", "is" + IdPic);
+                Log.d("NameId", "is" + NameId);
+                intPhoto = Integer.parseInt(IdPic);
+                img.setImageResource(intPhoto);
+
+                SharedPreferences sp = getActivity().getSharedPreferences("IncomeData", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
                 SharedPreferences outsp = getActivity().getSharedPreferences("OutcomeData", Context.MODE_PRIVATE);
                 SharedPreferences.Editor outcomeeditor = outsp.edit();
 
                 outcomeeditor.putInt("OutcomePosition", position);
                 outcomeeditor.putString("OutcomeName", Name);
-                outcomeeditor.putInt("OutcomePhoto", intPhoto);
+                editor.putInt("IncomePhoto", intPhoto);
+                outcomeeditor.putString("OutcomeNameId", NameId);
                 outcomeeditor.commit();
+                editor.commit();
 
                 Log.d("IncomeItemClick", "Item:" + position);
 
@@ -113,6 +102,11 @@ public class Outcome extends Fragment {
         return v;
 
 
+    }
 
+    @Override
+    public void onResume() {
+
+        super.onResume();
     }
 }

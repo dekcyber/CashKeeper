@@ -20,8 +20,24 @@
         android:text="Name"
         android:textSize="@dimen/NameCategory"
         android:layout_centerHorizontal="true"
-        android:id="@+id/income_txt"/>
+        android:id="@+id/income_txt" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID"
+        android:id="@+id/income_id_txt"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/income_txt"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NameId"
+        android:id="@+id/income_name_id"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
 
 
 </RelativeLayout>

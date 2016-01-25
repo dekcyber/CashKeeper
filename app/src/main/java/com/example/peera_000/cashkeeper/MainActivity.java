@@ -1,7 +1,10 @@
 package com.example.peera_000.cashkeeper;
 
+import android.content.ContentValues;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +24,10 @@ import android.widget.Toast;
 
 import com.example.peera_000.cashkeeper.Adapter.ViewPagerAdapter;
 import com.example.peera_000.cashkeeper.Database.CK_TABLE;
+import com.example.peera_000.cashkeeper.Database.INCOME_TABLE;
+import com.example.peera_000.cashkeeper.Database.OUTCOME_TABLE;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -32,8 +39,10 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 public class MainActivity extends AppCompatActivity {
 
     //Explicit
-    private SharedPreferences sp;
+
     private CK_TABLE objCK_TABLE;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
     private TextView OverV;
     private Toolbar toolbar;
     private ViewPager pager;
@@ -42,8 +51,12 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView nviewLmain;
     private DrawerLayout navigationL;
     private Drawer navigationR;
-    private CharSequence Titles[] = {"Overview","Graph"};
-    private int Numboftabs = 2;
+    public String tab1;
+    public String tab2;
+    private int Numboftabs;
+    private int Count = 0;
+    private INCOME_TABLE income_table;
+    private OUTCOME_TABLE outcome_table;
     private SwitchCompat switchPass;
     private OnCheckedChangeListener OnCheckChangeL = new OnCheckedChangeListener() {
         @Override
@@ -51,19 +64,28 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "onCheckedChanged: " + (isChecked ? "true" : "false"), Toast.LENGTH_SHORT).show();
         }
     };
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        income_table = new INCOME_TABLE(this);
+        outcome_table = new OUTCOME_TABLE(this);
+        sp = getSharedPreferences("CheckCount", MODE_PRIVATE);
+        editor = sp.edit();
+        tab1 = getString(R.string.Overview);
+        tab2 = getString(R.string.Graph);
+        CharSequence Titles[] = {tab1, tab2};
+        Numboftabs = 2;
         //ConnectDB
-        ConnectDB();
+        //ConnectDB();
+        int srtdata = getResources().getIdentifier("Bill", "strings", getPackageName());
+        Log.d("StringData", "=" + srtdata);
+        //int count =sp.getInt("Count",0)+Count++;
+        if (income_table.CheckIncome()) {
+            income_table.InsertIncome();
+            outcome_table.InsertOutcome();
+        }
 
         //TestAddDB
         //testAddValues();
@@ -71,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         // Creating The Toolbar and setting it as the Toolbar for the activity
         OverV = (TextView) findViewById(R.id.TextHead);
         Typeface customFont = Typeface.createFromAsset(getAssets(), "font/paaymaay_regular.ttf");
-        OverV.setTextColor(getResources().getColor(R.color.tabsScrollColor));
+        OverV.setTextColor(getResources().getColor(R.color.White));
         OverV.setTypeface(customFont);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
@@ -95,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.tabsScrollColor);
+                return getResources().getColor(R.color.colorAccent);
             }
         });
 
@@ -121,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                         String Language;
                         if (isChecked) {
 
-                               /* Language = "th";
+                               /*Language = "th";
                             Locale locale = new Locale(Language);
                             Locale.setDefault(locale);
                             Configuration config = new Configuration();
@@ -167,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                                                                  case R.id.Password:
 
                                                                      return true;
-                                                                 case R.id.Language:
+                                                                 //case R.id.Language:
                                                                      //Intent Int = new Intent(getApplicationContext(),LanguageChange.class);
                                                                      //startActivity(Int);
 
@@ -238,6 +260,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d("category_business","="+Draw6);
         int Draw7 = getResources().getIdentifier("category_travel","drawable",getPackageName());
         Log.d("category_business","="+Draw7);*/
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
     }//OnCreate
 
     @Override
@@ -259,17 +283,15 @@ public class MainActivity extends AppCompatActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
-    private void testAddValues() {
 
-        //byte[] Barray = BitmapUtility.getBytes(BitmapFactory.decodeResource(getResources(), R.drawable.food));
-        int Draw = getResources().getIdentifier("category_entertainment", "drawable", getPackageName());
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 
-        //objCK_TABLE.addNewValues("31/12/2558", "Entertainment", "Dekcyber", 350.00, String.valueOf(Draw));
-        Log.d("AddIncome", "AddIncome SuccessFul");
-    }//TestAddValues
-
-    private void ConnectDB() {
-        objCK_TABLE = new CK_TABLE(this);
-    }//ConnectDB
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
 
 }//Main Class

@@ -39,6 +39,7 @@ public class AdMoney extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private SharedPreferences Outsp;
     private SharedPreferences.Editor Outeditor;
+    private int CheckTab;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,25 +88,25 @@ public class AdMoney extends AppCompatActivity {
         final TabLayout.Tab income = TabAdmoney.newTab();
         final TabLayout.Tab outcome = TabAdmoney.newTab();
 
-        View IncomeView = getLayoutInflater().inflate(R.layout.custom_tabadmoney,null);
+        View IncomeView = getLayoutInflater().inflate(R.layout.custom_tabadmoney, null);
         final TextView TxIn = (TextView) IncomeView.findViewById(R.id.TxtcustomTab);
         TxIn.setTextColor(getResources().getColorStateList(R.color.selector));
-        TxIn.setText("INCOME");
+        TxIn.setText(getString(R.string.Income));
 
         TxIn.setTypeface(customFont);
 
-        View OutcomeView = getLayoutInflater().inflate(R.layout.custom_tabadmoney,null);
+        View OutcomeView = getLayoutInflater().inflate(R.layout.custom_tabadmoney, null);
         final TextView TxOu = (TextView) OutcomeView.findViewById(R.id.TxtcustomTab);
-        TxOu.setTextColor(getResources().getColorStateList(R.color.tabsScrollColor));
-        TxOu.setText("OUTCOME");
+        TxOu.setTextColor(getResources().getColorStateList(R.color.White));
+        TxOu.setText(getString(R.string.Outcome));
         TxOu.setTypeface(customFont);
         income.isSelected();
 
         income.setCustomView(IncomeView);
         outcome.setCustomView(OutcomeView);
 
-        TabAdmoney.addTab(outcome,0);
-        TabAdmoney.addTab(income, 1);
+        TabAdmoney.addTab(outcome, 0, true);
+        TabAdmoney.addTab(income, 1, false);
 
 
         /*
@@ -133,21 +134,26 @@ public class AdMoney extends AppCompatActivity {
          */
 
 
-        TabAdmoney.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.tabsScrollColor));
+        TabAdmoney.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.colorAccent));
         TabAdmoney.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
+
                 VPAdmoney.setCurrentItem(tab.getPosition());
 
-               if(position==0){
-                   TxIn.setTextColor(getResources().getColorStateList(R.color.selector));
+                if (position == 0) {
+                    CheckTab = 1;
+                    editor.putInt("CheckTab", CheckTab);
 
-               }
-                else if (position==1){
-
-                   TxOu.setTextColor(getResources().getColorStateList(R.color.selector));
-               }
+                    TxIn.setTextColor(getResources().getColorStateList(R.color.selector));
+                    Log.d("CheckTab", "=" + CheckTab);
+                } else if (position == 1) {
+                    CheckTab = 2;
+                    editor.putInt("CheckTab", CheckTab);
+                    TxOu.setTextColor(getResources().getColorStateList(R.color.selector));
+                    Log.d("CheckTab", "=" + CheckTab);
+                }
             }
 
             @Override
@@ -167,23 +173,23 @@ public class AdMoney extends AppCompatActivity {
         changes when a viewpager page changes.
          */
 
-                VPAdmoney.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(TabAdmoney));
-                VPAdmoney.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        VPAdmoney.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(TabAdmoney));
+        VPAdmoney.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                    }
+            }
 
-                    @Override
-                    public void onPageSelected(int position) {
+            @Override
+            public void onPageSelected(int position) {
 
-                    }
+            }
 
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
-                    }
-                });
+            }
+        });
 
     }//OnCreate
 
@@ -202,7 +208,7 @@ public class AdMoney extends AppCompatActivity {
         editor.putString("Money", EdtText);
         editor.commit();
         int menuId = item.getItemId();
-        if (menuId==R.id.AddmoneyNext){
+        if (menuId == R.id.AddmoneyNext) {
             if (EdtText.equals("")) {
                 Toast.makeText(getApplicationContext(), "กรุณากรอกจำนวนเงิน", Toast.LENGTH_SHORT).show();
             } else {
@@ -216,19 +222,26 @@ public class AdMoney extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
+    protected void onPostResume() {
         Outeditor.remove("OutcomePhoto");
         Outeditor.commit();
         editor.remove("IncomePhoto");
         editor.commit();
+        super.onPostResume();
+    }
+
+    @Override
+    protected void onPause() {
+
         super.onPause();
     }
 
     public static String POSITION = "POSITION";
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(POSITION,TabAdmoney.getSelectedTabPosition());
+        outState.putInt(POSITION, TabAdmoney.getSelectedTabPosition());
     }
 
     @Override

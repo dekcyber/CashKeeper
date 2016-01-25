@@ -7,8 +7,7 @@
         android:id="@+id/AddmoneyNext"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_action_forward"
-        />
+        android:icon="@drawable/ic_action_forward" />
     <item
         android:title="OK"
         android:id="@+id/OK"
