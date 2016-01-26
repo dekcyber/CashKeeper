@@ -1,6 +1,7 @@
 package com.example.peera_000.cashkeeper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -84,6 +85,11 @@ public class Outcome extends Fragment {
                 intPhoto = Integer.parseInt(IdPic);
                 img.setImageResource(intPhoto);
 
+                if (Name.equals(getResources().getString(R.string.Add))) {
+                    img.setImageResource(0);
+                    Intent intent = new Intent(getActivity(), Add_category.class);
+                    startActivity(intent);
+                }
                 SharedPreferences sp = getActivity().getSharedPreferences("IncomeData", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
                 SharedPreferences outsp = getActivity().getSharedPreferences("OutcomeData", Context.MODE_PRIVATE);

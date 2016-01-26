@@ -28,13 +28,20 @@ public class OUTCOME_TABLE {
     }//Constructor
 
     public Cursor readAllDataOutcome() {
-        Cursor cursorReadAll = readDatabase.query(TABLE_OUTCOME, new String[]{COLUMNOUTCOME_ID, COLUMNOUTCOME_NAME, COLUMNOUTCOME_NameID, COLUMNOUTCOME_Photo}, null, null, null, null, null);
+        Cursor cursorReadAll = readDatabase.query(TABLE_OUTCOME, new String[]{COLUMNOUTCOME_ID, COLUMNOUTCOME_NAME, COLUMNOUTCOME_NameID, COLUMNOUTCOME_Photo}, null, null, null, null, COLUMNOUTCOME_ID + " ASC");
         if (cursorReadAll != null) {
             cursorReadAll.moveToFirst();
         }
         return cursorReadAll;
     }
 
+    public Cursor readAllDataOutcomeCate() {
+        Cursor cursorReadAll = readDatabase.query(TABLE_OUTCOME, new String[]{COLUMNOUTCOME_ID, COLUMNOUTCOME_NAME, COLUMNOUTCOME_NameID, COLUMNOUTCOME_Photo}, COLUMNOUTCOME_NAME + " NOT IN ('Add')", null, null, null, null);
+        if (cursorReadAll != null) {
+            cursorReadAll.moveToFirst();
+        }
+        return cursorReadAll;
+    }
     public long AddCateOutcome(String strName, String strPhoto) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMNOUTCOME_NAME, strName);
