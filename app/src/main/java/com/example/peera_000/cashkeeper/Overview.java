@@ -8,22 +8,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.peera_000.cashkeeper.Adapter.RowDataAdp;
 import com.example.peera_000.cashkeeper.Database.CK_TABLE;
 import com.example.peera_000.cashkeeper.Rowdata.RowData;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 
@@ -69,39 +62,8 @@ public class Overview extends Fragment {
         String d = date.format(cal.getTime());
         String setDat ="2016/01/19";
         Log.d("Date", "="+d);*/
-        ArrayList<String> A = new ArrayList<>();
-        ArrayList<String> B = new ArrayList<>();
-        ArrayList<Integer> arrIntPhoto = new ArrayList<>();
-        ArrayList<String> arrStringCate = new ArrayList<>();
-        ArrayList<String> arrStringIncome = new ArrayList<>();
-        ArrayList<String> arrStringOutcome = new ArrayList<>();
-        ArrayList<String> arrStringNote = new ArrayList<>();
         String Check = "";
         String Check1 = "";
-        /*A.add("2016/01/24");
-        A.add("2016/01/24");
-        A.add("2016/01/25");
-        A.add("2016/01/25");
-        for (int i=0;i<A.size();i++) {
-            if (Check.equals(A.get(i))){
-                Check =A.get(i);
-                Check1=" ";
-                B.add(Check1);
-                Log.d("ArrayList","DataOfArray"+A.get(i));
-                Log.d("ArrayList","NewData="+Check);}
-            else {
-                Check = A.get(i);
-                Check1 = A.get(i);
-                B.add(Check1);
-                Log.d("ArrayList","DataOfArray"+A.get(i));
-                Log.d("ArrayList","NewData="+Check);
-            }
-        }
-        Log.d("ArrayListB","="+B.size());
-        for (int j=0;j<B.size();j++){
-            Log.d("ArrayListB","Data="+B.get(j));
-        }*/
-
 
         while (CurData.moveToNext()) {
             int MoneyIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_Income);
@@ -133,35 +95,9 @@ public class Overview extends Fragment {
                 Check1 = strDate;
                 lRowdata.add(new RowData(Photo, strMoney, Check1, ValueCate, strNote, strOutmoney));
             }
-            //Bitmap bitmapPhoto  = BitmapFactory.decodeByteArray(bytePhoto,0,bytePhoto.length);
-            //lRowdata.add(new RowData(Photo, strMoney, strDate, strCate, strNote, strOutmoney));
 
-            /*A.add(strDate);
-            arrIntPhoto.add(Photo);
-            arrStringIncome.add(strMoney);
-            arrStringOutcome.add(strOutmoney);
-            arrStringCate.add(strCate);
-            arrStringNote.add(strNote);*/
 
         }
-        /*Log.d("ArrayListA","Size Of"+A.size());
-        for (int i=0;i<A.size();i++){
-            if (Check.equals(A.get(i))){
-                Check = A.get(i);
-                Check1=" ";
-                B.add(Check1);
-            }else {
-                Check =A.get(i);
-                Check1=A.get(i);
-                B.add(Check1);
-            }
-
-        }
-        for (int j=0;j<B.size();j++){
-            lRowdata.add(new RowData(arrIntPhoto.get(j),arrStringIncome.get(j), B.get(j),arrStringCate.get(j)
-                    ,arrStringNote.get(j),arrStringOutcome.get(j)));
-            Log.d("ArrayListB", "Data = " + B.get(j));
-        }*/
 
         RowDataAdp = new RowDataAdp(lRowdata, getContext());
         RvRowdata = (RecyclerView) v.findViewById(R.id.RvRowdata);
@@ -169,33 +105,8 @@ public class Overview extends Fragment {
         RvRowdata.setHasFixedSize(true);
         RvRowdata.setAdapter(RowDataAdp);
         RvRowdata.setOnScrollListener(onScrollListener);
-/*
-        int income1 = getResources().getIdentifier("Business","string",getActivity().getPackageName());
-        int income2 = getResources().getIdentifier("Extra_income","string",getActivity().getPackageName());
-        int income3 = getResources().getIdentifier("Gifts","string",getActivity().getPackageName());
-        int income4 = getResources().getIdentifier("Salary", "string", getActivity().getPackageName());
-        Log.d("IncomeId","Business="+income1);
-        Log.d("IncomeId","Extra_income="+income2);
-        Log.d("IncomeId","Gifts="+income3);
-        Log.d("IncomeId","Salary="+income4);
-        int outcome1 = getResources().getIdentifier("Bill","string",getActivity().getPackageName());
-        int outcome2 = getResources().getIdentifier("Car","string",getActivity().getPackageName());
-        int outcome3 = getResources().getIdentifier("Entertain","string",getActivity().getPackageName());
-        int outcome4 = getResources().getIdentifier("Food", "string", getActivity().getPackageName());
-        int outcome5 = getResources().getIdentifier("Love", "string", getActivity().getPackageName());
-        int outcome6 = getResources().getIdentifier("Shopping", "string", getActivity().getPackageName());
-        int outcome7 = getResources().getIdentifier("Transport", "string", getActivity().getPackageName());
-        int outcome8 = getResources().getIdentifier("Travel", "string", getActivity().getPackageName());
-        Log.d("OutcomeId","Bill="+outcome1);
-        Log.d("OutcomeId","Car="+outcome2);
-        Log.d("OutcomeId","Entertain="+outcome3);
-        Log.d("OutcomeId","Food="+outcome4);
-        Log.d("OutcomeId","Love="+outcome5);
-        Log.d("OutcomeId", "Shopping=" + outcome6);
-        Log.d("OutcomeId","Transport="+outcome7);
-        Log.d("OutcomeId","Travel="+outcome8);
 
-*/
+
         return v;
     }
 

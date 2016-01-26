@@ -1,6 +1,5 @@
 package com.example.peera_000.cashkeeper;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -8,27 +7,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.peera_000.cashkeeper.Database.CK_TABLE;
+import com.example.peera_000.cashkeeper.MainActivity;
+import com.example.peera_000.cashkeeper.R;
 
 import java.util.Calendar;
-import java.util.zip.Inflater;
-
-import javax.xml.transform.dom.DOMLocator;
 
 public class AddDescript extends AppCompatActivity {
     //Explicit

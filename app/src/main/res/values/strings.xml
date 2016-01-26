@@ -32,5 +32,6 @@
     <string name="Shopping">Shopping</string>
     <string name="Transport">Transport</string>
     <string name="Travel">Travel</string>
+    <string name="Add">Add</string>
 
 </resources>

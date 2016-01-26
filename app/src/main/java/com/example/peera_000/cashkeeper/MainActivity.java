@@ -1,14 +1,11 @@
 package com.example.peera_000.cashkeeper;
 
-import android.content.ContentValues;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Typeface;
-import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
@@ -23,12 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.peera_000.cashkeeper.Adapter.ViewPagerAdapter;
+import com.example.peera_000.cashkeeper.Convert_ID.ID_Picture;
+import com.example.peera_000.cashkeeper.Convert_ID.ID_String;
 import com.example.peera_000.cashkeeper.Database.CK_TABLE;
 import com.example.peera_000.cashkeeper.Database.INCOME_TABLE;
 import com.example.peera_000.cashkeeper.Database.OUTCOME_TABLE;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
@@ -41,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     //Explicit
 
     private CK_TABLE objCK_TABLE;
+    private ID_Picture id_picture;
+    private ID_String id_string;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private TextView OverV;
@@ -240,26 +238,11 @@ public class MainActivity extends AppCompatActivity {
 
                 )
                 .build();
-
+        id_picture = new ID_Picture(this);
+        id_string = new ID_String(this);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         //client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-        /*int Draw = getResources().getIdentifier("category_business","drawable",getPackageName());
-        Log.d("category_business","="+Draw);
-        int Draw1 = getResources().getIdentifier("category_extramoney","drawable",getPackageName());
-        Log.d("category_extramoney","="+Draw1);
-        int Draw2 = getResources().getIdentifier("category_gift","drawable",getPackageName());
-        Log.d("category_gift","="+Draw2);
-        int Draw3 = getResources().getIdentifier("category_salary","drawable",getPackageName());
-        Log.d("category_salary","="+Draw3);
-        int Draw4 = getResources().getIdentifier("category_love","drawable",getPackageName());
-        Log.d("category_business","="+Draw4);
-        int Draw5 = getResources().getIdentifier("category_shopping","drawable",getPackageName());
-        Log.d("category_business","="+Draw5);
-        int Draw6 = getResources().getIdentifier("category_transport","drawable",getPackageName());
-        Log.d("category_business","="+Draw6);
-        int Draw7 = getResources().getIdentifier("category_travel","drawable",getPackageName());
-        Log.d("category_business","="+Draw7);*/
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
     }//OnCreate

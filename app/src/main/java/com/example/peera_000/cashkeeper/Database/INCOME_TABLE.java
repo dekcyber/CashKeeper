@@ -47,18 +47,20 @@ public class INCOME_TABLE {
         return objcursor.isBeforeFirst();
     }
 
-    public long AddCateIncome(String strName, String strPhoto) {
+    public long AddCateIncome(Integer Id, String strName, String strPhoto, String strNameid) {
         ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMNIN_ID, Id);
         contentValues.put(COLUMNIN_NAME, strName);
         contentValues.put(COLUMNIN_Photo, strPhoto);
+        contentValues.put(COLUMNIN_NameID, strNameid);
         return writeDatabase.insert(TABLE_INCOME, null, contentValues);
     }//AddNewValueIncome
 
     public void InsertIncome() {
         String[] IncomeName = {context.getString(R.string.Business), context.getString(R.string.Extra_income)
                 , context.getString(R.string.Gifts), context.getString(R.string.Salary)};
-        String[] IncomePic = {"2130837578", "2130837581", "2130837583", "2130837586"};
-        String[] IncomeNameID = {"2131099700", "2131099705", "2131099707", "2131099717"};
+        String[] IncomePic = {"2130837579", "2130837582", "2130837584", "2130837587"};
+        String[] IncomeNameID = {"2131099701", "2131099706", "2131099708", "2131099718"};
         for (int i = 0; i < IncomeName.length; i++) {
             ContentValues objContent = new ContentValues();
             objContent.put(COLUMNIN_NAME, IncomeName[i]);
@@ -66,6 +68,12 @@ public class INCOME_TABLE {
             objContent.put(COLUMNIN_NameID, IncomeNameID[i]);
             writeDatabase.insert(TABLE_INCOME, null, objContent);
         }
+        ContentValues objContent2 = new ContentValues();
+        objContent2.put(COLUMNIN_ID, 99);
+        objContent2.put(COLUMNIN_NAME, "Add");
+        objContent2.put(COLUMNIN_NameID, "2131099698");
+        objContent2.put(COLUMNIN_Photo, "2130837577");
+        writeDatabase.insert(TABLE_INCOME, null, objContent2);
     }
 
 }//MainClass

@@ -1,6 +1,5 @@
 package com.example.peera_000.cashkeeper;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,15 +16,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.peera_000.cashkeeper.Adapter.AdapterAdmoney;
-import com.example.peera_000.cashkeeper.Adapter.Income_Adapter;
-import com.example.peera_000.cashkeeper.Rowdata.Income_data;
-
-import java.util.List;
 
 public class AdMoney extends AppCompatActivity {
     //Explicit
