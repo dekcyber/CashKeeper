@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.widget.Toolbar;
 
 import com.example.peera_000.cashkeeper.R;
 
@@ -20,6 +21,7 @@ public class OUTCOME_TABLE {
     public static final String COLUMNOUTCOME_Photo = "Photo";
     public static final String COLUMNOUTCOME_NameID = "NameId";
     private Context context;
+    private Toolbar toolbar;
     public OUTCOME_TABLE(Context context) {
         objCK_Ophelper = new CK_OpHelper(context);
         writeDatabase = objCK_Ophelper.getWritableDatabase();
