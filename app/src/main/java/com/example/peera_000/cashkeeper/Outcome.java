@@ -17,7 +17,6 @@ import android.widget.ImageView;
 
 import com.example.peera_000.cashkeeper.Adapter.Outcome_Adapter;
 import com.example.peera_000.cashkeeper.Database.OUTCOME_TABLE;
-import com.example.peera_000.cashkeeper.R;
 import com.example.peera_000.cashkeeper.Rowdata.Outcome_data;
 
 import java.util.ArrayList;
@@ -36,26 +35,8 @@ public class Outcome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.outcome, container, false);
-        List<Outcome_data> OutcomeList = new ArrayList<>();
-        outcomeTable = new OUTCOME_TABLE(getActivity());
-        Cursor objCursor = outcomeTable.readAllDataOutcome();
-        objCursor.moveToPosition(-1);
-        while (objCursor.moveToNext()) {
-            int NameIndex = objCursor.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_NAME);
-            String strName = objCursor.getString(NameIndex);
-            int NameIdIndex = objCursor.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_NameID);
-            String strNameId = objCursor.getString(NameIdIndex);
-            String ValueNameId = getString(Integer.parseInt(strNameId));
-            Log.d("NameID", "=" + strNameId);
-            int PhotoIndex = objCursor.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_Photo);
-            String strPhoto = objCursor.getString(PhotoIndex);
 
-            Log.d("PhotoID", "=" + strPhoto);
-            int IntPhoto = Integer.parseInt(strPhoto);
-            OutcomeList.add(new Outcome_data(IntPhoto, ValueNameId, strPhoto, strNameId));
-            Log.d("ReadData", "OUTCOME SUCCESS");
-        }
-        Outcome_Adapter adpOutcome = new Outcome_Adapter(OutcomeList, getContext());
+        Outcome_Adapter adpOutcome = new Outcome_Adapter(OutcomeData(), getContext());
         rvOutcome = (RecyclerView) v.findViewById(R.id.outcome_rv);
         rvOutcome.setHasFixedSize(true);
         rvOutcome.setLayoutManager(new GridLayoutManager(getContext(), 4));
@@ -87,7 +68,7 @@ public class Outcome extends Fragment {
 
                 if (Name.equals(getResources().getString(R.string.Add))) {
                     img.setImageResource(0);
-                    Intent intent = new Intent(getActivity(), Add_category.class);
+                    Intent intent = new Intent(getActivity(), Add_category_Outcome.class);
                     startActivity(intent);
                 }
                 SharedPreferences sp = getActivity().getSharedPreferences("IncomeData", Context.MODE_PRIVATE);
@@ -107,9 +88,59 @@ public class Outcome extends Fragment {
             }
         });
         return v;
+    }//OnCreate
+    public List<Outcome_data> OutcomeData(){
+        List<Outcome_data> OutcomeList = new ArrayList<>();
+        outcomeTable = new OUTCOME_TABLE(getActivity());
+        Cursor objCursor = outcomeTable.readAllDataOutcomeCate();
+        objCursor.moveToPosition(-1);
+        while (objCursor.moveToNext()) {
+
+            int StatusIndex =  objCursor.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_Status);
+            String strStatus = objCursor.getString(StatusIndex);
+
+            if (strStatus.equals("N")){
+                int NameIdIndex = objCursor.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_NameID);
+                String strNameId = objCursor.getString(NameIdIndex);
+                int NameIndex = objCursor.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_NAME);
+                String strName = objCursor.getString(NameIndex);
+                int PhotoIndex = objCursor.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_Photo);
+                String strPhoto = objCursor.getString(PhotoIndex);
+                int IntPhoto = Integer.parseInt(strPhoto);
+                OutcomeList.add(new Outcome_data(IntPhoto, strName, strPhoto, strNameId));
+                Log.d("NameID", "=" + strNameId);
+                Log.d("PhotoID", "=" + strPhoto);
+                Log.d("ReadDataNew", "OUTCOME SUCCESS");
+            }else {
+                int NameIndex = objCursor.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_NAME);
+                String strName = objCursor.getString(NameIndex);
+                int NameIdIndex = objCursor.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_NameID);
+                String strNameId = objCursor.getString(NameIdIndex);
+                String ValueNameId = getString(Integer.parseInt(strNameId));
+                int PhotoIndex = objCursor.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_Photo);
+                String strPhoto = objCursor.getString(PhotoIndex);
+                int IntPhoto = Integer.parseInt(strPhoto);
+                OutcomeList.add(new Outcome_data(IntPhoto, ValueNameId, strPhoto, strNameId));
+                Log.d("NameID", "=" + strNameId);
+                Log.d("PhotoID", "=" + strPhoto);
+                Log.d("ReadData", "OUTCOME SUCCESS");
+            }
+
+        }
+        Cursor Cursor2 = outcomeTable.readAllDataOutcome();
+        int NameIndex = Cursor2.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_NAME);
+        String strName = Cursor2.getString(NameIndex);
+        int NameIdIndex = Cursor2.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_NameID);
+        String strNameId = Cursor2.getString(NameIdIndex);
+        String ValueNameId = getString(Integer.parseInt(strNameId));
+        int PhotoIndex = Cursor2.getColumnIndex(OUTCOME_TABLE.COLUMNOUTCOME_Photo);
+        String strPhoto = Cursor2.getString(PhotoIndex);
+        int IntPhoto = Integer.parseInt(strPhoto);
+        OutcomeList.add(new Outcome_data(IntPhoto, ValueNameId, strPhoto, strNameId));
 
 
-    }
+        return OutcomeList;
+    }//OutcomeDataList
 
     @Override
     public void onResume() {

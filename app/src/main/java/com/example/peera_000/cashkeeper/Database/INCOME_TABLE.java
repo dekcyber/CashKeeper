@@ -20,6 +20,7 @@ public class INCOME_TABLE {
     public static final String COLUMNIN_NAME = "Name";
     public static final String COLUMNIN_Photo = "Photo";
     public static final String COLUMNIN_NameID = "NameId";
+    public static final String COLUMNIN_Status = "status";
     private boolean booCheckIncome;
     private Context context;
     public INCOME_TABLE(Context context) {
@@ -30,13 +31,19 @@ public class INCOME_TABLE {
     }//Constructor
 
     public Cursor readAllDataIncome() {
-        Cursor cursorReadAll = readDatabase.query(TABLE_INCOME, new String[]{COLUMNIN_ID, COLUMNIN_NAME, COLUMNIN_NameID, COLUMNIN_Photo}, null, null, null, null, null);
+        Cursor cursorReadAll = readDatabase.query(TABLE_INCOME, new String[]{COLUMNIN_ID, COLUMNIN_NAME, COLUMNIN_NameID, COLUMNIN_Photo,COLUMNIN_Status}, COLUMNIN_NAME+" = 'Add'", null, null, null,COLUMNIN_NAME+" ASC");
         if (cursorReadAll != null) {
             cursorReadAll.moveToFirst();
         }
         return cursorReadAll;
-    }
-
+    }//ReadAllDataincome เอาแต่ Add
+    public Cursor readAllDataCateIncome(){
+        Cursor cursorCateIncome = readDatabase.query(TABLE_INCOME,new String[]{COLUMNIN_ID, COLUMNIN_NAME, COLUMNIN_NameID, COLUMNIN_Photo,COLUMNIN_Status},COLUMNIN_NAME+" NOT IN ('Add')",null,null,null,COLUMNIN_NAME+" ASC");
+        if (cursorCateIncome!=null){
+            cursorCateIncome.moveToFirst();
+        }
+        return cursorCateIncome;
+    }//ReadAllDataIncome ไม่เอา Add
     public boolean CheckIncome() {
         Cursor objcursor = readDatabase.query(TABLE_INCOME, new String[]{COLUMNIN_ID, COLUMNIN_NAME}, null, null, null, null, null);
         if (objcursor != null) {
@@ -47,12 +54,12 @@ public class INCOME_TABLE {
         return objcursor.isBeforeFirst();
     }
 
-    public long AddCateIncome(Integer Id, String strName, String strPhoto, String strNameid) {
+    public long AddCateIncome(String strName, String strPhoto, String strNameid,String strStatus) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMNIN_ID, Id);
         contentValues.put(COLUMNIN_NAME, strName);
         contentValues.put(COLUMNIN_Photo, strPhoto);
         contentValues.put(COLUMNIN_NameID, strNameid);
+        contentValues.put(COLUMNIN_Status,strStatus);
         return writeDatabase.insert(TABLE_INCOME, null, contentValues);
     }//AddNewValueIncome
 
@@ -61,18 +68,21 @@ public class INCOME_TABLE {
                 , context.getString(R.string.Gifts), context.getString(R.string.Salary)};
         String[] IncomePic = {"2130837579", "2130837582", "2130837584", "2130837587"};
         String[] IncomeNameID = {"2131099701", "2131099706", "2131099708", "2131099718"};
+        String[] IncomeStatus = {"O","O","O","O","O","O","O","O"};
         for (int i = 0; i < IncomeName.length; i++) {
             ContentValues objContent = new ContentValues();
             objContent.put(COLUMNIN_NAME, IncomeName[i]);
             objContent.put(COLUMNIN_Photo, IncomePic[i]);
             objContent.put(COLUMNIN_NameID, IncomeNameID[i]);
+            objContent.put(COLUMNIN_Status,IncomeStatus[i]);
             writeDatabase.insert(TABLE_INCOME, null, objContent);
         }
         ContentValues objContent2 = new ContentValues();
-        objContent2.put(COLUMNIN_ID, 99);
+        objContent2.put(COLUMNIN_ID, 5);
         objContent2.put(COLUMNIN_NAME, "Add");
         objContent2.put(COLUMNIN_NameID, "2131099698");
         objContent2.put(COLUMNIN_Photo, "2130837577");
+        objContent2.put(COLUMNIN_Status,"O");
         writeDatabase.insert(TABLE_INCOME, null, objContent2);
     }
 

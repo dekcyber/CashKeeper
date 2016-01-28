@@ -18,7 +18,7 @@ public class CK_TABLE {
     public static final String TABLE_CK = "CK_TABLE";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_InputDate = "inputDate";
-    public static final String COLUMN_Name = "name";
+    public static final String COLUMN_Name = "user";
     public static final String COLUMN_Cate = "cate";
     public static final String COLUMN_CateID = "cateId";
     public static final String COLUMN_Note = "note";

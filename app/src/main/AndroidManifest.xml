@@ -28,7 +28,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".AddDescript" />
-        <activity android:name=".Add_category"></activity>
+        <activity android:name=".Add_category_Outcome" />
+        <activity android:name=".Add_category_Income"></activity>
     </application>
 
 </manifest>

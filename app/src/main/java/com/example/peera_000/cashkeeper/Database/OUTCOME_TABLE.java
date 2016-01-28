@@ -20,6 +20,7 @@ public class OUTCOME_TABLE {
     public static final String COLUMNOUTCOME_NAME = "Name";
     public static final String COLUMNOUTCOME_Photo = "Photo";
     public static final String COLUMNOUTCOME_NameID = "NameId";
+    public static final String COLUMNOUTCOME_Status ="status";
     private Context context;
     private Toolbar toolbar;
     public OUTCOME_TABLE(Context context) {
@@ -30,7 +31,7 @@ public class OUTCOME_TABLE {
     }//Constructor
 
     public Cursor readAllDataOutcome() {
-        Cursor cursorReadAll = readDatabase.query(TABLE_OUTCOME, new String[]{COLUMNOUTCOME_ID, COLUMNOUTCOME_NAME, COLUMNOUTCOME_NameID, COLUMNOUTCOME_Photo}, null, null, null, null, COLUMNOUTCOME_ID + " ASC");
+        Cursor cursorReadAll = readDatabase.query(TABLE_OUTCOME, new String[]{COLUMNOUTCOME_ID, COLUMNOUTCOME_NAME, COLUMNOUTCOME_NameID, COLUMNOUTCOME_Photo,COLUMNOUTCOME_Status}, COLUMNOUTCOME_NAME+" = 'Add'", null, null, null, COLUMNOUTCOME_NAME + " ASC");
         if (cursorReadAll != null) {
             cursorReadAll.moveToFirst();
         }
@@ -38,16 +39,18 @@ public class OUTCOME_TABLE {
     }
 
     public Cursor readAllDataOutcomeCate() {
-        Cursor cursorReadAll = readDatabase.query(TABLE_OUTCOME, new String[]{COLUMNOUTCOME_ID, COLUMNOUTCOME_NAME, COLUMNOUTCOME_NameID, COLUMNOUTCOME_Photo}, COLUMNOUTCOME_NAME + " NOT IN ('Add')", null, null, null, null);
+        Cursor cursorReadAll = readDatabase.query(TABLE_OUTCOME, new String[]{COLUMNOUTCOME_ID, COLUMNOUTCOME_NAME, COLUMNOUTCOME_NameID, COLUMNOUTCOME_Photo,COLUMNOUTCOME_Status}, COLUMNOUTCOME_NAME + " NOT IN ('Add')", null, null, null, COLUMNOUTCOME_NAME + " ASC");
         if (cursorReadAll != null) {
             cursorReadAll.moveToFirst();
         }
         return cursorReadAll;
     }
-    public long AddCateOutcome(String strName, String strPhoto) {
+    public long AddCateOutcome(String strName, String strPhoto,String strNameId,String strStatus) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMNOUTCOME_NAME, strName);
         contentValues.put(COLUMNOUTCOME_Photo, strPhoto);
+        contentValues.put(COLUMNOUTCOME_NameID,strNameId);
+        contentValues.put(COLUMNOUTCOME_Status,strStatus);
         return writeDatabase.insert(TABLE_OUTCOME, null, contentValues);
     }//AddNewValueIncome
 
@@ -59,18 +62,21 @@ public class OUTCOME_TABLE {
                 "2130837588", "2130837589", "2130837590"};
         String[] OutcomeNameID = {"2131099699", "2131099702", "2131099704", "2131099707", "2131099712"
                 , "2131099720", "2131099721", "2131099722"};
+        String[] OutcomeStatus = {"O","O","O","O","O","O","O","O"};
         for (int i = 0; i < OutcomeName.length; i++) {
             ContentValues objContent = new ContentValues();
             objContent.put(COLUMNOUTCOME_NAME, OutcomeName[i]);
             objContent.put(COLUMNOUTCOME_Photo, OutcomePic[i]);
             objContent.put(COLUMNOUTCOME_NameID, OutcomeNameID[i]);
+            objContent.put(COLUMNOUTCOME_Status,OutcomeStatus[i]);
             writeDatabase.insert(TABLE_OUTCOME, null, objContent);
         }
         ContentValues objContent2 = new ContentValues();
-        objContent2.put(COLUMNOUTCOME_ID, 99);
+        objContent2.put(COLUMNOUTCOME_ID, 9);
         objContent2.put(COLUMNOUTCOME_NAME, "Add");
         objContent2.put(COLUMNOUTCOME_NameID, "2131099698");
         objContent2.put(COLUMNOUTCOME_Photo, "2130837577");
+        objContent2.put(COLUMNOUTCOME_Status,"O");
         writeDatabase.insert(TABLE_OUTCOME, null, objContent2);
     }
 

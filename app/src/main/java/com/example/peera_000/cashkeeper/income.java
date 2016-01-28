@@ -1,6 +1,7 @@
 package com.example.peera_000.cashkeeper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -16,8 +17,10 @@ import android.widget.ImageView;
 
 import com.example.peera_000.cashkeeper.Adapter.Income_Adapter;
 import com.example.peera_000.cashkeeper.Database.INCOME_TABLE;
+import com.example.peera_000.cashkeeper.Database.OUTCOME_TABLE;
 import com.example.peera_000.cashkeeper.R;
 import com.example.peera_000.cashkeeper.Rowdata.Income_data;
+import com.example.peera_000.cashkeeper.Rowdata.Outcome_data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,23 +38,8 @@ public class Income extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.income, container, false);
 
-        List<Income_data> income_datas = new ArrayList<>();
-        incomeTable = new INCOME_TABLE(getContext());
-        Cursor objCursor = incomeTable.readAllDataIncome();
-        objCursor.moveToPosition(-1);
-        while (objCursor.moveToNext()) {
-            int NameIndex = objCursor.getColumnIndex(INCOME_TABLE.COLUMNIN_NAME);
-            String strName = objCursor.getString(NameIndex);
-            int NameIdIndex = objCursor.getColumnIndex(INCOME_TABLE.COLUMNIN_NameID);
-            String strNameid = objCursor.getString(NameIdIndex);
-            String ValueNameid = getString(Integer.parseInt(strNameid));
-            int PhotoIndex = objCursor.getColumnIndex(INCOME_TABLE.COLUMNIN_Photo);
-            String strPhoto = objCursor.getString(PhotoIndex);
-            int IntPhoto = Integer.parseInt(strPhoto);
-            income_datas.add(new Income_data(IntPhoto, ValueNameid, strPhoto, strNameid));
-            Log.d("ReadData", "INCOME SUCCESS");
-        }
-        Income_Adapter income_adapter = new Income_Adapter(income_datas, getContext());
+
+        Income_Adapter income_adapter = new Income_Adapter(ListIncomeData(), getContext());
         rvIncome = (RecyclerView) v.findViewById(R.id.income_rv);
         rvIncome.setHasFixedSize(true);
         rvIncome.setLayoutManager(new GridLayoutManager(getContext(), 4));
@@ -87,12 +75,67 @@ public class Income extends Fragment {
                 editor.putString("IncomeNameId", Nameid);
                 editor.commit();
 
+                if (Name.equals(getResources().getString(R.string.Add))){
+                    img.setImageResource(0);
+                    Intent intent = new Intent(getActivity(), Add_category_Income.class);
+                    startActivity(intent);
+                }
+
                 //Log.d("IncomeItemClick", "Item:" + intPhoto);
 
             }
         });
         return v;
     }//OnCreate
+    public List<Income_data> ListIncomeData(){
+        List<Income_data> income_datas = new ArrayList<>();
+        incomeTable = new INCOME_TABLE(getContext());
+        Cursor objCursor = incomeTable.readAllDataCateIncome();
+        objCursor.moveToPosition(-1);
+        while (objCursor.moveToNext()) {
+            int StatusIndex =  objCursor.getColumnIndex(INCOME_TABLE.COLUMNIN_Status);
+            String strStatus = objCursor.getString(StatusIndex);
 
+            if (strStatus.equals("N")){
+                int NameIdIndex = objCursor.getColumnIndex(INCOME_TABLE.COLUMNIN_NameID);
+                String strNameId = objCursor.getString(NameIdIndex);
+                int NameIndex = objCursor.getColumnIndex(INCOME_TABLE.COLUMNIN_NAME);
+                String strName = objCursor.getString(NameIndex);
+                int PhotoIndex = objCursor.getColumnIndex(INCOME_TABLE.COLUMNIN_Photo);
+                String strPhoto = objCursor.getString(PhotoIndex);
+                int IntPhoto = Integer.parseInt(strPhoto);
+                income_datas.add(new Income_data(IntPhoto, strName, strPhoto, strNameId));
+                Log.d("NameID", "=" + strNameId);
+                Log.d("PhotoID", "=" + strPhoto);
+                Log.d("ReadDataNew", "INCOME SUCCESS");
+            }else {
+                int NameIndex = objCursor.getColumnIndex(INCOME_TABLE.COLUMNIN_NAME);
+                String strName = objCursor.getString(NameIndex);
+                int NameIdIndex = objCursor.getColumnIndex(INCOME_TABLE.COLUMNIN_NameID);
+                String strNameId = objCursor.getString(NameIdIndex);
+                String ValueNameId = getString(Integer.parseInt(strNameId));
+                int PhotoIndex = objCursor.getColumnIndex(INCOME_TABLE.COLUMNIN_Photo);
+                String strPhoto = objCursor.getString(PhotoIndex);
+                int IntPhoto = Integer.parseInt(strPhoto);
+                income_datas.add(new Income_data(IntPhoto, ValueNameId, strPhoto, strNameId));
+                Log.d("NameID", "=" + strNameId);
+                Log.d("PhotoID", "=" + strPhoto);
+                Log.d("ReadData", "INCOME SUCCESS");
+            }
+
+        }
+        Cursor Cursor2 = incomeTable.readAllDataIncome();
+        int NameIndex = Cursor2.getColumnIndex(INCOME_TABLE.COLUMNIN_NAME);
+        String strName = Cursor2.getString(NameIndex);
+        int NameIdIndex = Cursor2.getColumnIndex(INCOME_TABLE.COLUMNIN_NameID);
+        String strNameId = Cursor2.getString(NameIdIndex);
+        String ValueNameId = getString(Integer.parseInt(strNameId));
+        int PhotoIndex = Cursor2.getColumnIndex(INCOME_TABLE.COLUMNIN_Photo);
+        String strPhoto = Cursor2.getString(PhotoIndex);
+        int IntPhoto = Integer.parseInt(strPhoto);
+        income_datas.add(new Income_data(IntPhoto, ValueNameId, strPhoto, strNameId));
+
+        return income_datas;
+    }
 
 }//MainClass
