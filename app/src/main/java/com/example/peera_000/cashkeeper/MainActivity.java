@@ -10,15 +10,19 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.peera_000.cashkeeper.Adapter.CustomTypefaceSpan;
 import com.example.peera_000.cashkeeper.Adapter.ViewPagerAdapter;
 import com.example.peera_000.cashkeeper.Convert_ID.ID_Picture;
 import com.example.peera_000.cashkeeper.Convert_ID.ID_String;
@@ -122,18 +126,54 @@ public class MainActivity extends AppCompatActivity {
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
         //ActionBarToggle
+        nviewLmain = (NavigationView) findViewById(R.id.NavigationMain_view);
         navigationL = (DrawerLayout) findViewById(R.id.drawerMain);
+        Menu Nmenu = nviewLmain.getMenu();
+        for (int i = 0; i < Nmenu.size(); i++) {
+            MenuItem mi = Nmenu.getItem(i);
+
+            //for aapplying a font to subMenu ...
+            SubMenu subMenu = mi.getSubMenu();
+            if (subMenu != null && subMenu.size() > 0) {
+                for (int j = 0; j < subMenu.size(); j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+
+            //the method we have create in activity
+            applyFontToMenuItem(mi);
+        }
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, navigationL, toolbar, R.string.openDrawer, R.string.closeDrawer) {
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+                nviewLmain.getMenu().clear();
+                nviewLmain.inflateMenu(R.menu.navigation_menu);
+                Menu Nmenu = nviewLmain.getMenu();
+                for (int i = 0; i < Nmenu.size(); i++) {
+                    MenuItem mi = Nmenu.getItem(i);
+
+                    //for aapplying a font to subMenu ...
+                    SubMenu subMenu = mi.getSubMenu();
+                    if (subMenu != null && subMenu.size() > 0) {
+                        for (int j = 0; j < subMenu.size(); j++) {
+                            MenuItem subMenuItem = subMenu.getItem(j);
+                            applyFontToMenuItem(subMenuItem);
+                        }
+                    }
+
+                    //the method we have create in activity
+                    applyFontToMenuItem(mi);
+                }
                 super.onDrawerClosed(drawerView);
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
+
                 switchPass = (SwitchCompat) findViewById(R.id.switchPass);
                 switchPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -167,29 +207,30 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
 
         //NavigationL
-        nviewLmain = (NavigationView) findViewById(R.id.NavigationMain_view);
+
+
+
         nviewLmain.setItemIconTintList(null);
         nviewLmain.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
                                                          @Override
 
                                                          public boolean onNavigationItemSelected(MenuItem item) {
-                                                             if (item.isChecked())
-                                                                 item.setChecked(false);
-                                                             else item.setChecked(true);
-
                                                              //navigationL.closeDrawers();
 
                                                              switch (item.getItemId()) {
                                                                  case R.id.Budget:
-                                                                     Toast.makeText(MainActivity.this, "Click Budget", Toast.LENGTH_SHORT).show();
+                                                                     //Toast.makeText(MainActivity.this, "Click Budget", Toast.LENGTH_SHORT).show();
+                                                                     nviewLmain.getMenu().clear();
+                                                                     nviewLmain.inflateMenu(R.menu.toolbar_admoney);
                                                                      return true;
                                                                  case R.id.Password:
 
+                                                                     Toast.makeText(MainActivity.this, "Click Budget", Toast.LENGTH_SHORT).show();
                                                                      return true;
                                                                  //case R.id.Language:
-                                                                     //Intent Int = new Intent(getApplicationContext(),LanguageChange.class);
-                                                                     //startActivity(Int);
+                                                                 //Intent Int = new Intent(getApplicationContext(),LanguageChange.class);
+                                                                 //startActivity(Int);
 
                                                              }
 
@@ -246,6 +287,13 @@ public class MainActivity extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
     }//OnCreate
+
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = Typeface.createFromAsset(getAssets(), "font/paaymaay_regular.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -14,8 +14,9 @@
             android:checked="false"
             android:icon="@drawable/arrowdown"
             android:title="@string/Outcome" />
-    </group>
-    <item android:title="@string/Setting">
+
+    <item android:title="@string/Setting"
+        android:id="@+id/SettingNav">
         <menu>
             <group
                 android:id="@+id/MenuBelow"
@@ -49,8 +50,9 @@
                     android:icon="@drawable/currency"
                     android:title="@string/Currency" />
 
-
             </group>
+
         </menu>
     </item>
+</group>
 </menu>
