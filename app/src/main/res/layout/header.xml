@@ -24,6 +24,14 @@
         android:textStyle="bold"
         android:layout_below="@+id/ProfileMain"
         android:layout_alignLeft="@+id/ProfileMain"
-        android:layout_alignStart="@+id/ProfileMain" />
+        android:layout_alignStart="@+id/ProfileMain"
+        android:id="@+id/Nameuser"/>
+   <ImageButton
+       android:layout_width="24dp"
+       android:layout_height="24dp"
+       android:background="@drawable/arrow_dropdown"
+       android:layout_alignTop="@+id/Nameuser"
+       android:layout_alignParentEnd="true"
+       android:id="@+id/ImgDropdown"/>
 
 </RelativeLayout>

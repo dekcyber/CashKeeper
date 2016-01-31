@@ -10,15 +10,19 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private INCOME_TABLE income_table;
     private OUTCOME_TABLE outcome_table;
     private SwitchCompat switchPass;
+    private ImageButton ImgBtt;
     private OnCheckedChangeListener OnCheckChangeL = new OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
@@ -127,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         tabs.setViewPager(pager);
         //ActionBarToggle
         nviewLmain = (NavigationView) findViewById(R.id.NavigationMain_view);
+
         navigationL = (DrawerLayout) findViewById(R.id.drawerMain);
         Menu Nmenu = nviewLmain.getMenu();
         for (int i = 0; i < Nmenu.size(); i++) {
@@ -173,7 +179,68 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
+                //View headNav = nviewLmain.getHeaderView(0);
 
+                /*View HeadNav = nviewLmain.inflateHeaderView(R.layout.header);
+                HeadNav.findViewById(R.id.ImgDropdown).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(),"Click",Toast.LENGTH_SHORT).show();
+                    }
+                });*/
+                ImgBtt = (ImageButton) findViewById(R.id.ImgDropdown);
+                ImgBtt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                       if (v.isSelected()){
+                           v.setSelected(false);
+                           nviewLmain.getMenu().clear();
+                           nviewLmain.inflateMenu(R.menu.navigation_menu);
+                           Menu Nmenu = nviewLmain.getMenu();
+                           for (int i = 0; i < Nmenu.size(); i++) {
+                               MenuItem mi = Nmenu.getItem(i);
+
+                               //for aapplying a font to subMenu ...
+                               SubMenu subMenu = mi.getSubMenu();
+                               if (subMenu != null && subMenu.size() > 0) {
+                                   for (int j = 0; j < subMenu.size(); j++) {
+                                       MenuItem subMenuItem = subMenu.getItem(j);
+                                       applyFontToMenuItem(subMenuItem);
+                                   }
+                               }
+
+                               //the method we have create in activity
+                               applyFontToMenuItem(mi);
+                           }
+
+                       }else {
+                           v.setSelected(true);
+
+                           nviewLmain.getMenu().clear();
+                           Menu Nmenu = nviewLmain.getMenu();
+                           if (Nmenu.size()==0){
+                               Nmenu.add("Test");
+                           }
+                           for (int i = 0; i < Nmenu.size(); i++) {
+                               MenuItem mi = Nmenu.getItem(i);
+
+                               //for aapplying a font to subMenu ...
+                               SubMenu subMenu = mi.getSubMenu();
+                               if (subMenu != null && subMenu.size() > 0) {
+                                   for (int j = 0; j < subMenu.size(); j++) {
+                                       MenuItem subMenuItem = subMenu.getItem(j);
+                                       applyFontToMenuItem(subMenuItem);
+                                   }
+                               }
+
+                               //the method we have create in activity
+                               applyFontToMenuItem(mi);
+                           }
+                       }
+
+                    }
+                });
                 switchPass = (SwitchCompat) findViewById(R.id.switchPass);
                 switchPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override

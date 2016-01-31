@@ -58,8 +58,8 @@ public class OUTCOME_TABLE {
         String[] OutcomeName = {context.getString(R.string.Bill), context.getString(R.string.Car), context.getString(R.string.Entertain)
                 , context.getString(R.string.Food), context.getString(R.string.Love), context.getString(R.string.Shopping),
                 context.getString(R.string.Transport), context.getString(R.string.Travel)};
-        String[] OutcomePic = {"2130837578", "2130837580", "2130837581", "2130837583", "2130837586",
-                "2130837588", "2130837589", "2130837590"};
+        String[] OutcomePic = {"2130837580", "2130837582", "2130837583", "2130837585", "2130837588",
+                "2130837590", "2130837591", "2130837592"};
         String[] OutcomeNameID = {"2131099699", "2131099702", "2131099704", "2131099707", "2131099712"
                 , "2131099720", "2131099721", "2131099722"};
         String[] OutcomeStatus = {"O","O","O","O","O","O","O","O"};
@@ -75,7 +75,7 @@ public class OUTCOME_TABLE {
         objContent2.put(COLUMNOUTCOME_ID, 9);
         objContent2.put(COLUMNOUTCOME_NAME, "Add");
         objContent2.put(COLUMNOUTCOME_NameID, "2131099698");
-        objContent2.put(COLUMNOUTCOME_Photo, "2130837577");
+        objContent2.put(COLUMNOUTCOME_Photo, "2130837579");
         objContent2.put(COLUMNOUTCOME_Status,"O");
         writeDatabase.insert(TABLE_OUTCOME, null, objContent2);
     }
