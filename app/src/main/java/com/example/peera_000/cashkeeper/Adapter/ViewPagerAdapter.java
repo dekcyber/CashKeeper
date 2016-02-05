@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.peera_000.cashkeeper.Overview;
-import com.example.peera_000.cashkeeper.Graph;
+import com.example.peera_000.cashkeeper.MainCode.Overview;
+import com.example.peera_000.cashkeeper.Graph.Graph;
 
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {

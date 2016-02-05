@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdMoney">
+    tools:context=".MainCode.AdMoney">
 
     <include
         android:id="@+id/Toolbar_Admoney"

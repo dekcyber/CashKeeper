@@ -75,5 +75,25 @@ public class CK_TABLE {
         return desc;
     }
 
+    public int SumMoneyOfDay(String strDate){
+        String Date = strDate;
+        int Value=0;
+        Cursor objCursorIncome = readDB.rawQuery("SELECT SUM(income),SUM(outcome) FROM CK_TABLE WHERE inputdate='" + Date + "';", null);
+        if (objCursorIncome!=null){
+            objCursorIncome.moveToFirst();
+            Value = objCursorIncome.getInt(0)-objCursorIncome.getInt(1);
+        }
+        return Value;
+    }
+    public int SumOutcomeAll(){
+        int ValueOutcome=0;
+        Cursor objCursorOut = readDB.rawQuery("SELECT SUM(outcome) FROM CK_TABLE;",null);
+        if (objCursorOut!=null){
+            objCursorOut.moveToFirst();
+            ValueOutcome = objCursorOut.getInt(0);
+        }
+       return ValueOutcome;
+    }
+
 
 }//Main Class

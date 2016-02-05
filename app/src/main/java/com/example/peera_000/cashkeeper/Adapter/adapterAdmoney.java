@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.peera_000.cashkeeper.Outcome;
-import com.example.peera_000.cashkeeper.Income;
+import com.example.peera_000.cashkeeper.MainCode.Outcome;
+import com.example.peera_000.cashkeeper.MainCode.Income;
 
 /**
  * Created by peera_000 on 10/1/2559.

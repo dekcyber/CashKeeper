@@ -39,6 +39,9 @@ import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,10 +64,16 @@ public class MainActivity extends AppCompatActivity {
     public String tab2;
     private int Numboftabs;
     private int Count = 0;
+    private int CountItem = 1;
     private INCOME_TABLE income_table;
     private OUTCOME_TABLE outcome_table;
     private SwitchCompat switchPass;
     private ImageButton ImgBtt;
+    int Valoutcome = 0;
+    private TextView NavTxtOutcome;
+    private TextView NavTxtIncome;
+    private TextView NavTxtTotal;
+    private Typeface customFont;
     private OnCheckedChangeListener OnCheckChangeL = new OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
@@ -72,12 +81,16 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    public MainActivity() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         income_table = new INCOME_TABLE(this);
         outcome_table = new OUTCOME_TABLE(this);
+        objCK_TABLE = new CK_TABLE(this);
         sp = getSharedPreferences("CheckCount", MODE_PRIVATE);
         editor = sp.edit();
         tab1 = getString(R.string.Overview);
@@ -99,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
         OverV = (TextView) findViewById(R.id.TextHead);
-        Typeface customFont = Typeface.createFromAsset(getAssets(), "font/paaymaay_regular.ttf");
+        customFont = Typeface.createFromAsset(getAssets(), "font/paaymaay_regular.ttf");
         OverV.setTextColor(getResources().getColor(R.color.White));
         OverV.setTypeface(customFont);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
@@ -134,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         nviewLmain = (NavigationView) findViewById(R.id.NavigationMain_view);
 
         navigationL = (DrawerLayout) findViewById(R.id.drawerMain);
-        Menu Nmenu = nviewLmain.getMenu();
+        final Menu Nmenu = nviewLmain.getMenu();
         for (int i = 0; i < Nmenu.size(); i++) {
             MenuItem mi = Nmenu.getItem(i);
 
@@ -158,21 +171,9 @@ public class MainActivity extends AppCompatActivity {
                 nviewLmain.getMenu().clear();
                 nviewLmain.inflateMenu(R.menu.navigation_menu);
                 Menu Nmenu = nviewLmain.getMenu();
-                for (int i = 0; i < Nmenu.size(); i++) {
-                    MenuItem mi = Nmenu.getItem(i);
+                Fontmenu(Nmenu);
+                CallMoneyNav();
 
-                    //for aapplying a font to subMenu ...
-                    SubMenu subMenu = mi.getSubMenu();
-                    if (subMenu != null && subMenu.size() > 0) {
-                        for (int j = 0; j < subMenu.size(); j++) {
-                            MenuItem subMenuItem = subMenu.getItem(j);
-                            applyFontToMenuItem(subMenuItem);
-                        }
-                    }
-
-                    //the method we have create in activity
-                    applyFontToMenuItem(mi);
-                }
                 super.onDrawerClosed(drawerView);
             }
 
@@ -188,82 +189,63 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"Click",Toast.LENGTH_SHORT).show();
                     }
                 });*/
+                CallMoneyNav();
                 ImgBtt = (ImageButton) findViewById(R.id.ImgDropdown);
                 ImgBtt.setOnClickListener(new View.OnClickListener() {
+                    ArrayList<String> budget = new ArrayList<String>();
+
                     @Override
                     public void onClick(View v) {
 
-                       if (v.isSelected()){
-                           v.setSelected(false);
-                           nviewLmain.getMenu().clear();
-                           nviewLmain.inflateMenu(R.menu.navigation_menu);
-                           Menu Nmenu = nviewLmain.getMenu();
-                           for (int i = 0; i < Nmenu.size(); i++) {
-                               MenuItem mi = Nmenu.getItem(i);
+                        if (v.isSelected()) {
+                            v.setSelected(false);
+                            nviewLmain.getMenu().clear();
+                            nviewLmain.inflateMenu(R.menu.navigation_menu);
+                            Menu Nmenu = nviewLmain.getMenu();
+                            Fontmenu(Nmenu);
 
-                               //for aapplying a font to subMenu ...
-                               SubMenu subMenu = mi.getSubMenu();
-                               if (subMenu != null && subMenu.size() > 0) {
-                                   for (int j = 0; j < subMenu.size(); j++) {
-                                       MenuItem subMenuItem = subMenu.getItem(j);
-                                       applyFontToMenuItem(subMenuItem);
-                                   }
-                               }
+                        } else {
+                            v.setSelected(true);
+                            nviewLmain.getMenu().clear();
+                            nviewLmain.inflateMenu(R.menu.budget_menu);
+                            final Menu Nmenu = nviewLmain.getMenu();
+                            //budget.clear();
+                            if (budget.size() != 0) {
+                                for (int j = 0; j < budget.size(); j++) {
+                                    Nmenu.add(budget.get(j));
+                                }
 
-                               //the method we have create in activity
-                               applyFontToMenuItem(mi);
-                           }
+                                for (int i = 0; i < Nmenu.size(); i++) {
+                                    Nmenu.getItem(i).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                                        @Override
+                                        public boolean onMenuItemClick(MenuItem item) {
+                                            Toast.makeText(getApplicationContext(), "TestClick", Toast.LENGTH_SHORT).show();
+                                            return false;
+                                        }
+                                    });
+                                }
+                            }
 
-                       }else {
-                           v.setSelected(true);
+                            MenuItem budgetM = Nmenu.getItem(0);
+                            budgetM.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
 
-                           nviewLmain.getMenu().clear();
-                           Menu Nmenu = nviewLmain.getMenu();
-                           if (Nmenu.size()==0){
-                               Nmenu.add("Test");
-                           }
-                           for (int i = 0; i < Nmenu.size(); i++) {
-                               MenuItem mi = Nmenu.getItem(i);
+                                    Nmenu.add(R.id.budgetgroup, CountItem, Menu.NONE, "Item" + CountItem);
+                                    budget.add("Item" + CountItem);
+                                    CountItem++;
 
-                               //for aapplying a font to subMenu ...
-                               SubMenu subMenu = mi.getSubMenu();
-                               if (subMenu != null && subMenu.size() > 0) {
-                                   for (int j = 0; j < subMenu.size(); j++) {
-                                       MenuItem subMenuItem = subMenu.getItem(j);
-                                       applyFontToMenuItem(subMenuItem);
-                                   }
-                               }
+                                    Fontmenu(Nmenu);
+                                    return false;
+                                }
 
-                               //the method we have create in activity
-                               applyFontToMenuItem(mi);
-                           }
-                       }
+                            });
+                            Fontmenu(Nmenu);
+                        }
 
                     }
                 });
                 switchPass = (SwitchCompat) findViewById(R.id.switchPass);
-                switchPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        String Language;
-                        if (isChecked) {
-
-                               /*Language = "th";
-                            Locale locale = new Locale(Language);
-                            Locale.setDefault(locale);
-                            Configuration config = new Configuration();
-                            config.locale = locale;
-                            getBaseContext().getResources().updateConfiguration(config,
-                                    getBaseContext().getResources().getDisplayMetrics());
-                            this.setContentView(R.layout.activity_main,R.menu.navigation_menu);*/
-
-
-                        } else {
-
-                        }
-                    }
-                });
-
 
                 super.onDrawerOpened(drawerView);
             }
@@ -287,14 +269,14 @@ public class MainActivity extends AppCompatActivity {
 
                                                              switch (item.getItemId()) {
                                                                  case R.id.Budget:
-                                                                     //Toast.makeText(MainActivity.this, "Click Budget", Toast.LENGTH_SHORT).show();
-                                                                     nviewLmain.getMenu().clear();
-                                                                     nviewLmain.inflateMenu(R.menu.toolbar_admoney);
+                                                                     Toast.makeText(MainActivity.this, "Click Budget", Toast.LENGTH_SHORT).show();
                                                                      return true;
                                                                  case R.id.Password:
 
                                                                      Toast.makeText(MainActivity.this, "Click Budget", Toast.LENGTH_SHORT).show();
                                                                      return true;
+
+
                                                                  //case R.id.Language:
                                                                  //Intent Int = new Intent(getApplicationContext(),LanguageChange.class);
                                                                  //startActivity(Int);
@@ -310,42 +292,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         );
-
-
         //EndOfNavigationL
-
-        navigationR = new DrawerBuilder()
-                .withActivity(this)
-                        //.withToolbar(toolbar)
-                .withActionBarDrawerToggleAnimated(true)
-                .withDrawerGravity(Gravity.END)
-                .withSavedInstance(savedInstanceState)
-                .withSelectedItem(-1)
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        Toast.makeText(MainActivity.this, "onItemClick:" + position, Toast.LENGTH_LONG).show();
-                        return false;
-                    }
-                })
-                .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(View view, int position, IDrawerItem drawerItem) {
-                        Toast.makeText(MainActivity.this, "onItemLongClick:" + position, Toast.LENGTH_LONG).show();
-                        return false;
-                    }
-                })
-                .addDrawerItems(new SwitchDrawerItem().withName("Limit").withIcon(R.drawable.picconfig).withChecked(false).withOnCheckedChangeListener(new OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
-                                if (isChecked == true) {
-                                }
-
-                            }
-                        })
-
-                )
-                .build();
         id_picture = new ID_Picture(this);
         id_string = new ID_String(this);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -354,6 +301,42 @@ public class MainActivity extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
     }//OnCreate
+    public void CallMoneyNav(){
+        NavTxtOutcome = (TextView) findViewById(R.id.NavTxt_outcome);
+        NavTxtIncome = (TextView) findViewById(R.id.NavTxt_income);
+        NavTxtTotal = (TextView) findViewById(R.id.NavTxt_Total);
+        NavTxtOutcome.setTextColor(getResources().getColor(R.color.Crimson));
+        NavTxtIncome.setTextColor(getResources().getColor(R.color.DodgerBlue));
+        NavTxtTotal.setTextColor(getResources().getColor(R.color.MediumSeaGreen));
+        NavTxtOutcome.setTypeface(customFont);
+        NavTxtIncome.setTypeface(customFont);
+        NavTxtTotal.setTypeface(customFont);
+        Valoutcome = objCK_TABLE.SumOutcomeAll();
+        NavTxtOutcome.setText(String.valueOf(Valoutcome));
+        NavTxtIncome.setText("5555");
+        NavTxtTotal.setText("4305");
+    }
+
+    public Menu Fontmenu(Menu menu){
+        Menu Nmenu;
+        Nmenu = menu;
+        for (int i = 0; i < Nmenu.size(); i++) {
+            MenuItem mi = Nmenu.getItem(i);
+
+            //for aapplying a font to subMenu ...
+            SubMenu subMenu = mi.getSubMenu();
+            if (subMenu != null && subMenu.size() > 0) {
+                for (int j = 0; j < subMenu.size(); j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+
+            //the method we have create in activity
+            applyFontToMenuItem(mi);
+        }
+        return menu;
+    }//Set font NavMenu
 
     private void applyFontToMenuItem(MenuItem mi) {
         Typeface font = Typeface.createFromAsset(getAssets(), "font/paaymaay_regular.ttf");

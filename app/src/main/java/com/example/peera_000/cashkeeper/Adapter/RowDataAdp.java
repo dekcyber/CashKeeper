@@ -68,6 +68,7 @@ public class RowDataAdp extends RecyclerView.Adapter<RowDataAdp.RowDataHolder> {
         holder.TxCate.setText(rwRowData.getCate());
         holder.TxNote.setText(rwRowData.getNote());
         holder.TxtOutMoney.setText(rwRowData.getMoneyOut());
+        holder.TxtSummoney.setText(rwRowData.getSummoney());
 
 
         Log.d("RecyblerViewOverview", "BlindingOverview" + position);
@@ -86,6 +87,7 @@ public class RowDataAdp extends RecyclerView.Adapter<RowDataAdp.RowDataHolder> {
         private TextView TxCate;
         private TextView TxNote;
         private TextView TxtOutMoney;
+        private TextView TxtSummoney;
 
         public RowDataHolder(View itemView) {
             super(itemView);
@@ -97,15 +99,18 @@ public class RowDataAdp extends RecyclerView.Adapter<RowDataAdp.RowDataHolder> {
             TxDate = (TextView) itemView.findViewById(R.id.TxtDate);
             TxCate = (TextView) itemView.findViewById(R.id.TxtCate);
             TxNote = (TextView) itemView.findViewById(R.id.TxtNote);
+            TxtSummoney = (TextView) itemView.findViewById(R.id.TxtSumMoney);
             TxtOutMoney = (TextView) itemView.findViewById(R.id.TxtMoneyOut);
             TxtOutMoney.setTextColor(context.getResources().getColor(R.color.Crimson));
             TxMoney.setTextColor(context.getResources().getColor(R.color.MediumSeaGreen));
+            TxtSummoney.setTextColor(context.getResources().getColor(R.color.DodgerBlue));
             //SetFont
             TxMoney.setTypeface(customFont);
             TxCate.setTypeface(customFont);
             TxDate.setTypeface(customFont);
             TxNote.setTypeface(customFont);
             TxtOutMoney.setTypeface(customFont);
+            TxtSummoney.setTypeface(customFont);
             TxCate.setOnClickListener(this);
 
         }

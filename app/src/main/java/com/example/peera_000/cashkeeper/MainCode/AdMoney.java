@@ -1,4 +1,4 @@
-package com.example.peera_000.cashkeeper;
+package com.example.peera_000.cashkeeper.MainCode;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.peera_000.cashkeeper.Adapter.AdapterAdmoney;
+import com.example.peera_000.cashkeeper.R;
 
 public class AdMoney extends AppCompatActivity {
     //Explicit

@@ -1,4 +1,4 @@
-package com.example.peera_000.cashkeeper;
+package com.example.peera_000.cashkeeper.Graph;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.peera_000.cashkeeper.MainCode.Overview;
+import com.example.peera_000.cashkeeper.R;
 
 public class Graph extends Fragment {
     TextView Graph;

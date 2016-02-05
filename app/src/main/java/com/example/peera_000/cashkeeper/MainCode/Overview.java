@@ -1,4 +1,4 @@
-package com.example.peera_000.cashkeeper;
+package com.example.peera_000.cashkeeper.MainCode;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -8,12 +8,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.peera_000.cashkeeper.Adapter.RowDataAdp;
 import com.example.peera_000.cashkeeper.Database.CK_TABLE;
+import com.example.peera_000.cashkeeper.R;
 import com.example.peera_000.cashkeeper.Rowdata.RowData;
 
 import java.util.ArrayList;
@@ -64,7 +66,11 @@ public class Overview extends Fragment {
         Log.d("Date", "="+d);*/
         String Check = "";
         String Check1 = "";
-
+        String strSumIncome = null;
+        String Checkd="";
+        Double sumIncome = 0.0;
+        CurData.moveToPosition(-1);
+        String strSum = null;
         while (CurData.moveToNext()) {
             int MoneyIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_Income);
             String strMoney = CurData.getString(MoneyIndex);
@@ -89,11 +95,18 @@ public class Overview extends Fragment {
             if (Check.equals(strDate)) {
                 Check = strDate;
                 Check1 = " ";
-                lRowdata.add(new RowData(Photo, strMoney, Check1, ValueCate, strNote, strOutmoney));
+                strSum = null;
+                //Log.d("TestValue","SUM"+" "+"DATE"+strDate+"="+sumIncome);
+                lRowdata.add(new RowData(Photo, strMoney, Check1, ValueCate, strNote, strOutmoney,strSum));
+                //Log.d("SumIncome", "วันที่เท่ากัน" + strSumIncome);
             } else {
+
                 Check = strDate;
                 Check1 = strDate;
-                lRowdata.add(new RowData(Photo, strMoney, Check1, ValueCate, strNote, strOutmoney));
+                int Value = objCK_TABLE.SumMoneyOfDay(strDate);
+                strSum = strSumIncome;
+                lRowdata.add(new RowData(Photo, strMoney, Check1, ValueCate, strNote, strOutmoney,String.valueOf(Value)));
+                //Log.d("SumIncome", "วันที่ไม่เท่ากัน" + strSumIncome);
             }
 
 

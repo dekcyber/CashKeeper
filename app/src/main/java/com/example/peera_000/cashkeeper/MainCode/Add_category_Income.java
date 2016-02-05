@@ -1,4 +1,4 @@
-package com.example.peera_000.cashkeeper;
+package com.example.peera_000.cashkeeper.MainCode;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.peera_000.cashkeeper.Adapter.Income_Adapter;
 import com.example.peera_000.cashkeeper.Database.INCOME_TABLE;
+import com.example.peera_000.cashkeeper.R;
 import com.example.peera_000.cashkeeper.Rowdata.Income_data;
 
 import java.util.ArrayList;

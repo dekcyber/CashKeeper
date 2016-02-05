@@ -18,7 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AdMoney" />
+        <activity android:name=".MainCode.AdMoney" />
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -27,9 +27,9 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".AddDescript" />
-        <activity android:name=".Add_category_Outcome" />
-        <activity android:name=".Add_category_Income"></activity>
+        <activity android:name=".MainCode.AddDescript" />
+        <activity android:name=".MainCode.Add_category_Outcome" />
+        <activity android:name=".MainCode.Add_category_Income"></activity>
     </application>
 
 </manifest>

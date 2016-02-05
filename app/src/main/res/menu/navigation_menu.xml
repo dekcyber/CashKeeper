@@ -8,12 +8,20 @@
             android:id="@+id/Budget"
             android:checked="false"
             android:icon="@drawable/arrowup"
-            android:title="@string/Budget" />
+            android:title="@string/Budget"
+            app:actionLayout="@layout/item_txtincome"/>
         <item
             android:id="@+id/Outcome"
             android:checked="false"
             android:icon="@drawable/arrowdown"
+            app:actionLayout="@layout/item_txtoutcome"
             android:title="@string/Outcome" />
+        <item
+            android:id="@+id/Total"
+            android:checked="false"
+            android:title="Total"
+            app:actionLayout="@layout/item_txttotal"
+            />
 
     <item android:title="@string/Setting"
         android:id="@+id/SettingNav">

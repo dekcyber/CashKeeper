@@ -12,16 +12,25 @@ public class RowData {
     private String Cate;
     private String Note;
     private String MoneyOut;
+    private String Summoney;
 
-    public RowData(int photo, String money, String date, String cate, String note, String moneyOut) {
+    public RowData(int photo, String money, String date, String cate, String note, String moneyOut,String sumMoney) {
         Photo = photo;
         Money = money;
         Date = date;
         Cate = cate;
         Note = note;
-
+        Summoney = sumMoney;
         MoneyOut = moneyOut;
     }//Constructor
+
+    public String getSummoney() {
+        return Summoney;
+    }
+
+    public void setSummoney(String summoney) {
+        Summoney = summoney;
+    }
 
     public String getNote() {
         return Note;

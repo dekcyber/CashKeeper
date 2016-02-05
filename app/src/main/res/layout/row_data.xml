@@ -106,6 +106,15 @@
         android:textSize="20dp"
         android:padding="10dp"
         android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/TxtSumMoney"
+                android:text="SUM"
+                android:textSize="20dp"
+                android:padding="10dp"
+                android:layout_toStartOf="@+id/TxtMoney"
+                />
 
     <View
         android:layout_width="wrap_content"

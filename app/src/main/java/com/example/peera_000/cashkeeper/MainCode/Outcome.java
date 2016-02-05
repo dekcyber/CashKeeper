@@ -1,4 +1,4 @@
-package com.example.peera_000.cashkeeper;
+package com.example.peera_000.cashkeeper.MainCode;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,8 @@ import android.widget.ImageView;
 
 import com.example.peera_000.cashkeeper.Adapter.Outcome_Adapter;
 import com.example.peera_000.cashkeeper.Database.OUTCOME_TABLE;
+import com.example.peera_000.cashkeeper.MainCode.Add_category_Outcome;
+import com.example.peera_000.cashkeeper.R;
 import com.example.peera_000.cashkeeper.Rowdata.Outcome_data;
 
 import java.util.ArrayList;
