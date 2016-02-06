@@ -5,43 +5,38 @@
     android:layout_height="match_parent">
 
     <com.daimajia.swipe.SwipeLayout
+        android:id="@+id/swipOver"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         swipe:leftEdgeSwipeOffset="0dp"
         swipe:rightEdgeSwipeOffset="0dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:tag="Bottom3"
-            android:weightSum="10">
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:tag="Bottom1"
+            android:weightSum="2">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4.5"
-                android:text="Edit?"
-                android:paddingLeft="65dp"
-                android:textColor="@color/White"
-                android:textSize="17sp" />
+            <ImageView
+                android:id="@+id/ImgSwipEdit"
+                android:layout_width="50dp"
+                android:layout_height="93dp"
+                android:padding="15dp"
+                android:background="@color/colorPrimary"
+                android:src="@drawable/ic_mode_edit_white_24dp"
+                android:layout_weight="1"
+                />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="|"
-                android:textColor="@color/White"
-                android:textSize="17sp" />
+            <ImageView
+                android:id="@+id/ImgSwipDelete"
+                android:layout_width="50dp"
+                android:layout_height="93dp"
+                android:padding="15dp"
+                android:background="@color/Crimson"
+                android:src="@drawable/ic_delete_white_24dp"
+                android:layout_weight="1"
+                />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4.5"
-                android:paddingLeft="65dp"
-                android:textSize="17sp"
-                android:text="Delete?"
-                android:textColor="@color/White" />
 
         </LinearLayout>
 
@@ -55,74 +50,74 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_below="@+id/TxtDate"
-                android:src="@drawable/ic_add_black_24dp"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_add_black_24dp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Money"
-                android:textSize="25dp"
                 android:id="@+id/TxtMoney"
-                android:layout_below="@+id/TxtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:paddingEnd="10dp" />
-
-            <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+                android:layout_below="@+id/TxtDate"
+                android:paddingEnd="10dp"
                 android:text="Money"
-                android:textSize="25dp"
+                android:textSize="25dp" />
+
+            <TextView
                 android:id="@+id/TxtMoneyOut"
-                android:layout_below="@+id/TxtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:paddingEnd="10dp" />
+                android:layout_below="@+id/TxtDate"
+                android:paddingEnd="10dp"
+                android:text="Money"
+                android:textSize="25dp" />
 
             <TextView
+                android:id="@+id/TxtCate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-        android:text="Cate"
-        android:textSize="25dp"
-        android:id="@+id/TxtCate"
-        android:layout_below="@+id/TxtDate"
-        android:layout_toRightOf="@+id/Img"
-                android:paddingLeft="40dp" />
+                android:layout_below="@+id/TxtDate"
+                android:layout_toRightOf="@+id/Img"
+                android:paddingLeft="40dp"
+                android:text="Cate"
+                android:textSize="25dp" />
 
             <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="note"
-        android:id="@+id/TxtNote"
-        android:layout_below="@+id/TxtCate"
-        android:textSize="20dp"
-        android:layout_toRightOf="@+id/Img"
-                android:paddingLeft="40dp" />
-
-    <TextView
-        android:id="@+id/TxtDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DATE"
-        android:textSize="20dp"
-        android:padding="10dp"
-        android:layout_gravity="center_horizontal" />
-            <TextView
+                android:id="@+id/TxtNote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/TxtSumMoney"
-                android:text="SUM"
-                android:textSize="20dp"
+                android:layout_below="@+id/TxtCate"
+                android:layout_toRightOf="@+id/Img"
+                android:paddingLeft="40dp"
+                android:text="note"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/TxtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:padding="10dp"
-                android:layout_toStartOf="@+id/TxtMoney"
-                />
+                android:text="DATE"
+                android:textSize="20dp" />
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="2px"
-        android:background="@color/colorPrimary"
-        android:layout_toRightOf="@+id/Img"
-        android:layout_below="@+id/TxtNote"
-        android:layout_marginTop="7dp" />
+            <TextView
+                android:id="@+id/TxtSumMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/TxtMoney"
+                android:padding="10dp"
+                android:text="SUM"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="2px"
+                android:layout_below="@+id/TxtNote"
+                android:layout_marginTop="7dp"
+                android:layout_toRightOf="@+id/Img"
+                android:background="@color/colorPrimary" />
         </RelativeLayout>
     </com.daimajia.swipe.SwipeLayout>
 </RelativeLayout>

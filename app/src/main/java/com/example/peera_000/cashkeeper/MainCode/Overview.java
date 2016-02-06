@@ -13,10 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.example.peera_000.cashkeeper.Adapter.RowDataAdp;
 import com.example.peera_000.cashkeeper.Database.CK_TABLE;
 import com.example.peera_000.cashkeeper.R;
 import com.example.peera_000.cashkeeper.Rowdata.RowData;
+
+import com.daimajia.swipe.util.Attributes;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,12 +116,13 @@ public class Overview extends Fragment {
 
         }
 
-        RowDataAdp = new RowDataAdp(lRowdata, getContext());
+        RowDataAdp = new RowDataAdp(lRowdata,getContext());
         RvRowdata = (RecyclerView) v.findViewById(R.id.RvRowdata);
         RvRowdata.setLayoutManager(new LinearLayoutManager(getContext()));
         RvRowdata.setHasFixedSize(true);
         RvRowdata.setAdapter(RowDataAdp);
         RvRowdata.setOnScrollListener(onScrollListener);
+
 
 
         return v;
