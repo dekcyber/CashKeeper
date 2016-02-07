@@ -30,6 +30,7 @@
         <activity android:name=".MainCode.AddDescript" />
         <activity android:name=".MainCode.Add_category_Outcome" />
         <activity android:name=".MainCode.Add_category_Income"></activity>
+        <activity android:name=".EditRowOverview.EditDescript"/>
     </application>
 
 </manifest>

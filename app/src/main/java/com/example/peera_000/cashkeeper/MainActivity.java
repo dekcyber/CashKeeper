@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.peera_000.cashkeeper.Adapter.CustomTypefaceSpan;
+import com.example.peera_000.cashkeeper.Adapter.NonSwipeableViewPager;
 import com.example.peera_000.cashkeeper.Adapter.ViewPagerAdapter;
 import com.example.peera_000.cashkeeper.Convert_ID.ID_Picture;
 import com.example.peera_000.cashkeeper.Convert_ID.ID_String;
@@ -128,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
+
 
         // Assiging the Sliding Tab Layout View
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);

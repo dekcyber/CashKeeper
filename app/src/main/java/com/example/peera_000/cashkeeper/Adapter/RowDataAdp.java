@@ -2,6 +2,7 @@ package com.example.peera_000.cashkeeper.Adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -22,6 +23,9 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.daimajia.swipe.implments.SwipeItemRecyclerMangerImpl;
+import com.example.peera_000.cashkeeper.Database.CK_TABLE;
+import com.example.peera_000.cashkeeper.EditRowOverview.EditDescript;
+import com.example.peera_000.cashkeeper.MainCode.AddDescript;
 import com.example.peera_000.cashkeeper.MainCode.Overview;
 import com.example.peera_000.cashkeeper.R;
 import com.example.peera_000.cashkeeper.Rowdata.RowData;
@@ -42,6 +46,7 @@ public class RowDataAdp extends RecyclerSwipeAdapter<RowDataAdp.RowDataHolder> {
     private Overview overV;
     private List<RowData> lRowData;
     private Context context;
+    private CK_TABLE objCkTable;
     protected SwipeItemRecyclerMangerImpl sirm = new SwipeItemRecyclerMangerImpl(this);
     public RowDataAdp(List<RowData> lRow, Context context) {
         lRowData = lRow;
@@ -57,7 +62,7 @@ public class RowDataAdp extends RecyclerSwipeAdapter<RowDataAdp.RowDataHolder> {
     @Override
     public RowDataHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_data, parent, false);
-
+        objCkTable = new CK_TABLE(context);
 
         return new RowDataHolder(view);
     }
@@ -76,6 +81,9 @@ public class RowDataAdp extends RecyclerSwipeAdapter<RowDataAdp.RowDataHolder> {
                 lRowData.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, lRowData.size());
+                String strid = (String) holder.Txtid.getText();
+                Log.d("IDROW", "=" + strid);
+                objCkTable.DeleteRowData(strid);
                 notifyDataSetChanged();
                 sirm.closeAllItems();
             }
@@ -83,7 +91,24 @@ public class RowDataAdp extends RecyclerSwipeAdapter<RowDataAdp.RowDataHolder> {
         holder.ImgSwipEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String strid = (String) holder.Txtid.getText();
+               /* String strDate = (String) holder.TxDate.getText();
+                String strCate = (String) holder.TxCate.getText();
+                String strInMoney = (String) holder.TxMoney.getText();
+                String strOutMoney = (String) holder.TxtOutMoney.getText()*/
+                String strNote = (String) holder.TxNote.getText();
+
+                Log.d("IDROW", "=" + strid);
                 Toast.makeText(context, "Click", Toast.LENGTH_SHORT).show();
+               //v.getContext().startActivity(new Intent(context,EditDescript.class));
+                Intent intent = new Intent(context,EditDescript.class);
+                intent.putExtra("ID",strid);
+               /* intent.putExtra("Date",strDate);
+                intent.putExtra("Cate",strCate);
+                intent.putExtra("InMoney",strInMoney);
+                intent.putExtra("OutMoney",strOutMoney);
+                intent.putExtra("Note",strNote);*/
+                context.startActivity(intent);
             }
         });
         //holder.Img.setImageResource(rwRowData.getPhoto());
@@ -94,6 +119,7 @@ public class RowDataAdp extends RecyclerSwipeAdapter<RowDataAdp.RowDataHolder> {
         holder.TxNote.setText(rwRowData.getNote());
         holder.TxtOutMoney.setText(rwRowData.getMoneyOut());
         holder.TxtSummoney.setText(rwRowData.getSummoney());
+        holder.Txtid.setText(rwRowData.getId());
         sirm.bindView(holder.itemView, position);
 
 
@@ -118,6 +144,7 @@ public class RowDataAdp extends RecyclerSwipeAdapter<RowDataAdp.RowDataHolder> {
         private TextView TxDate;
         private TextView TxCate;
         private TextView TxNote;
+        private TextView Txtid;
         private TextView TxtOutMoney;
         private TextView TxtSummoney;
         private SwipeLayout swipeLayout;
@@ -133,6 +160,7 @@ public class RowDataAdp extends RecyclerSwipeAdapter<RowDataAdp.RowDataHolder> {
             ImgSwipEdit = (ImageView) itemView.findViewById(R.id.ImgSwipEdit);
             swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipOver);
             Img = (ImageView) itemView.findViewById(R.id.Img);
+            Txtid = (TextView) itemView.findViewById(R.id.TxtIdRowdata);
             TxMoney = (TextView) itemView.findViewById(R.id.TxtMoney);
             TxDate = (TextView) itemView.findViewById(R.id.TxtDate);
             TxCate = (TextView) itemView.findViewById(R.id.TxtCate);

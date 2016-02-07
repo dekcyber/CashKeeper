@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,6 +25,8 @@ import com.daimajia.swipe.util.Attributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 
 public class Overview extends Fragment {
@@ -33,6 +36,9 @@ public class Overview extends Fragment {
     private RowDataAdp RowDataAdp;
     private CK_TABLE objCK_TABLE;
     private FloatingActionButton fabAd;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private View v;
+    private Handler handler;
     private static final String DESC = "SELECT * FROM CK_TABLE ORDER BY DESC";
 
 
@@ -49,7 +55,8 @@ public class Overview extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.overview, container, false);
+         v = inflater.inflate(R.layout.overview, container, false);
+        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.OverSwiprefesh);
         fabAd = (FloatingActionButton) v.findViewById(R.id.fabAd);
         fabAd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,15 +66,34 @@ public class Overview extends Fragment {
             }
         });
         //int Draw = getResources().getIdentifier("bell","drawable",getContext().getPackageName());
+       setAndShowData();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                v.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //RowDataAdp.closeAllItems();
+                        setAndShowData();
+                        RowDataAdp.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                },1000);
+
+
+            }
+        });
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
+                R.color.colorPrimary,R.color.Crimson);
+
+        return v;
+    }//Oncreate
+
+    public void setAndShowData(){
         List<RowData> lRowdata = new ArrayList<>();
         objCK_TABLE = new CK_TABLE(getActivity());
         Cursor CurData = objCK_TABLE.readDESC();
         CurData.moveToPosition(-1);
-       /* Calendar cal = Calendar.getInstance();
-        SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
-        String d = date.format(cal.getTime());
-        String setDat ="2016/01/19";
-        Log.d("Date", "="+d);*/
         String Check = "";
         String Check1 = "";
         String strSumIncome = null;
@@ -96,12 +122,16 @@ public class Overview extends Fragment {
             String strPhoto = CurData.getString(PhotoIndex);
             int Photo = Integer.valueOf(strPhoto);
 
+            int IdIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_ID);
+            int intId = CurData.getInt(IdIndex);
+            String strId = Integer.toString(intId);
+
             if (Check.equals(strDate)) {
                 Check = strDate;
                 Check1 = " ";
                 strSum = null;
                 //Log.d("TestValue","SUM"+" "+"DATE"+strDate+"="+sumIncome);
-                lRowdata.add(new RowData(Photo, strMoney, Check1, ValueCate, strNote, strOutmoney,strSum));
+                lRowdata.add(new RowData(Photo, strMoney, Check1, ValueCate, strNote, strOutmoney,strSum,strId));
                 //Log.d("SumIncome", "วันที่เท่ากัน" + strSumIncome);
             } else {
 
@@ -109,7 +139,7 @@ public class Overview extends Fragment {
                 Check1 = strDate;
                 int Value = objCK_TABLE.SumMoneyOfDay(strDate);
                 strSum = strSumIncome;
-                lRowdata.add(new RowData(Photo, strMoney, Check1, ValueCate, strNote, strOutmoney,String.valueOf(Value)));
+                lRowdata.add(new RowData(Photo, strMoney, Check1, ValueCate, strNote, strOutmoney,String.valueOf(Value),strId));
                 //Log.d("SumIncome", "วันที่ไม่เท่ากัน" + strSumIncome);
             }
 
@@ -122,10 +152,6 @@ public class Overview extends Fragment {
         RvRowdata.setHasFixedSize(true);
         RvRowdata.setAdapter(RowDataAdp);
         RvRowdata.setOnScrollListener(onScrollListener);
-
-
-
-        return v;
     }
 
     RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {

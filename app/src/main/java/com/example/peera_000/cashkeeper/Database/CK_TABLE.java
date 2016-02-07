@@ -73,7 +73,7 @@ public class CK_TABLE {
         }
         Log.d("ReadDesc", "Success");
         return desc;
-    }
+    }//อ่าน database แบบ ล่างขึ้นบน
 
     public int SumMoneyOfDay(String strDate){
         String Date = strDate;
@@ -84,6 +84,15 @@ public class CK_TABLE {
             Value = objCursorIncome.getInt(0)-objCursorIncome.getInt(1);
         }
         return Value;
+    }//รวมรายจ่ายระหว่างวัน
+    public Cursor readRowOfId(String strId){
+        String Id = strId;
+        Cursor objCursor = readDB.query(TABLE_CK,new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_Photo},COLUMN_ID+" = '"+Id+"'",null,null,null,null);
+        if (objCursor!=null){
+            objCursor.moveToFirst();
+            Log.d("readRowOfDate","Success");
+        }
+        return objCursor;
     }
     public int SumOutcomeAll(){
         int ValueOutcome=0;
@@ -93,7 +102,11 @@ public class CK_TABLE {
             ValueOutcome = objCursorOut.getInt(0);
         }
        return ValueOutcome;
-    }
+    }//รวมรายจ่ายทั้งหมด
 
+    public void DeleteRowData(String strId){
+        String Id = strId;
+        writerDB.delete(TABLE_CK, COLUMN_ID+"="+ Id,null);
+    }
 
 }//Main Class

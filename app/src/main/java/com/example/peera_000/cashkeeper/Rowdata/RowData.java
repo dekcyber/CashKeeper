@@ -13,8 +13,9 @@ public class RowData {
     private String Note;
     private String MoneyOut;
     private String Summoney;
+    private String Id;
 
-    public RowData(int photo, String money, String date, String cate, String note, String moneyOut,String sumMoney) {
+    public RowData(int photo, String money, String date, String cate, String note, String moneyOut,String sumMoney,String RowId) {
         Photo = photo;
         Money = money;
         Date = date;
@@ -22,7 +23,16 @@ public class RowData {
         Note = note;
         Summoney = sumMoney;
         MoneyOut = moneyOut;
+        Id = RowId;
     }//Constructor
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
 
     public String getSummoney() {
         return Summoney;
