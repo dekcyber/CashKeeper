@@ -31,6 +31,7 @@
         <activity android:name=".MainCode.Add_category_Outcome" />
         <activity android:name=".MainCode.Add_category_Income"></activity>
         <activity android:name=".EditRowOverview.EditDescript"/>
+        <activity android:name=".EditRowOverview.EditmoneyCate"/>
     </application>
 
 </manifest>

@@ -92,7 +92,7 @@ public class Overview extends Fragment {
     public void setAndShowData(){
         List<RowData> lRowdata = new ArrayList<>();
         objCK_TABLE = new CK_TABLE(getActivity());
-        Cursor CurData = objCK_TABLE.readDESC();
+        Cursor CurData = objCK_TABLE.readASC();
         CurData.moveToPosition(-1);
         String Check = "";
         String Check1 = "";

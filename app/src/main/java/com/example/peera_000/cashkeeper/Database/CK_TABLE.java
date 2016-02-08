@@ -66,8 +66,8 @@ public class CK_TABLE {
         return writerDB.insert(TABLE_CK, null, objContentValues);
     }//Add NewValues
 
-    public Cursor readDESC() {
-        Cursor desc = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_Photo}, null, null, null, null, COLUMN_InputDate + " DESC");
+    public Cursor readASC() {
+        Cursor desc = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_Photo}, null, null, null, null, COLUMN_InputDate + " ASC");
         if (desc != null) {
             desc.moveToFirst();
         }
@@ -87,7 +87,7 @@ public class CK_TABLE {
     }//รวมรายจ่ายระหว่างวัน
     public Cursor readRowOfId(String strId){
         String Id = strId;
-        Cursor objCursor = readDB.query(TABLE_CK,new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_Photo},COLUMN_ID+" = '"+Id+"'",null,null,null,null);
+        Cursor objCursor = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_Photo}, COLUMN_ID + " = '" + Id + "'", null, null, null, null);
         if (objCursor!=null){
             objCursor.moveToFirst();
             Log.d("readRowOfDate","Success");
@@ -96,7 +96,7 @@ public class CK_TABLE {
     }
     public int SumOutcomeAll(){
         int ValueOutcome=0;
-        Cursor objCursorOut = readDB.rawQuery("SELECT SUM(outcome) FROM CK_TABLE;",null);
+        Cursor objCursorOut = readDB.rawQuery("SELECT SUM(outcome) FROM CK_TABLE;", null);
         if (objCursorOut!=null){
             objCursorOut.moveToFirst();
             ValueOutcome = objCursorOut.getInt(0);
@@ -107,6 +107,29 @@ public class CK_TABLE {
     public void DeleteRowData(String strId){
         String Id = strId;
         writerDB.delete(TABLE_CK, COLUMN_ID+"="+ Id,null);
+    }//ลบข้อมูลตาม ID
+
+    public long EditRowDataIncome(String strInputdate, String strCate, String strCateId
+            , String strNote, Double douIncome, String strPhoto ,String CheckId){
+        ContentValues objContentValues = new ContentValues();
+        objContentValues.put(COLUMN_InputDate, strInputdate);
+        objContentValues.put(COLUMN_Cate, strCate);
+        objContentValues.put(COLUMN_CateID, strCateId);
+        objContentValues.put(COLUMN_Note, strNote);
+        objContentValues.put(COLUMN_Income, douIncome);
+        objContentValues.put(COLUMN_Photo, strPhoto);
+        return writerDB.update("CK_TABLE",objContentValues,"_id=?",new String[]{CheckId});
+    }
+    public long EditRowDataOutcome(String strInputdate, String strCate, String strCateId
+            , String strNote, Double douOutcome, String strPhoto ,String CheckId){
+        ContentValues objContentValues = new ContentValues();
+        objContentValues.put(COLUMN_InputDate, strInputdate);
+        objContentValues.put(COLUMN_Cate, strCate);
+        objContentValues.put(COLUMN_CateID, strCateId);
+        objContentValues.put(COLUMN_Note, strNote);
+        objContentValues.put(COLUMN_Outcome, douOutcome);
+        objContentValues.put(COLUMN_Photo, strPhoto);
+        return writerDB.update("CK_TABLE",objContentValues,"_id=?",new String[]{CheckId});
     }
 
 }//Main Class
