@@ -1,6 +1,8 @@
 package com.example.peera_000.cashkeeper.MainCode;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,6 +41,10 @@ public class Overview extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private View v;
     private Handler handler;
+    private SharedPreferences sp;
+    private SharedPreferences Outsp;
+    private SharedPreferences.Editor Outeditor;
+    private SharedPreferences.Editor editor;
     private static final String DESC = "SELECT * FROM CK_TABLE ORDER BY DESC";
 
 
@@ -57,6 +63,17 @@ public class Overview extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
          v = inflater.inflate(R.layout.overview, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.OverSwiprefesh);
+        //----เริ่มประกาศ SharedPreferences เพื่อ Clear ค่าต่างๆทั้งหมด-----
+        sp = getActivity().getSharedPreferences("IncomeData", Context.MODE_PRIVATE);
+        Outsp = getActivity().getSharedPreferences("OutcomeData", Context.MODE_PRIVATE);
+        editor = sp.edit();
+        Outeditor = Outsp.edit();
+        editor.clear();
+        editor.commit();
+        Outeditor.clear();
+        Outeditor.commit();
+        //---จบการ Clear SharePreference----
+
         fabAd = (FloatingActionButton) v.findViewById(R.id.fabAd);
         fabAd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +135,7 @@ public class Overview extends Fragment {
             int DateIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_InputDate);
             String strDate = CurData.getString(DateIndex);
 
-            int PhotoIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_Photo);
+            int PhotoIndex = CurData.getColumnIndex(CK_TABLE.COLUMN_CPhoto);
             String strPhoto = CurData.getString(PhotoIndex);
             int Photo = Integer.valueOf(strPhoto);
 

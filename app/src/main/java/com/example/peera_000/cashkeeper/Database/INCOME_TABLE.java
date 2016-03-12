@@ -66,7 +66,7 @@ public class INCOME_TABLE {
     public void InsertIncome() {
         String[] IncomeName = {context.getString(R.string.Business), context.getString(R.string.Extra_income)
                 , context.getString(R.string.Gifts), context.getString(R.string.Salary)};
-        String[] IncomePic = {"2130837581", "2130837584", "2130837586", "2130837589"};
+        String[] IncomePic = {"2130837583", "2130837586", "2130837588", "2130837591"};
         String[] IncomeNameID = {"2131099701", "2131099706", "2131099708", "2131099718"};
         String[] IncomeStatus = {"O","O","O","O","O","O","O","O"};
         for (int i = 0; i < IncomeName.length; i++) {

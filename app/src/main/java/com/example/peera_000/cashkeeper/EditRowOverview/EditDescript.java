@@ -149,7 +149,7 @@ public class EditDescript extends AppCompatActivity {
             TxtDatepicker.setText(Date);
             Log.d("Edit", "DateNew = " + Date);
         }
-        int ImgIndex = objReadrowCursor.getColumnIndex(CK_TABLE.COLUMN_Photo);
+        int ImgIndex = objReadrowCursor.getColumnIndex(CK_TABLE.COLUMN_CPhoto);
         String strImg = objReadrowCursor.getString(ImgIndex);
         imgPhoto = Integer.parseInt(strImg);
         edit_Edsp.putInt("Photo", imgPhoto);

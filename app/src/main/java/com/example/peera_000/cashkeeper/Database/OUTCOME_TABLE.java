@@ -58,8 +58,8 @@ public class OUTCOME_TABLE {
         String[] OutcomeName = {context.getString(R.string.Bill), context.getString(R.string.Car), context.getString(R.string.Entertain)
                 , context.getString(R.string.Food), context.getString(R.string.Love), context.getString(R.string.Shopping),
                 context.getString(R.string.Transport), context.getString(R.string.Travel)};
-        String[] OutcomePic = {"2130837580", "2130837582", "2130837583", "2130837585", "2130837588",
-                "2130837590", "2130837591", "2130837592"};
+        String[] OutcomePic = {"2130837582", "2130837584", "2130837585", "2130837587", "2130837590",
+                "2130837592", "2130837593", "2130837594"};
         String[] OutcomeNameID = {"2131099699", "2131099702", "2131099704", "2131099707", "2131099712"
                 , "2131099720", "2131099721", "2131099722"};
         String[] OutcomeStatus = {"O","O","O","O","O","O","O","O"};

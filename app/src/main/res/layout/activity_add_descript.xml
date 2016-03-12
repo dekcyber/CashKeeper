@@ -57,24 +57,24 @@
                 android:onClick="ShowDialog"
                 android:text="Date"
                 android:textSize="20dp" />
-
-            <View
-                android:id="@+id/ViewLocation"
-                android:layout_width="250dp"
-                android:layout_height="150dp"
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/ImgCameraDes"
+                android:layout_centerHorizontal="true"
                 android:layout_below="@+id/TxtDatePicker"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/ic_add_black_24dp"/>
+            <ImageView
+                android:layout_margin="10dp"
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:id="@+id/ImgCameraTest"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="25dp"
-                android:background="@color/Gray" />
+                android:layout_below="@+id/TxtDatePicker"
+                 />
 
-            <View
-                android:id="@+id/ViewPhoto"
-                android:layout_width="250dp"
-                android:layout_height="150dp"
-                android:layout_below="@+id/ViewLocation"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="25dp"
-                android:background="@color/Gray" />
+
 
         </RelativeLayout>
     </ScrollView>

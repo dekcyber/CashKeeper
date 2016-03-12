@@ -24,7 +24,7 @@ public class CK_TABLE {
     public static final String COLUMN_Note = "note";
     public static final String COLUMN_Income = "income";
     public static final String COLUMN_Outcome = "outcome";
-    public static final String COLUMN_Photo = "photo";
+    public static final String COLUMN_CPhoto = "Cate_photo";
 
     public CK_TABLE(Context context) {
         objCK_OpHelper = new CK_OpHelper(context);
@@ -34,7 +34,7 @@ public class CK_TABLE {
     }//Constructor
 
     public Cursor readAllData() {
-        Cursor objCursor = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_Photo}, null, null, null, null, null);
+        Cursor objCursor = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_CPhoto}, null, null, null, null, null);
         if (objCursor != null) {
             objCursor.moveToFirst();
         }
@@ -50,7 +50,7 @@ public class CK_TABLE {
         objContentValues.put(COLUMN_CateID, strCateId);
         objContentValues.put(COLUMN_Note, strNote);
         objContentValues.put(COLUMN_Income, douIncome);
-        objContentValues.put(COLUMN_Photo, strPhoto);
+        objContentValues.put(COLUMN_CPhoto, strPhoto);
         return writerDB.insert(TABLE_CK, null, objContentValues);
     }//Add NewValues
 
@@ -62,12 +62,12 @@ public class CK_TABLE {
         objContentValues.put(COLUMN_CateID, strCateId);
         objContentValues.put(COLUMN_Note, strNote);
         objContentValues.put(COLUMN_Outcome, douOutcome);
-        objContentValues.put(COLUMN_Photo, strPhoto);
+        objContentValues.put(COLUMN_CPhoto, strPhoto);
         return writerDB.insert(TABLE_CK, null, objContentValues);
     }//Add NewValues
 
     public Cursor readASC() {
-        Cursor desc = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_Photo}, null, null, null, null, COLUMN_InputDate + " ASC");
+        Cursor desc = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_CPhoto}, null, null, null, null, COLUMN_InputDate + " ASC");
         if (desc != null) {
             desc.moveToFirst();
         }
@@ -87,7 +87,7 @@ public class CK_TABLE {
     }//รวมรายจ่ายระหว่างวัน
     public Cursor readRowOfId(String strId){
         String Id = strId;
-        Cursor objCursor = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_Photo}, COLUMN_ID + " = '" + Id + "'", null, null, null, null);
+        Cursor objCursor = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_CPhoto}, COLUMN_ID + " = '" + Id + "'", null, null, null, null);
         if (objCursor!=null){
             objCursor.moveToFirst();
             Log.d("readRowOfDate","Success");
@@ -117,7 +117,7 @@ public class CK_TABLE {
         objContentValues.put(COLUMN_CateID, strCateId);
         objContentValues.put(COLUMN_Note, strNote);
         objContentValues.put(COLUMN_Income, douIncome);
-        objContentValues.put(COLUMN_Photo, strPhoto);
+        objContentValues.put(COLUMN_CPhoto, strPhoto);
         return writerDB.update("CK_TABLE",objContentValues,"_id=?",new String[]{CheckId});
     }
     public long EditRowDataOutcome(String strInputdate, String strCate, String strCateId
@@ -128,7 +128,7 @@ public class CK_TABLE {
         objContentValues.put(COLUMN_CateID, strCateId);
         objContentValues.put(COLUMN_Note, strNote);
         objContentValues.put(COLUMN_Outcome, douOutcome);
-        objContentValues.put(COLUMN_Photo, strPhoto);
+        objContentValues.put(COLUMN_CPhoto, strPhoto);
         return writerDB.update("CK_TABLE",objContentValues,"_id=?",new String[]{CheckId});
     }
 

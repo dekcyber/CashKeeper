@@ -295,8 +295,8 @@ public class MainActivity extends AppCompatActivity {
         );
         //EndOfNavigationL
 
-        /*id_picture = new ID_Picture(this);
-        id_string = new ID_String(this);*/
+        id_picture = new ID_Picture(this);
+        id_string = new ID_String(this);
 
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
