@@ -33,6 +33,6 @@
     <string name="Transport">Transport</string>
     <string name="Travel">Travel</string>
     <string name="Add">Add</string>
-    <string name="pick_image_intent_text">image_intent_text</string>
+    <string name="pick_image_intent_text">Choose Image</string>
 
 </resources>

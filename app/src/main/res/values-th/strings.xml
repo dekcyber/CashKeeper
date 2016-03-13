@@ -29,4 +29,5 @@
     <string name="Travel">ท่องเที่ยว</string>
     <string name="Transport">ขนส่ง</string>
     <string name="Add">เพิ่ม</string>
+    <string name="pick_image_intent_text">เลือกรูปภาพ</string>
 </resources>

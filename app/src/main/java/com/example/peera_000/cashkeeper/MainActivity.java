@@ -3,6 +3,7 @@ package com.example.peera_000.cashkeeper;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -40,6 +41,7 @@ import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -107,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
             income_table.InsertIncome();
             outcome_table.InsertOutcome();
         }
+        //Create Folder App
+        CreateFolder();
 
         //TestAddDB
         //testAddValues();
@@ -319,6 +323,19 @@ public class MainActivity extends AppCompatActivity {
         NavTxtOutcome.setText(String.valueOf(Valoutcome));
         NavTxtIncome.setText("5555");
         NavTxtTotal.setText("4305");
+    }
+    public void CreateFolder(){
+        File folder = new File(Environment.getExternalStorageDirectory() +
+                File.separator + "PocketManagement/Picture");
+        boolean success = true;
+        if (!folder.exists()) {
+            success = folder.mkdir();
+        }
+        if (success) {
+            // Do something on success
+        } else {
+            // Do something else on failure
+        }
     }
 
     public Menu Fontmenu(Menu menu){

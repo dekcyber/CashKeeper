@@ -75,7 +75,7 @@ public class OUTCOME_TABLE {
         objContent2.put(COLUMNOUTCOME_ID, 9);
         objContent2.put(COLUMNOUTCOME_NAME, "Add");
         objContent2.put(COLUMNOUTCOME_NameID, "2131099698");
-        objContent2.put(COLUMNOUTCOME_Photo, "2130837579");
+        objContent2.put(COLUMNOUTCOME_Photo, "2130837581");
         objContent2.put(COLUMNOUTCOME_Status,"O");
         writeDatabase.insert(TABLE_OUTCOME, null, objContent2);
     }

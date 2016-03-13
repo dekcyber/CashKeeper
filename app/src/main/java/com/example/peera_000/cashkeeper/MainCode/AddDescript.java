@@ -33,6 +33,9 @@ import com.example.peera_000.cashkeeper.MainActivity;
 import com.example.peera_000.cashkeeper.R;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -118,19 +121,25 @@ public class AddDescript extends AppCompatActivity {
         ImgCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                //เปิดใช้กล้อง ---->1
+               /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 String strTimestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 String strImgFilename = "IMG_"+strTimestamp+".jpg";
                 File file = new File(Environment.getExternalStorageDirectory(),"DCIM/Camera/"+strImgFilename);
                 uri = Uri.fromFile(file);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 startActivityForResult(Intent.createChooser(intent,"Take picture with"),REQUEST_CAMERA);*/
+                //จบเปิดใช้กล้อง ---->1
 
+                //เปิดใช้ gallery ---->2
                 /*Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image*//**//**//**//*");
                 startActivityForResult(Intent.createChooser(intent
-                        , "Select photo from"), 0);
+                        , "Select photo from"), 0); */
+                //จบเปิดใช้ gallery ---->2
 
+                //สร้าง Dialog เลือกระหว่างกล้องกับ gallery ---->3
+                /*
                 AlertDialog.Builder alertBuild = new AlertDialog.Builder(AddDescript.this);
                 alertBuild.setTitle("Select Image");
                 alertBuild.setAdapter(adapter, new DialogInterface.OnClickListener() {
@@ -164,8 +173,14 @@ public class AddDescript extends AppCompatActivity {
                 } );
 
                 alertBuild.show();*/
+                //จบ เลือกใช้ระหว่างกล้องกับ gallery ---->3
+
+
+                //-----ใช้ ImagePicker ช่วย-----  ---->4
                 Intent chooseImageIntent = ImagePicker.getPickImageIntent(getApplicationContext());
                 startActivityForResult(chooseImageIntent,PICK_IMAGE_ID);
+                //----- จบ ImagePicker  ----- ---->4
+
             }
         });
 
@@ -189,16 +204,50 @@ public class AddDescript extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
+
+        // รับค่าจาก กล้อง ---->1
+        /*if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK) {
+            getContentResolver().notifyChange(uri, null);
+            ContentResolver cr = getContentResolver();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(cr, uri);
+                ImgCameratest.setImageBitmap(bitmap);
+                Toast.makeText(getApplicationContext()
+                        , uri.getPath(), Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }*/ //จบรับค่าจากกล้อง ---->1
+
+
+        //รับค่าจาก ImagePicker ---->4
+
+       switch(requestCode) {
             case PICK_IMAGE_ID :
                 Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
                 ImgCameratest.setImageBitmap(bitmap);
+                String strTimestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                String strImgFilename = "PocketM_"+strTimestamp+".jpg";
+                File file = new File(Environment.getExternalStorageDirectory(),"PocketManagement/Picture/"+strImgFilename);
+                FileOutputStream fOut = null;
+                try {
+                    fOut = new FileOutputStream(file);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+                    fOut.flush();
+                    fOut.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
                 // TODO use bitmap
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
                 break;
         }
+
+        //จบรับค่าจาก imagePicker ---->4
     }
 
 

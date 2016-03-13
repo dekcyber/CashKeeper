@@ -63,8 +63,9 @@
                 android:id="@+id/ImgCameraDes"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/TxtDatePicker"
-                android:layout_marginTop="50dp"
-                android:src="@drawable/ic_add_black_24dp"/>
+                android:layout_marginTop="60dp"
+                android:padding="25dp"
+                android:src="@drawable/ic_camera"/>
             <ImageView
                 android:layout_margin="10dp"
                 android:layout_width="300dp"
@@ -72,6 +73,7 @@
                 android:id="@+id/ImgCameraTest"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/TxtDatePicker"
+                android:background="@drawable/image_border"
                  />
 
 

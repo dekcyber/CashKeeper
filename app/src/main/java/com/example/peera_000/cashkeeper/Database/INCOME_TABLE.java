@@ -81,7 +81,7 @@ public class INCOME_TABLE {
         objContent2.put(COLUMNIN_ID, 5);
         objContent2.put(COLUMNIN_NAME, "Add");
         objContent2.put(COLUMNIN_NameID, "2131099698");
-        objContent2.put(COLUMNIN_Photo, "2130837579");
+        objContent2.put(COLUMNIN_Photo, "2130837581");
         objContent2.put(COLUMNIN_Status,"O");
         writeDatabase.insert(TABLE_INCOME, null, objContent2);
     }
