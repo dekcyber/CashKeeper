@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Camera;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 import com.example.peera_000.cashkeeper.Adapter.ImagePicker;
 import com.example.peera_000.cashkeeper.Database.CK_TABLE;
 import com.example.peera_000.cashkeeper.MainActivity;
+import com.example.peera_000.cashkeeper.Map.Map;
 import com.example.peera_000.cashkeeper.R;
 
 import java.io.File;
@@ -51,6 +53,8 @@ public class AddDescript extends AppCompatActivity {
     private ImageView img;
     private ImageView ImgCamera;
     private ImageView ImgCameratest;
+    private ImageView ImgMap;
+    private ImageView ImgPicmap;
     private TextView TxtDatepicker;
     private EditText edtNote;
     private int intDate;
@@ -74,6 +78,7 @@ public class AddDescript extends AppCompatActivity {
     private Typeface customFont;
     private Uri mImageCaptureUri;
     private ImageView mImageView;
+    Camera mcamera;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_descript);
@@ -183,6 +188,14 @@ public class AddDescript extends AppCompatActivity {
 
             }
         });
+       ImgMap.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent(getApplicationContext(), Map.class);
+               startActivity(intent);
+           }
+       });
+
 
     }//OnCreate
 
@@ -198,6 +211,8 @@ public class AddDescript extends AppCompatActivity {
         img = (ImageView) findViewById(R.id.SelectImg);
         ImgCamera = (ImageView) findViewById(R.id.ImgCameraDes);
         ImgCameratest = (ImageView) findViewById(R.id.ImgCameraTest);
+        ImgMap = (ImageView) findViewById(R.id.ImgMap);
+        ImgPicmap = (ImageView) findViewById(R.id.ImgPicMap);
 
     }//BlindWidget
 
@@ -329,8 +344,8 @@ public class AddDescript extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-
         super.onPause();
+
     }
 
     @Override

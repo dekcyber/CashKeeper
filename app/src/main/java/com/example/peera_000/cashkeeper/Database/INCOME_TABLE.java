@@ -66,8 +66,8 @@ public class INCOME_TABLE {
     public void InsertIncome() {
         String[] IncomeName = {context.getString(R.string.Business), context.getString(R.string.Extra_income)
                 , context.getString(R.string.Gifts), context.getString(R.string.Salary)};
-        String[] IncomePic = {"2130837583", "2130837586", "2130837588", "2130837591"};
-        String[] IncomeNameID = {"2131099701", "2131099706", "2131099708", "2131099718"};
+        String[] IncomePic = {"2130837588", "2130837591", "2130837593", "2130837596"};
+        String[] IncomeNameID = {"2131165250", "2131165255", "2131165257", "2131165267"};
         String[] IncomeStatus = {"O","O","O","O","O","O","O","O"};
         for (int i = 0; i < IncomeName.length; i++) {
             ContentValues objContent = new ContentValues();
@@ -80,8 +80,8 @@ public class INCOME_TABLE {
         ContentValues objContent2 = new ContentValues();
         objContent2.put(COLUMNIN_ID, 5);
         objContent2.put(COLUMNIN_NAME, "Add");
-        objContent2.put(COLUMNIN_NameID, "2131099698");
-        objContent2.put(COLUMNIN_Photo, "2130837581");
+        objContent2.put(COLUMNIN_NameID, "2131165247");
+        objContent2.put(COLUMNIN_Photo, "2130837586");
         objContent2.put(COLUMNIN_Status,"O");
         writeDatabase.insert(TABLE_INCOME, null, objContent2);
     }

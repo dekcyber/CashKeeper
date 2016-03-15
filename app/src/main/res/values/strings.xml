@@ -34,5 +34,7 @@
     <string name="Travel">Travel</string>
     <string name="Add">Add</string>
     <string name="pick_image_intent_text">Choose Image</string>
+    <string name="title_activity_map">Map</string>
+    <string name="title_activity_mapgoogle">Map</string>
 
 </resources>
