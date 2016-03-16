@@ -6,8 +6,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <uses-feature
@@ -48,8 +48,7 @@
         <activity android:name=".MainCode.Add_category_Income" />
         <activity android:name=".EditRowOverview.EditDescript" />
         <activity android:name=".EditRowOverview.EditmoneyCate" />
-        <activity android:name=".Map.Map"></activity>
+        <activity android:name=".Map.Map" />
     </application>
 
 </manifest>
-
