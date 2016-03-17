@@ -3,6 +3,7 @@ package com.example.peera_000.cashkeeper.Map;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.peera_000.cashkeeper.R;
@@ -56,6 +58,7 @@ public class Map extends AppCompatActivity
 
         SupportMapFragment SupportmapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         SupportmapFragment.getMapAsync(this);
+
     }
 
 
@@ -83,6 +86,10 @@ public class Map extends AppCompatActivity
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.getUiSettings().setZoomControlsEnabled(true);
         enableMyLocation();
+        LatLng Psu = new LatLng(7.892816,98.354788);
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Psu, 16));
+
 
     }
 
@@ -99,6 +106,7 @@ public class Map extends AppCompatActivity
         } else if (mMap != null) {
             // Access to the location has been granted to the app.
             mMap.setMyLocationEnabled(true);
+
         }
     }
 
@@ -133,4 +141,11 @@ public class Map extends AppCompatActivity
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+    @Override
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
 }
