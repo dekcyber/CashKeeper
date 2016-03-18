@@ -1,11 +1,17 @@
 package com.example.peera_000.cashkeeper.Map;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -13,16 +19,31 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.example.peera_000.cashkeeper.R;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceDetectionApi;
 import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -36,12 +57,19 @@ public class Map extends AppCompatActivity
         implements OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback,
         GoogleMap.OnMyLocationButtonClickListener,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.ConnectionCallbacks{
     GoogleMap mMap;
     Marker mMarker;
     LocationManager lm;
+    Location mLastLocation;
     double lat, lng;
+    TextView mLatitudeText;
+    TextView mLongitudeText;
+    Toolbar TbMap;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private static final int ACCESS_COARSE_LOCATION_REQUEST_CODE = 2;
+    int PLACE_AUTOCOMPLETE_REQUEST_CODE = 3;
     private boolean mPermissionDenied = false;
     private GoogleApiClient mGoogleApiClient;
 
@@ -49,18 +77,27 @@ public class Map extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        mGoogleApiClient = new GoogleApiClient
-                .Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .enableAutoManage(this, this)
-                .build();
+        mLatitudeText = (TextView) findViewById(R.id.Lat);
+        mLongitudeText = (TextView) findViewById(R.id.Long);
+        TbMap = (Toolbar) findViewById(R.id.ToobarMap);
+        setSupportActionBar(TbMap);
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .addApi(Places.GEO_DATA_API)
+                    .addApi(Places.PLACE_DETECTION_API)
+                    .enableAutoManage(this,this)
+                    .build();
+        }
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
         SupportMapFragment SupportmapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         SupportmapFragment.getMapAsync(this);
 
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -68,14 +105,27 @@ public class Map extends AppCompatActivity
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
             return;
         }
+        if (requestCode == ACCESS_COARSE_LOCATION_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                            mGoogleApiClient);
+                    if (mLastLocation != null) {
+                        mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
+                        mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
 
-        if (PermissionUtils.isPermissionGranted(permissions, grantResults,
-                Manifest.permission.ACCESS_FINE_LOCATION)) {
-            // Enable the my location layer if the permission has been granted.
-            enableMyLocation();
-        } else {
-            // Display the missing permission error dialog when the fragments resume.
-            mPermissionDenied = true;
+                    }
+                }
+            }
+
+            if (PermissionUtils.isPermissionGranted(permissions, grantResults,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // Enable the my location layer if the permission has been granted.
+                enableMyLocation();
+            } else {
+                // Display the missing permission error dialog when the fragments resume.
+                mPermissionDenied = true;
+            }
         }
     }
 
@@ -86,11 +136,9 @@ public class Map extends AppCompatActivity
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.getUiSettings().setZoomControlsEnabled(true);
         enableMyLocation();
-        LatLng Psu = new LatLng(7.892816,98.354788);
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Psu, 16));
-
-
+        //Log.d("LAT,LONG", "= " + mLastLocation.getLatitude()+" "+mLastLocation.getLongitude());
+        //LatLng Psu = new LatLng(Double.parseDouble(LL[0]),Double.parseDouble(LL[1]));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Psu, 16));
     }
 
 
@@ -146,6 +194,48 @@ public class Map extends AppCompatActivity
     protected void onStart() {
         mGoogleApiClient.connect();
         super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        CallLastLocation();
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public void CallLastLocation() {
+    //เช็ค Permission สำหรับ api 23 MashMallow
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                    mGoogleApiClient);
+            if (mLastLocation != null) {
+                mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
+                mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
+                LatLng LastLocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LastLocation, 16));
+
+            } else {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                    Toast.makeText(this, "Tracking on Device required GPS", Toast.LENGTH_SHORT).show();
+                }
+                // ย้อนไปเช็คที่ onRequestPermissionsResult
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, ACCESS_COARSE_LOCATION_REQUEST_CODE);
+            }
+
+        }
+
+    }
+
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
     }
 
 }

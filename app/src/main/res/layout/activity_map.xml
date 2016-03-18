@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
-    android:id="@+id/map"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:elevation="2dp"
+        android:id="@+id/ToobarMap"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <fragment
+            android:id="@+id/place_autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment" />
+    </android.support.v7.widget.Toolbar>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/framlayout"
+        android:layout_below="@+id/ToobarMap">
+
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Lat"
+            android:text="Lat"
+            android:textSize="15dp"
+            android:layout_gravity="left|bottom"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Long"
+            android:text="Long"
+            android:textSize="15dp"
+            android:layout_marginTop="25dp"
+            android:layout_gravity="right|bottom"
+            />
+
+    </FrameLayout>
+
+
+</RelativeLayout>
