@@ -30,4 +30,7 @@
     <string name="Transport">ขนส่ง</string>
     <string name="Add">เพิ่ม</string>
     <string name="pick_image_intent_text">เลือกรูปภาพ</string>
+    <string name="Cancel">ยกเลิก</string>
+    <string name="Choose_from_gallery">รูปภายในโทรศัพท์</string>
+    <string name="Take_Photo">ถ่ายรูป</string>
 </resources>

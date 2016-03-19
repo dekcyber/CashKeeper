@@ -76,23 +76,22 @@
                 android:background="@drawable/image_border"
                  />
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/ImgMap"
-                android:layout_centerHorizontal="true"
+                android:id="@+id/ImgPlace"
+                android:layout_width="@dimen/Category_width"
+                android:layout_height="@dimen/Category_height"
                 android:layout_below="@+id/ImgCameraTest"
-                android:layout_marginTop="60dp"
-                android:padding="25dp"
-                android:src="@drawable/ic_location"/>
-            <ImageView
-                android:layout_margin="10dp"
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                android:id="@+id/ImgPicMap"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/ImgCameraTest"
-                android:background="@drawable/image_border"
-                />
+                android:layout_margin="20dp"
+                android:src="@drawable/ic_location" />
+
+            <TextView
+                android:id="@+id/TxtPlace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/ImgPlace"
+                android:layout_toRightOf="@+id/ImgPlace"
+                android:onClick="ShowDialog"
+                android:text="Place"
+                android:textSize="20dp" />
 
 
 

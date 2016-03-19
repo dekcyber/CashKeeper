@@ -33,7 +33,12 @@
     <string name="Transport">Transport</string>
     <string name="Travel">Travel</string>
     <string name="Add">Add</string>
+    <!--  เกี่ยวกับกล้อง-->
     <string name="pick_image_intent_text">Choose Image</string>
+    <string name="Take_Photo">Take Photo</string>
+    <string name="Choose_from_gallery">Choose from gallery</string>
+    <string name="Cancel">Cancel</string>
+
     <string name="title_activity_map">Map</string>
     <string name="title_activity_mapgoogle">Map</string>
     <!--    Permissions    -->

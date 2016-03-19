@@ -43,6 +43,7 @@ import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -69,7 +70,8 @@ public class Map extends AppCompatActivity
     Toolbar TbMap;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final int ACCESS_COARSE_LOCATION_REQUEST_CODE = 2;
-    int PLACE_AUTOCOMPLETE_REQUEST_CODE = 3;
+    private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 3;
+    private static final int PLACE_PICKER_REQUEST = 4;
     private boolean mPermissionDenied = false;
     private GoogleApiClient mGoogleApiClient;
 
@@ -96,6 +98,27 @@ public class Map extends AppCompatActivity
 
         SupportMapFragment SupportmapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         SupportmapFragment.getMapAsync(this);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                Log.i("Place Complete Api", "Place: " + place.getName());
+
+                String placeDetailsStr = place.getName() + "\n"
+                        + place.getId() + "\n"
+                        + place.getLatLng().toString() + "\n"
+                        + place.getAddress() + "\n"
+                        + place.getAttributions();
+                mLongitudeText.setText(placeDetailsStr);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(),16));
+            }
+
+            @Override
+            public void onError(Status status) {
+                Log.i("Place Complete Api", "An error occurred: " + status);
+            }
+        });
 
     }
 
@@ -136,6 +159,15 @@ public class Map extends AppCompatActivity
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.getUiSettings().setZoomControlsEnabled(true);
         enableMyLocation();
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+        try {
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
         //Log.d("LAT,LONG", "= " + mLastLocation.getLatitude()+" "+mLastLocation.getLongitude());
         //LatLng Psu = new LatLng(Double.parseDouble(LL[0]),Double.parseDouble(LL[1]));
         //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Psu, 16));
@@ -206,6 +238,7 @@ public class Map extends AppCompatActivity
     @Override
     public void onConnected(Bundle bundle) {
         CallLastLocation();
+
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -232,6 +265,19 @@ public class Map extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+      switch (requestCode){
+          case PLACE_PICKER_REQUEST:
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                String toastMsg = String.format("Place: %s", place.getName());
+                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+            }
+              break;
+        }
+    }
 
     @Override
     public void onConnectionSuspended(int i) {
