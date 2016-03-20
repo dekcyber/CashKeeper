@@ -62,7 +62,7 @@
                 android:layout_height="100dp"
                 android:id="@+id/ImgCameraDes"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/TxtDatePicker"
+                android:layout_below="@+id/TxtPlace"
                 android:layout_marginTop="60dp"
                 android:padding="25dp"
                 android:src="@drawable/ic_camera"/>
@@ -72,14 +72,14 @@
                 android:layout_height="200dp"
                 android:id="@+id/ImgCameraTest"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/TxtDatePicker"
+                android:layout_below="@+id/TxtPlace"
                 android:background="@drawable/image_border"
                  />
             <ImageView
                 android:id="@+id/ImgPlace"
                 android:layout_width="@dimen/Category_width"
                 android:layout_height="@dimen/Category_height"
-                android:layout_below="@+id/ImgCameraTest"
+                android:layout_below="@+id/ImgCalendar"
                 android:layout_margin="20dp"
                 android:src="@drawable/ic_location" />
 

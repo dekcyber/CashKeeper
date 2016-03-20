@@ -1,5 +1,6 @@
 package com.example.peera_000.cashkeeper.MainCode;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -10,15 +11,19 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Camera;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -56,6 +61,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.jar.Manifest;
 
 public class AddDescript extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
@@ -80,6 +86,7 @@ public class AddDescript extends AppCompatActivity implements
     private static final int DILOG_ID = 0;
     private static final int REQUEST_CAMERA = 2;
     private static final int GALLERY_PICTURE = 1;
+    private static final int WRITE_External = 3;
     private static final int PICK_IMAGE_ID = 234;
     private static final int PLACE_PICKER_REQUEST = 4;
     private Uri uri;
@@ -235,17 +242,22 @@ public class AddDescript extends AppCompatActivity implements
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.pick_image_intent_text);
         builder.setItems(item, new DialogInterface.OnClickListener() {
-            @Override
+
+            @TargetApi(Build.VERSION_CODES.M)
             public void onClick(DialogInterface dialog, int which) {
-                if (item[which].equals(getString(R.string.Take_Photo))){
+                if (item[which].equals(getString(R.string.Take_Photo))) {
                     /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent,REQUEST_CAMERA);*/
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA)==PackageManager.PERMISSION_GRANTED){
                     dispatchTakePictureIntent();
-                }else if (item[which].equals(getString(R.string.Choose_from_gallery))){
-                    Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    }else {
+                        requestPermissions(new String[]{android.Manifest.permission.CAMERA},REQUEST_CAMERA);
+                    }
+                } else if (item[which].equals(getString(R.string.Choose_from_gallery))) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     intent.setType("image/*");
-                    startActivityForResult(intent.createChooser(intent,"Select File"),GALLERY_PICTURE);
-                }else if (item[which].equals(getString(R.string.Cancel))){
+                    startActivityForResult(intent.createChooser(intent, "Select File"), GALLERY_PICTURE);
+                } else if (item[which].equals(getString(R.string.Cancel))) {
                     dialog.dismiss();
                 }
             }
@@ -344,7 +356,7 @@ public class AddDescript extends AppCompatActivity implements
         int photoH = bmOptions.outHeight;
 
         // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
 
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;
@@ -353,6 +365,17 @@ public class AddDescript extends AppCompatActivity implements
 
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         ImgCameratest.setImageBitmap(bitmap);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CAMERA:
+                dispatchTakePictureIntent();
+                break;
+            default:
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     @Override

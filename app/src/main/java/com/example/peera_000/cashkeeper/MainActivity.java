@@ -1,10 +1,14 @@
 package com.example.peera_000.cashkeeper;
 
+import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -68,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private int Numboftabs;
     private int Count = 0;
     private int CountItem = 1;
+    private static final int WRITE_External = 3;
     private INCOME_TABLE income_table;
     private OUTCOME_TABLE outcome_table;
     private SwitchCompat switchPass;
@@ -83,9 +88,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "onCheckedChanged: " + (isChecked ? "true" : "false"), Toast.LENGTH_SHORT).show();
         }
     };
-
-    public MainActivity() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +111,16 @@ public class MainActivity extends AppCompatActivity {
             income_table.InsertIncome();
             outcome_table.InsertOutcome();
         }
-        //Create Folder App
-        CreateFolder();
-
+        //Create Folder Appg
+        if (ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED) {
+            CreateFolder();
+        }else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},WRITE_External);
+            }else {
+                CreateFolder();
+            }
+        }
         //TestAddDB
         //testAddValues();
 
@@ -325,17 +334,39 @@ public class MainActivity extends AppCompatActivity {
         NavTxtTotal.setText("4305");
     }
     public void CreateFolder(){
-        File folder = new File(Environment.getExternalStorageDirectory() +
-                File.separator + "PocketManagement/Picture");
-        boolean success = true;
-        if (!folder.exists()) {
-            success = folder.mkdir();
-        }
-        if (success) {
-            // Do something on success
-        } else {
-            // Do something else on failure
-        }
+            File folder = new File(Environment.getExternalStorageDirectory()+
+                    File.separator + "PocketManagement/Picture");
+           boolean success = true;
+            if (!folder.exists()) {
+                success = folder.mkdirs();
+                Log.d("Create Folder","Success = "+success);
+            }
+            if (success) {
+                Log.d("Create Folder","Success = "+success);
+            } else {
+                // Do something else on failure
+                Log.d("Create Folder","Not success ="+success);
+            }
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+       switch (requestCode) {
+           case WRITE_External:
+               if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
+               CreateFolder();
+               }else {
+                   Toast.makeText(MainActivity.this, "Create Directory Denied", Toast.LENGTH_SHORT)
+                           .show();
+               }
+               break;
+           default:
+               super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+       }
+
     }
 
     public Menu Fontmenu(Menu menu){
