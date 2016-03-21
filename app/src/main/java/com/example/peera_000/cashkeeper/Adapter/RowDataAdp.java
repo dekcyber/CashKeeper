@@ -8,6 +8,8 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,28 +66,34 @@ public class RowDataAdp extends RecyclerSwipeAdapter<RowDataAdp.RowDataHolder> {
     public RowDataHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_data, parent, false);
         objCkTable = new CK_TABLE(context);
-
         return new RowDataHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final RowDataHolder holder, final int position) {
-        RowData rwRowData = lRowData.get(position);
+        final RowData rwRowData = lRowData.get(position);
 
         holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
 
         holder.ImgSwipDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 sirm.removeShownLayouts(holder.swipeLayout);
                 lRowData.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, lRowData.size());
                 String strid = (String) holder.Txtid.getText();
                 Log.d("IDROW", "=" + strid);
-                objCkTable.DeleteRowData(strid);
-                notifyDataSetChanged();
+                //objCkTable.DeleteRowData(strid);
+                final Snackbar sbSnack =Snackbar.make(v, "Do you want to Delete", Snackbar.LENGTH_INDEFINITE);
+                       sbSnack.setAction("Undo", new View.OnClickListener() {
+                           @Override
+                           public void onClick(View v) {
+                               updateList(lRowData);
+                           }
+                       });
+                sbSnack.show();
+
                 sirm.closeAllItems();
             }
         });
@@ -124,6 +133,11 @@ public class RowDataAdp extends RecyclerSwipeAdapter<RowDataAdp.RowDataHolder> {
 
 
         Log.d("RecyblerViewOverview", "BlindingOverview" + position);
+    }
+    public void updateList(List<RowData> updatelist){
+            lRowData.clear();
+            lRowData.addAll(updatelist);
+        this.notifyDataSetChanged();
     }
 
     @Override
