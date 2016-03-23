@@ -111,6 +111,7 @@ public class AddDescript extends AppCompatActivity implements
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    private CharSequence NamePlace;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -466,7 +467,8 @@ public class AddDescript extends AppCompatActivity implements
             case PLACE_PICKER_REQUEST:
                 if (resultCode == RESULT_OK) {
                     Place place = PlacePicker.getPlace(data, this);
-                    TxtPlace.setText(place.getName());
+                    NamePlace = place.getName();
+                    TxtPlace.setText(NamePlace);
                 }
                 break;
 
@@ -493,6 +495,7 @@ public class AddDescript extends AppCompatActivity implements
         Note = edtNote.getText().toString();
         Date = TxtDatepicker.getText().toString();
         Money = edtMonney.getText().toString();
+        CharSequence charPlace = NamePlace.toString();
         String strImgPhoto = Integer.toString(imgPhoto);
         int CheckIncome = sp.getInt("IncomePosition", -1);
         int CheckTab = sp.getInt("CheckTab", 0);
@@ -519,7 +522,7 @@ public class AddDescript extends AppCompatActivity implements
             case R.id.OK:
 
                 if (CheckTab == 2) {
-                    ck_table.addNewValuesIncome(Date, Category, Nameid, "Dekcyber", Note, douMoney, strImgPhoto);
+                    ck_table.addNewValuesIncome(Date, Category, Nameid, "Dekcyber", Note, douMoney, strImgPhoto, (String) charPlace,mCurrentPhotoPath);
                     Intent In = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(In);
                     Log.d("Date", "=" + Date);
@@ -527,7 +530,7 @@ public class AddDescript extends AppCompatActivity implements
                     Log.d("photo", "=" + imgPhoto);
                     Log.d("CheckTab", "=" + CheckTab);
                 } else if (CheckTab == 0) {
-                    ck_table.addNewValuesOutcome(Date, Category, Nameid, "Dekcyber", Note, douMoney, strImgPhoto);
+                    ck_table.addNewValuesOutcome(Date, Category, Nameid, "Dekcyber", Note, douMoney, strImgPhoto, (String) charPlace,mCurrentPhotoPath);
                     Intent In = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(In);
                     Log.d("Date", "=" + Date);

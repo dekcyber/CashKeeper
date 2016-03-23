@@ -14,7 +14,8 @@ public class CK_OpHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "CK_DB.db";
     private static final int DATABASE_VERSION = 1;
     private static final String CREATE_TABLE_CKTABLE = "create table CK_TABLE (_id integer primary key," +
-            "inputDate text,user text,cate text,cateId text,note text,income double,outcome double,Cate_photo text)";
+            "inputDate text,user text,cate text,cateId text,note text,income double,outcome double,Cate_photo text," +
+            "Place text,PathPhoto text)";
     private static final String CREATE_TABLE_CATINCOME = "create table INCOME_TABLE(_id integer primary key," +
             "Name text,NameId text,Photo text,status text,user text)";
     private static final String CREATE_TABLE_CATOUTCOME = "create table OUTCOME_TABLE(_id integer primary key," +

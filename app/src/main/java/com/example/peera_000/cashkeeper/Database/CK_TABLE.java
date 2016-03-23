@@ -25,6 +25,8 @@ public class CK_TABLE {
     public static final String COLUMN_Income = "income";
     public static final String COLUMN_Outcome = "outcome";
     public static final String COLUMN_CPhoto = "Cate_photo";
+    public static final String COLUMN_Place = "Place";
+    public static final String COLUMN_PathPhoto ="PathPhoto";
 
     public CK_TABLE(Context context) {
         objCK_OpHelper = new CK_OpHelper(context);
@@ -42,7 +44,7 @@ public class CK_TABLE {
     }
 
     //Add NewValues
-    public long addNewValuesIncome(String strInputdate, String strCate, String strCateId, String strName, String strNote, Double douIncome, String strPhoto) {
+    public long addNewValuesIncome(String strInputdate, String strCate, String strCateId, String strName, String strNote, Double douIncome, String strPhoto, String strPlace, String strPathPhoto) {
         ContentValues objContentValues = new ContentValues();
         objContentValues.put(COLUMN_InputDate, strInputdate);
         objContentValues.put(COLUMN_Name, strName);
@@ -51,10 +53,12 @@ public class CK_TABLE {
         objContentValues.put(COLUMN_Note, strNote);
         objContentValues.put(COLUMN_Income, douIncome);
         objContentValues.put(COLUMN_CPhoto, strPhoto);
+        objContentValues.put(COLUMN_Place, strPlace);
+        objContentValues.put(COLUMN_PathPhoto,strPathPhoto);
         return writerDB.insert(TABLE_CK, null, objContentValues);
     }//Add NewValues
 
-    public long addNewValuesOutcome(String strInputdate, String strCate, String strCateId, String strName, String strNote, Double douOutcome, String strPhoto) {
+    public long addNewValuesOutcome(String strInputdate, String strCate, String strCateId, String strName, String strNote, Double douOutcome, String strPhoto, String strPlace, String strPathPhoto) {
         ContentValues objContentValues = new ContentValues();
         objContentValues.put(COLUMN_InputDate, strInputdate);
         objContentValues.put(COLUMN_Name, strName);
@@ -63,11 +67,13 @@ public class CK_TABLE {
         objContentValues.put(COLUMN_Note, strNote);
         objContentValues.put(COLUMN_Outcome, douOutcome);
         objContentValues.put(COLUMN_CPhoto, strPhoto);
+        objContentValues.put(COLUMN_Place, strPlace);
+        objContentValues.put(COLUMN_PathPhoto,strPathPhoto);
         return writerDB.insert(TABLE_CK, null, objContentValues);
     }//Add NewValues
 
     public Cursor readASC() {
-        Cursor desc = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_CPhoto}, null, null, null, null, COLUMN_InputDate + " ASC");
+        Cursor desc = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_CPhoto,COLUMN_Place,COLUMN_PathPhoto}, null, null, null, null, COLUMN_InputDate + " DESC");
         if (desc != null) {
             desc.moveToFirst();
         }
@@ -87,13 +93,13 @@ public class CK_TABLE {
     }//รวมรายจ่ายระหว่างวัน
     public Cursor readRowOfId(String strId){
         String Id = strId;
-        Cursor objCursor = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_CPhoto}, COLUMN_ID + " = '" + Id + "'", null, null, null, null);
+        Cursor objCursor = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_CPhoto,COLUMN_Place,COLUMN_PathPhoto}, COLUMN_ID + " = '" + Id + "'", null, null, null, null);
         if (objCursor!=null){
             objCursor.moveToFirst();
             Log.d("readRowOfDate","Success");
         }
         return objCursor;
-    }
+    }//อ่าน Row เอาไว้ Edit
     public int SumOutcomeAll(){
         int ValueOutcome=0;
         Cursor objCursorOut = readDB.rawQuery("SELECT SUM(outcome) FROM CK_TABLE;", null);
@@ -119,7 +125,7 @@ public class CK_TABLE {
         objContentValues.put(COLUMN_Income, douIncome);
         objContentValues.put(COLUMN_CPhoto, strPhoto);
         return writerDB.update("CK_TABLE",objContentValues,"_id=?",new String[]{CheckId});
-    }
+    }//Update Income
     public long EditRowDataOutcome(String strInputdate, String strCate, String strCateId
             , String strNote, Double douOutcome, String strPhoto ,String CheckId){
         ContentValues objContentValues = new ContentValues();
@@ -130,6 +136,6 @@ public class CK_TABLE {
         objContentValues.put(COLUMN_Outcome, douOutcome);
         objContentValues.put(COLUMN_CPhoto, strPhoto);
         return writerDB.update("CK_TABLE",objContentValues,"_id=?",new String[]{CheckId});
-    }
+    }//Update Outcome
 
 }//Main Class
