@@ -78,18 +78,19 @@ public class RowDataAdp extends RecyclerSwipeAdapter<RowDataAdp.RowDataHolder> {
         holder.ImgSwipDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sirm.removeShownLayouts(holder.swipeLayout);
-                lRowData.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, lRowData.size());
-                String strid = (String) holder.Txtid.getText();
-                Log.d("IDROW", "=" + strid);
-                //objCkTable.DeleteRowData(strid);
-                final Snackbar sbSnack =Snackbar.make(v, "Do you want to Delete", Snackbar.LENGTH_INDEFINITE);
-                       sbSnack.setAction("Undo", new View.OnClickListener() {
+
+               final Snackbar sbSnack =Snackbar.make(v, "Do you want to Delete", Snackbar.LENGTH_LONG);
+                       sbSnack.setAction("Yes", new View.OnClickListener() {
                            @Override
                            public void onClick(View v) {
-                               updateList(lRowData);
+                               sirm.removeShownLayouts(holder.swipeLayout);
+                               lRowData.remove(position);
+                               notifyItemRemoved(position);
+                               notifyItemRangeChanged(position, lRowData.size());
+                               String strid = (String) holder.Txtid.getText();
+                               Log.d("IDROW", "=" + strid);
+                               objCkTable.DeleteRowData(strid);
+                               //updateList(lRowData);
                            }
                        });
                 sbSnack.show();
@@ -101,10 +102,10 @@ public class RowDataAdp extends RecyclerSwipeAdapter<RowDataAdp.RowDataHolder> {
             @Override
             public void onClick(View v) {
                 String strid = (String) holder.Txtid.getText();
-               /* String strDate = (String) holder.TxDate.getText();
+                String strDate = (String) holder.TxDate.getText();
                 String strCate = (String) holder.TxCate.getText();
                 String strInMoney = (String) holder.TxMoney.getText();
-                String strOutMoney = (String) holder.TxtOutMoney.getText()*/
+                String strOutMoney = (String) holder.TxtOutMoney.getText();
                 String strNote = (String) holder.TxNote.getText();
 
                 Log.d("IDROW", "=" + strid);
@@ -112,11 +113,11 @@ public class RowDataAdp extends RecyclerSwipeAdapter<RowDataAdp.RowDataHolder> {
                //v.getContext().startActivity(new Intent(context,EditDescript.class));
                 Intent intent = new Intent(context,EditDescript.class);
                 intent.putExtra("ID",strid);
-               /* intent.putExtra("Date",strDate);
+                intent.putExtra("Date",strDate);
                 intent.putExtra("Cate",strCate);
                 intent.putExtra("InMoney",strInMoney);
                 intent.putExtra("OutMoney",strOutMoney);
-                intent.putExtra("Note",strNote);*/
+                intent.putExtra("Note",strNote);
                 context.startActivity(intent);
             }
         });

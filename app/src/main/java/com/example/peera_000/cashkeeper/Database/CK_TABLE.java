@@ -73,7 +73,7 @@ public class CK_TABLE {
     }//Add NewValues
 
     public Cursor readASC() {
-        Cursor desc = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_CPhoto,COLUMN_Place,COLUMN_PathPhoto}, null, null, null, null, COLUMN_InputDate + " DESC");
+        Cursor desc = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_CPhoto,COLUMN_Place,COLUMN_PathPhoto}, null, null, null, null, COLUMN_InputDate + " ASC");
         if (desc != null) {
             desc.moveToFirst();
         }

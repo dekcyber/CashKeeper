@@ -88,7 +88,7 @@ public class EditDescript extends AppCompatActivity {
     private String strCate;
     private String strCateId;
     private int intPhoto;
-    private int comparePhoto;
+    private String PathPhoto ;
     private AddDescript addDescript = new AddDescript();
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -333,8 +333,16 @@ public class EditDescript extends AppCompatActivity {
 
         int PathPhotoIndex = objReadrowCursor.getColumnIndex(CK_TABLE.COLUMN_PathPhoto);
         strPathPhoto = objReadrowCursor.getString(PathPhotoIndex);
-        Bitmap bitmap = BitmapFactory.decodeFile(strPathPhoto);
-        ImgPathPhotoTest.setImageBitmap(bitmap);
+        PathPhoto = Edsp.getString("EditPathPhoto",null);
+        if (PathPhoto != null){
+            Bitmap bitmap = BitmapFactory.decodeFile(PathPhoto);
+            ImgPathPhotoTest.setImageBitmap(bitmap);
+        }else {
+            if (strPathPhoto!=null){
+                Bitmap bitmap = BitmapFactory.decodeFile(strPathPhoto);
+                ImgPathPhotoTest.setImageBitmap(bitmap);
+            }
+        }
 
         edit_Edsp.commit();
 
@@ -459,6 +467,7 @@ public class EditDescript extends AppCompatActivity {
                 options.inJustDecodeBounds = false;
                 bm = BitmapFactory.decodeFile(selectedImagePath, options);
                 ImgPathPhotoTest.setImageBitmap(bm);
+                PathPhoto = selectedImagePath;
                 edit_Edsp.putString("EditPathPhoto",selectedImagePath);
                 edit_Edsp.commit();
                 break;

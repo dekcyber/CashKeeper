@@ -495,7 +495,12 @@ public class AddDescript extends AppCompatActivity implements
         Note = edtNote.getText().toString();
         Date = TxtDatepicker.getText().toString();
         Money = edtMonney.getText().toString();
-        CharSequence charPlace = NamePlace.toString();
+        String strPlace;
+        if (NamePlace!=null) {
+           strPlace = NamePlace.toString();
+        }else {
+           strPlace = null;
+        }
         String strImgPhoto = Integer.toString(imgPhoto);
         int CheckIncome = sp.getInt("IncomePosition", -1);
         int CheckTab = sp.getInt("CheckTab", 0);
@@ -522,7 +527,7 @@ public class AddDescript extends AppCompatActivity implements
             case R.id.OK:
 
                 if (CheckTab == 2) {
-                    ck_table.addNewValuesIncome(Date, Category, Nameid, "Dekcyber", Note, douMoney, strImgPhoto, (String) charPlace,mCurrentPhotoPath);
+                    ck_table.addNewValuesIncome(Date, Category, Nameid, "Dekcyber", Note, douMoney, strImgPhoto, strPlace,mCurrentPhotoPath);
                     Intent In = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(In);
                     Log.d("Date", "=" + Date);
@@ -530,7 +535,7 @@ public class AddDescript extends AppCompatActivity implements
                     Log.d("photo", "=" + imgPhoto);
                     Log.d("CheckTab", "=" + CheckTab);
                 } else if (CheckTab == 0) {
-                    ck_table.addNewValuesOutcome(Date, Category, Nameid, "Dekcyber", Note, douMoney, strImgPhoto, (String) charPlace,mCurrentPhotoPath);
+                    ck_table.addNewValuesOutcome(Date, Category, Nameid, "Dekcyber", Note, douMoney, strImgPhoto,strPlace,mCurrentPhotoPath);
                     Intent In = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(In);
                     Log.d("Date", "=" + Date);
