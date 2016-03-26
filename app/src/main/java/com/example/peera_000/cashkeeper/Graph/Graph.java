@@ -1,6 +1,7 @@
 package com.example.peera_000.cashkeeper.Graph;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -9,28 +10,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.peera_000.cashkeeper.MainCode.Overview;
 import com.example.peera_000.cashkeeper.R;
-import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.formatter.YAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+
+import java.io.LineNumberReader;
 import java.util.ArrayList;
 
 public class Graph extends Fragment {
-    TextView Graph;
-    private PieChart mChart;
-    private float[] ydata = {5, 10, 15, 30, 40};
-    private String[] xdata = {"Sony", "Huawei", "LG", "Apple", "Samsung"};
-    private RelativeLayout relaGraph;
+    private BarChart mChart;
+    private SeekBar mSeekBarX, mSeekBarY;
+    private TextView tvX, tvY;
+    private float[] yData = {5, 10, 15, 30, 40};
+    private String[] xData = {"Sony", "Huawei", "LG", "Apple", "Samsung"};
 
     public static Overview newInstance() {
         Overview TabFrag2 = new Overview();
@@ -43,96 +50,52 @@ public class Graph extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.graph, container, false);
-        relaGraph = (RelativeLayout) v.findViewById(R.id.RelaGraph);
-        mChart = new PieChart(getContext());
-        //ใส่กราฟใน layout
-        relaGraph.addView(mChart);
-        relaGraph.setBackgroundColor(Color.LTGRAY);
-        //ตั้งค่ากราฟ
-        mChart.setUsePercentValues(true);
-        mChart.setDescription("SmartPhone Market Share");
-        mChart.setDrawHoleEnabled(true);
-        mChart.setHoleRadius(7);
-        mChart.setTransparentCircleRadius(10);
 
-        mChart.setRotationAngle(0);
-        mChart.setRotationEnabled(true);
+        mChart = (BarChart) v.findViewById(R.id.chart);
 
-        mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-                if (e == null) {
-                    return;
-                }
-                Snackbar.make(v, xdata[e.getXIndex()] + " = " + e.getVal() + "%", Snackbar.LENGTH_SHORT);
+        mChart.setDescription("");
 
-            }
+        // if more than 60 entries are displayed in the chart, no values will be
+        // drawn
+        mChart.setMaxVisibleValueCount(60);
 
-            @Override
-            public void onNothingSelected() {
+        // scaling can now only be done on x- and y-axis separately
+        mChart.setPinchZoom(false);
 
-            }
-        });
+        mChart.setDrawBarShadow(false);
+        mChart.setDrawGridBackground(false);
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setSpaceBetweenLabels(0);
+        xAxis.setDrawGridLines(false);
 
-        //เพิ่มข้อมูล
-        addData();
+        mChart.getAxisLeft().setDrawGridLines(false);
 
-        //Customize Legends
-        Legend l = mChart.getLegend();
-        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
-        l.setXEntrySpace(7);
-        l.setYEntrySpace(5);
+        // add a nice and smooth animation
+        mChart.animateY(2500);
 
+        mChart.getLegend().setEnabled(false);
+        setData();
         return v;
     }
 
-    private void addData() {
-        ArrayList<Entry> yValsl = new ArrayList<Entry>();
-        for (int i = 0; i < ydata.length; i++){
-            yValsl.add(new Entry(ydata[i], i));}
+    private void setData() {
+        ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
+        for (int i = 0; i < yData.length; i++) {
+            yVals.add(new BarEntry(yData[i], i));
 
+        }
         ArrayList<String> xVals = new ArrayList<String>();
-        for (int j = 0; j < xdata.length; j++){
-            xVals.add(xdata[j]);}
-
-        PieDataSet dataSet = new PieDataSet(yValsl,"Market Share");
-        dataSet.setSliceSpace(3);
-        dataSet.setSelectionShift(5);
-
-        ArrayList<Integer> colors = new ArrayList<Integer>();
-        for (int c: ColorTemplate.VORDIPLOM_COLORS){
-            colors.add(c);
+        for (int i = 0; i < xData.length; i++) {
+            xVals.add(xData[i]);
         }
-        for (int c: ColorTemplate.JOYFUL_COLORS){
-            colors.add(c);
-        }
-        for (int c: ColorTemplate.COLORFUL_COLORS){
-            colors.add(c);
-        }
-        for (int c: ColorTemplate.LIBERTY_COLORS){
-            colors.add(c);
-        }
-        for (int c: ColorTemplate.PASTEL_COLORS){
-            colors.add(c);
-        }
-        colors.add(ColorTemplate.getHoloBlue());
-        dataSet.setColors(colors);
-
-        //instantiate pie data object now
-        PieData data = new PieData(xVals,dataSet);
-        data.setValueFormatter(new PercentFormatter());
-        data.setValueTextSize(14);
-        data.setValueTextColor(R.color.Gray);
-
+        BarDataSet dataSet = new BarDataSet(yVals, "Make Share");
+        dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
+        BarData data = new BarData(xVals,dataSet);
         mChart.setData(data);
-
-        //use all highlight
-        mChart.highlightValue(null);
-
-        // update pie chart
         mChart.invalidate();
 
-
-
     }
+
+
 }
