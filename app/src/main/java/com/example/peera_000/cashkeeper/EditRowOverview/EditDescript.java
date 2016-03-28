@@ -75,6 +75,7 @@ public class EditDescript extends AppCompatActivity {
     private String Date;
     private String Place;
     private String strPlace;
+    private String strEditPlace;
     private String strPathPhoto;
     private CharSequence NamePlace;
     private int imgPhoto;
@@ -199,31 +200,52 @@ public class EditDescript extends AppCompatActivity {
         Log.d("AbsolutePath", "= " + mCurrentPhotoPath);
         return image;
     }
+    private File setUpPhotoFile() throws IOException {
+
+        File f = createImageFile();
+        mCurrentPhotoPath = f.getAbsolutePath();
+        Log.d("AbsolutePath","= "+mCurrentPhotoPath);
+        return f;
+    }
     private void setPic() {
-        // Get the dimensions of the View
         int targetW = ImgPathPhotoTest.getWidth();
         int targetH = ImgPathPhotoTest.getHeight();
 
-        // Get the dimensions of the bitmap
+		/* Get the size of the image */
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         int photoW = bmOptions.outWidth;
         int photoH = bmOptions.outHeight;
 
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+		/* Figure out which way needs to be reduced less */
+        int scaleFactor = 1;
+        if ((targetW > 0) || (targetH > 0)) {
+            scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+        }
 
-        // Decode the image file into a Bitmap sized to fill the View
+		/* Set bitmap options to scale the image decode target */
         bmOptions.inJustDecodeBounds = false;
         bmOptions.inSampleSize = scaleFactor;
         bmOptions.inPurgeable = true;
 
+		/* Decode the JPEG file into a Bitmap */
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
+		/* Associate the Bitmap to the ImageView */
         ImgPathPhotoTest.setImageBitmap(bitmap);
+        ImgPathPhotoTest.setVisibility(View.VISIBLE);
         edit_Edsp.putString("EditPathPhoto", mCurrentPhotoPath);
         edit_Edsp.commit();
     }
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    }
+
 
     public void PlacePicker() {
 
@@ -325,14 +347,17 @@ public class EditDescript extends AppCompatActivity {
         Place = Edsp.getString("EditPlace",null);
         if (Place!=null){
             txtPlace.setText(Place);
+            strEditPlace = Place;
         }else {
             if (strPlace!=null){
                 txtPlace.setText(strPlace);
+                strEditPlace = strPlace;
             }
         }
 
         int PathPhotoIndex = objReadrowCursor.getColumnIndex(CK_TABLE.COLUMN_PathPhoto);
         strPathPhoto = objReadrowCursor.getString(PathPhotoIndex);
+        Log.d("AbsolutePath","EditPath = "+ strPathPhoto);
         PathPhoto = Edsp.getString("EditPathPhoto",null);
         if (PathPhoto != null){
             Bitmap bitmap = BitmapFactory.decodeFile(PathPhoto);
@@ -397,6 +422,16 @@ public class EditDescript extends AppCompatActivity {
         };
 
     }
+    private void handleBigCameraPhoto() {
+
+        if (mCurrentPhotoPath != null) {
+            Log.d("AbsolutePath","handleBigCameraPhoto= "+mCurrentPhotoPath);
+            setPic();
+            galleryAddPic();
+            mCurrentPhotoPath = null;
+        }
+
+    }
 
     @Override
     protected Dialog onCreateDialog(int id) {
@@ -443,7 +478,7 @@ public class EditDescript extends AppCompatActivity {
                 }
                 break;
             case REQUEST_CAMERA:
-                setPic();
+                handleBigCameraPhoto();
                 break;
             case GALLERY_PICTURE:
                 Uri selectedImageUri = data.getData();
@@ -479,6 +514,12 @@ public class EditDescript extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Date = TxtDatepicker.getText().toString();
+        String strPlace;
+        if (NamePlace!=null) {
+            strPlace = NamePlace.toString();
+        }else {
+            strPlace = null;
+        }
         if (Date == null) {
             Date = Edsp.getString("Date", null);
         }
@@ -501,14 +542,14 @@ public class EditDescript extends AppCompatActivity {
 
             case R.id.OK:
                 if (intChecktab == 2) {
-                    ck_table.EditRowDataIncome(Date, strCate, strCateId, Note, douMoney, strPhoto, strRowId);
+                    ck_table.EditRowDataIncome(Date, strCate, strCateId, Note, douMoney, strPhoto,strPlace,null,strRowId);
                     Toast.makeText(this, "CLick", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(this, MainActivity.class);
                     edit_Edsp.clear();
                     edit_Edsp.commit();
                     startActivity(intent);
                 } else if (intChecktab == 1 || intChecktab == 0) {
-                    ck_table.EditRowDataOutcome(Date, strCate, strCateId, Note, douMoney, strPhoto, strRowId);
+                    ck_table.EditRowDataOutcome(Date, strCate, strCateId, Note, douMoney, strPhoto,strPlace,null, strRowId);
                     Toast.makeText(this, "CLick", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(this, MainActivity.class);
                     edit_Edsp.clear();

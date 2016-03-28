@@ -1,18 +1,26 @@
 package com.example.peera_000.cashkeeper.Graph;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.peera_000.cashkeeper.Adapter.SpinnerAdapter;
+import com.example.peera_000.cashkeeper.Database.CK_TABLE;
 import com.example.peera_000.cashkeeper.MainCode.Overview;
 import com.example.peera_000.cashkeeper.R;
 import com.github.mikephil.charting.charts.BarChart;
@@ -30,15 +38,20 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 
 import java.io.LineNumberReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Graph extends Fragment {
-    private BarChart mChart;
-    private SeekBar mSeekBarX, mSeekBarY;
-    private TextView tvX, tvY;
-    private float[] yData = {5, 10, 15, 30, 40};
-    private String[] xData = {"Sony", "Huawei", "LG", "Apple", "Samsung"};
-
+    //Explicit
+    private BarChart_Graph objBarChart;
+    private android.support.v4.app.FragmentTransaction fragmentTransaction;
+    private android.support.v4.app.FragmentManager fragmentManager;
+    private Spinner spinnerTypeGraph;
+    private ArrayAdapter<CharSequence> arrayAdapterGraph;
+    private SpinnerAdapter spinnerAdapter;
+    private TextView TxtGraphType;
+    private Typeface customFont;
     public static Overview newInstance() {
         Overview TabFrag2 = new Overview();
         return TabFrag2;
@@ -50,52 +63,25 @@ public class Graph extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.graph, container, false);
+        customFont = Typeface.createFromAsset(v.getContext().getAssets(), "font/paaymaay_regular.ttf");
+        spinnerTypeGraph = (Spinner) v.findViewById(R.id.SpinnerGraph);
+        TxtGraphType = (TextView) v.findViewById(R.id.TxtTypeGraph);
+        TxtGraphType.setTypeface(customFont);
+        spinnerAdapter = new SpinnerAdapter(getContext(),android.R.layout.simple_spinner_item
+                , Arrays.asList(getResources().getStringArray(R.array.GraphType_Array)));
+        /*arrayAdapterGraph = ArrayAdapter.createFromResource(getContext(),R.array.GraphType_Array,android.R.layout.simple_spinner_item);
+        arrayAdapterGraph.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
+        spinnerTypeGraph.setAdapter(spinnerAdapter);
+        objBarChart = new BarChart_Graph();
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.FragRelaGraph,objBarChart);
+        fragmentTransaction.commit();
 
-        mChart = (BarChart) v.findViewById(R.id.chart);
-
-        mChart.setDescription("");
-
-        // if more than 60 entries are displayed in the chart, no values will be
-        // drawn
-        mChart.setMaxVisibleValueCount(60);
-
-        // scaling can now only be done on x- and y-axis separately
-        mChart.setPinchZoom(false);
-
-        mChart.setDrawBarShadow(false);
-        mChart.setDrawGridBackground(false);
-        XAxis xAxis = mChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setSpaceBetweenLabels(0);
-        xAxis.setDrawGridLines(false);
-
-        mChart.getAxisLeft().setDrawGridLines(false);
-
-        // add a nice and smooth animation
-        mChart.animateY(2500);
-
-        mChart.getLegend().setEnabled(false);
-        setData();
         return v;
     }
 
-    private void setData() {
-        ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
-        for (int i = 0; i < yData.length; i++) {
-            yVals.add(new BarEntry(yData[i], i));
 
-        }
-        ArrayList<String> xVals = new ArrayList<String>();
-        for (int i = 0; i < xData.length; i++) {
-            xVals.add(xData[i]);
-        }
-        BarDataSet dataSet = new BarDataSet(yVals, "Make Share");
-        dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        BarData data = new BarData(xVals,dataSet);
-        mChart.setData(data);
-        mChart.invalidate();
-
-    }
 
 
 }

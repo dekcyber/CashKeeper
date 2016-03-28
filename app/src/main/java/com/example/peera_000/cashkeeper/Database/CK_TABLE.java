@@ -4,9 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.method.TextKeyListener;
 import android.util.Log;
 
 import com.example.peera_000.cashkeeper.Database.CK_OpHelper;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by peera_000 on 31/12/2558.
@@ -27,6 +32,7 @@ public class CK_TABLE {
     public static final String COLUMN_CPhoto = "Cate_photo";
     public static final String COLUMN_Place = "Place";
     public static final String COLUMN_PathPhoto ="PathPhoto";
+    private ArrayList<String> arrayListCate = new ArrayList<String>();
 
     public CK_TABLE(Context context) {
         objCK_OpHelper = new CK_OpHelper(context);
@@ -73,7 +79,7 @@ public class CK_TABLE {
     }//Add NewValues
 
     public Cursor readASC() {
-        Cursor desc = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_CPhoto,COLUMN_Place,COLUMN_PathPhoto}, null, null, null, null, COLUMN_InputDate + " ASC");
+        Cursor desc = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_CPhoto,COLUMN_Place,COLUMN_PathPhoto}, null, null, null, null, COLUMN_InputDate + " DESC");
         if (desc != null) {
             desc.moveToFirst();
         }
@@ -93,7 +99,7 @@ public class CK_TABLE {
     }//รวมรายจ่ายระหว่างวัน
     public Cursor readRowOfId(String strId){
         String Id = strId;
-        Cursor objCursor = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_CPhoto,COLUMN_Place,COLUMN_PathPhoto}, COLUMN_ID + " = '" + Id + "'", null, null, null, null);
+        Cursor objCursor = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_CateID, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_CPhoto, COLUMN_Place, COLUMN_PathPhoto}, COLUMN_ID + " = '" + Id + "'", null, null, null, null);
         if (objCursor!=null){
             objCursor.moveToFirst();
             Log.d("readRowOfDate","Success");
@@ -116,7 +122,7 @@ public class CK_TABLE {
     }//ลบข้อมูลตาม ID
 
     public long EditRowDataIncome(String strInputdate, String strCate, String strCateId
-            , String strNote, Double douIncome, String strPhoto ,String CheckId){
+            , String strNote, Double douIncome, String strPhoto ,String strPlace, String strPathPhoto,String CheckId){
         ContentValues objContentValues = new ContentValues();
         objContentValues.put(COLUMN_InputDate, strInputdate);
         objContentValues.put(COLUMN_Cate, strCate);
@@ -124,10 +130,12 @@ public class CK_TABLE {
         objContentValues.put(COLUMN_Note, strNote);
         objContentValues.put(COLUMN_Income, douIncome);
         objContentValues.put(COLUMN_CPhoto, strPhoto);
+        objContentValues.put(COLUMN_Place,strPlace);
+        objContentValues.put(COLUMN_PathPhoto,strPathPhoto);
         return writerDB.update("CK_TABLE",objContentValues,"_id=?",new String[]{CheckId});
     }//Update Income
     public long EditRowDataOutcome(String strInputdate, String strCate, String strCateId
-            , String strNote, Double douOutcome, String strPhoto ,String CheckId){
+            , String strNote, Double douOutcome, String strPhoto,String strPlace, String strPathPhoto ,String CheckId){
         ContentValues objContentValues = new ContentValues();
         objContentValues.put(COLUMN_InputDate, strInputdate);
         objContentValues.put(COLUMN_Cate, strCate);
@@ -135,7 +143,44 @@ public class CK_TABLE {
         objContentValues.put(COLUMN_Note, strNote);
         objContentValues.put(COLUMN_Outcome, douOutcome);
         objContentValues.put(COLUMN_CPhoto, strPhoto);
+        objContentValues.put(COLUMN_Place,strPlace);
+        objContentValues.put(COLUMN_PathPhoto,strPathPhoto);
         return writerDB.update("CK_TABLE",objContentValues,"_id=?",new String[]{CheckId});
     }//Update Outcome
+    public ArrayList<String> PickCateForGraph(){
+        int CateIndex;
+        String strCate;
+        Set<String> setDuplicate = new HashSet<String>();
+        Cursor objCursor = readDB.query(TABLE_CK, new String[]{COLUMN_Cate},null,null,null,null,null);
+        if (objCursor!=null){
+            objCursor.moveToPosition(-1);
+            while (objCursor.moveToNext()){
+                CateIndex = objCursor.getColumnIndex(COLUMN_Cate);
+                strCate = objCursor.getString(CateIndex);
+                Log.d("CateOfPickGraph","Name = "+strCate);
+                arrayListCate.add(strCate);
+                Log.d("CateOfPickGraph", "Size = " + arrayListCate.size());
+                setDuplicate.addAll(arrayListCate);
+                arrayListCate.clear();
+                arrayListCate.addAll(setDuplicate);
+                Log.d("CateOfPickGraph", "SizeOfNewArray = " + arrayListCate.size());
+            }
+        }
+        return arrayListCate;
+    }
+    public ArrayList<Integer> PickMoneyForGraph(){
+        Cursor objCursor;
+        ArrayList<Integer> arrayListMoney = new ArrayList<Integer>();
+        for (int i = 0; i<arrayListCate.size();i++){
+            objCursor = readDB.rawQuery("SELECT SUM(income),SUM(outcome) FROM CK_TABLE WHERE cate= '"+arrayListCate.get(i) +"';",null);
+            if (objCursor!=null) {
+                objCursor.moveToFirst();
+                Integer douMoney = objCursor.getInt(0) + objCursor.getInt(1);
+                arrayListMoney.add(douMoney);
+                Log.d("MoneyOfPickGraph", "Name = " + arrayListCate.get(i) + " Value = " + douMoney);
+            }
+        }
+        return arrayListMoney;
+    }
 
 }//Main Class
