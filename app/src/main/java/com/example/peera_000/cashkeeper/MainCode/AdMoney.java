@@ -220,8 +220,8 @@ public class AdMoney extends AppCompatActivity {
     protected void onPostResume() {
         Outeditor.remove("OutcomePhoto");
         Outeditor.commit();
-        editor.remove("IncomePhoto");
-        editor.commit();
+        /*editor.remove("IncomePhoto");
+        editor.commit();*/
         super.onPostResume();
     }
 

@@ -52,6 +52,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -89,23 +90,21 @@ public class AddDescript extends AppCompatActivity implements
     private static final int WRITE_External = 3;
     private static final int PICK_IMAGE_ID = 234;
     private static final int PLACE_PICKER_REQUEST = 4;
-    private Uri uri;
     private static DatePickerDialog.OnDateSetListener Datesetpicker;
     private String Money;
     private String MoneyComp;
     private String Category;
     private String Note;
     private String Date;
+    private String strPathPhoto;
     private int imgPhoto;
     private CK_TABLE ck_table;
     double douMoney;
     private String Nameid;
     private Typeface customFont;
-    private Uri mImageCaptureUri;
     private ImageView mImageView;
-    Camera mcamera;
     private String mCurrentPhotoPath;
-    private String strSharePathpho;
+    private String Place;
     private GoogleApiClient mGoogleApiClient;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -138,16 +137,44 @@ public class AddDescript extends AppCompatActivity implements
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Date = TxtDatepicker.getText().toString();
+                editor.putString("AddDesDate", Date);
+                Note = edtNote.getText().toString();
+                editor.putString("AddDesNote", Note);
+                Place = TxtPlace.getText().toString();
+                editor.putString("AddDesPlace", Place);
+                editor.commit();
                 onBackPressed();
                 Log.d("Note", "=" + Note);
             }
         });
+        String Addnote = sp.getString("AddDesNote",null);
+        if (Addnote==null){
+        }else {
+            edtNote.setText(Addnote);
+        }
+        String AddPlace = sp.getString("AddDesPlace",null);
+        if (AddPlace!=null){
+            TxtPlace.setText(AddPlace);
+        }
+
+        Log.d("AddDes","PathOfPhoto = "+strPathPhoto);
+        if (strPathPhoto!=null){
+            Bitmap bitmap = BitmapFactory.decodeFile(strPathPhoto);
+            ImgCameratest.setImageBitmap(bitmap);
+        }
         Calendar calendar = Calendar.getInstance();
         intYear = calendar.get(Calendar.YEAR);
         intMonth = calendar.get(Calendar.MONTH);
         intDate = calendar.get(Calendar.DAY_OF_MONTH);
         TxtDatepicker.setTypeface(customFont);
-        TxtDatepicker.setText(intYear + "/" + (intMonth + 1) + "/" + intDate);
+        String AddDate = sp.getString("AddDesDate",null);
+        if (AddDate==null){
+            TxtDatepicker.setText(intYear + "/" + (intMonth + 1) + "/" + intDate);
+        }else {
+            TxtDatepicker.setText(AddDate);
+        }
+
         Datesetpicker = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -164,64 +191,6 @@ public class AddDescript extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 //เปิดใช้กล้อง ---->1
-               /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                String strTimestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                String strImgFilename = "IMG_"+strTimestamp+".jpg";
-                File file = new File(Environment.getExternalStorageDirectory(),"DCIM/Camera/"+strImgFilename);
-                uri = Uri.fromFile(file);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                startActivityForResult(Intent.createChooser(intent,"Take picture with"),REQUEST_CAMERA);*/
-                //จบเปิดใช้กล้อง ---->1
-
-                //เปิดใช้ gallery ---->2
-                /*Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image*//**//**//**//*");
-                startActivityForResult(Intent.createChooser(intent
-                        , "Select photo from"), 0); */
-                //จบเปิดใช้ gallery ---->2
-
-                //สร้าง Dialog เลือกระหว่างกล้องกับ gallery ---->3
-
-                /*AlertDialog.Builder alertBuild = new AlertDialog.Builder(AddDescript.this);
-                alertBuild.setTitle("Select Image");
-                alertBuild.setAdapter(adapter, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-                        if (item == 0) {
-                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            String strTimestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                            String strImgFilename = "IMG_"+strTimestamp+".jpg";
-                            File file = new File(Environment.getExternalStorageDirectory(),"DCIM/Camera/"+strImgFilename);
-                            uri = Uri.fromFile(file);
-
-                            try {
-                                intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
-                                intent.putExtra("return-data", true);
-
-                                startActivityForResult(intent, REQUEST_CAMERA);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-                            dialog.cancel();
-                        } else {
-                            Intent intent = new Intent();
-
-                            intent.setType("image*//**//**//**//*");
-                            intent.setAction(Intent.ACTION_GET_CONTENT);
-
-                            startActivityForResult(Intent.createChooser(intent, "Complete action using"), GALLERY_PICTURE);
-                        }
-                    }
-                } );
-
-                alertBuild.show();*/
-                //จบ เลือกใช้ระหว่างกล้องกับ gallery ---->3
-
-
-                //-----ใช้ ImagePicker ช่วย-----  ---->4
-               /* Intent chooseImageIntent = ImagePicker.getPickImageIntent(getApplicationContext());
-                startActivityForResult(chooseImageIntent, PICK_IMAGE_ID);*/
-                //----- จบ ImagePicker  ----- ---->4
 
             SelectPhoto();
             }
@@ -230,8 +199,7 @@ public class AddDescript extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 PlacePicker();
-               /* Intent intent = new Intent(getApplicationContext(),Map.class);
-                startActivity(intent);*/
+
             }
         });
 
@@ -376,11 +344,10 @@ public class AddDescript extends AppCompatActivity implements
 
 		/* Decode the JPEG file into a Bitmap */
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        Log.d("AbsolutePath","Setpic = "+mCurrentPhotoPath);
+        Log.d("AbsolutePath", "Setpic = " + mCurrentPhotoPath);
 		/* Associate the Bitmap to the ImageView */
         mImageView.setImageBitmap(bitmap);
-        mImageView.setVisibility(View.VISIBLE);
-
+        //Picasso.with(this).load(mCurrentPhotoPath).into(mImageView);
     }
     private void galleryAddPic() {
         Intent mediaScanIntent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
@@ -438,51 +405,12 @@ public class AddDescript extends AppCompatActivity implements
         //รับค่าจาก ImagePicker ---->4
 
         switch (requestCode) {
-            /*case PICK_IMAGE_ID:
-                Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
-                ImgCameratest.setImageBitmap(bitmap);
-                String strTimestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                String strImgFilename = "PocketM_" + strTimestamp + ".jpg";
-                File file = new File(Environment.getExternalStorageDirectory(), "PocketManagement/Picture/" + strImgFilename);
-                FileOutputStream fOut = null;
-                try {
-                    fOut = new FileOutputStream(file);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-                    fOut.flush();
-                    fOut.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                // TODO use bitmap*/
+
             case REQUEST_CAMERA:
-
-              /*  Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                String strTimestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                String strImgFilename = "PocketM_" + strTimestamp + ".jpg";
-                File destination = new File(Environment.getExternalStorageDirectory(),
-                        "PocketManagement/Picture/" + strImgFilename);
-                FileOutputStream fo = null;
-                try {
-                    fo = new FileOutputStream(destination);
-                    thumbnail.compress(Bitmap.CompressFormat.JPEG,100, fo);
-                    fo.flush();
-                    fo.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                ImgCameratest.setImageBitmap(thumbnail);*/
-               /* if (resultCode==RESULT_OK){
-                Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-                ImgCameratest.setImageBitmap(imageBitmap);
-                }*/
-
                     handleBigCameraPhoto();
-
                 break;
             case GALLERY_PICTURE:
-                Uri selectedImageUri = data.getData();
+               Uri selectedImageUri = data.getData();
                 String[] projection = { MediaStore.MediaColumns.DATA };
                 CursorLoader cursorLoader = new CursorLoader(this,selectedImageUri, projection, null, null,
                         null);
@@ -502,7 +430,11 @@ public class AddDescript extends AppCompatActivity implements
                 options.inSampleSize = scale;
                 options.inJustDecodeBounds = false;
                 bm = BitmapFactory.decodeFile(selectedImagePath, options);
-                ImgCameratest.setImageBitmap(bm);
+                mCurrentPhotoPath = selectedImagePath;
+                editor.putString("PathOfPhoto", mCurrentPhotoPath);
+                editor.commit();
+                mImageView.setImageBitmap(bm);
+                //Picasso.with(this).load(selectedImagePath).into(mImageView);
                 break;
             case PLACE_PICKER_REQUEST:
                 if (resultCode == RESULT_OK) {
@@ -541,7 +473,7 @@ public class AddDescript extends AppCompatActivity implements
         }else {
            strPlace = null;
         }
-        String strPathPhoto = sp.getString("PathOfPhoto",null);
+        strPathPhoto = sp.getString("PathOfPhoto",null);
         String strImgPhoto = Integer.toString(imgPhoto);
         int CheckIncome = sp.getInt("IncomePosition", -1);
         int CheckTab = sp.getInt("CheckTab", 0);

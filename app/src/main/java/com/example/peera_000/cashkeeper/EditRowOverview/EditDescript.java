@@ -40,6 +40,7 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -75,6 +76,7 @@ public class EditDescript extends AppCompatActivity {
     private String Date;
     private String Place;
     private String strPlace;
+    private String strFistAPlace;
     private String strEditPlace;
     private String strPathPhoto;
     private CharSequence NamePlace;
@@ -238,6 +240,38 @@ public class EditDescript extends AppCompatActivity {
         edit_Edsp.putString("EditPathPhoto", mCurrentPhotoPath);
         edit_Edsp.commit();
     }
+    private void setPicMore(String strPathPhoto) {
+        mCurrentPhotoPath = strPathPhoto;
+        int targetW = ImgPathPhotoTest.getWidth();
+        int targetH = ImgPathPhotoTest.getHeight();
+
+		/* Get the size of the image */
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+		/* Figure out which way needs to be reduced less */
+        int scaleFactor = 1;
+        if ((targetW > 0) || (targetH > 0)) {
+            scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+        }
+
+		/* Set bitmap options to scale the image decode target */
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+		/* Decode the JPEG file into a Bitmap */
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
+		/* Associate the Bitmap to the ImageView */
+        ImgPathPhotoTest.setImageBitmap(bitmap);
+        ImgPathPhotoTest.setVisibility(View.VISIBLE);
+        edit_Edsp.putString("EditPathPhoto", mCurrentPhotoPath);
+        edit_Edsp.commit();
+    }
     private void galleryAddPic() {
         Intent mediaScanIntent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
         File f = new File(mCurrentPhotoPath);
@@ -298,10 +332,8 @@ public class EditDescript extends AppCompatActivity {
         if (Note != null) {
             edtNote.setText(Note);
         } else {
-            if (strNote != null) {
                 edtNote.setText(strNote);
                 edit_Edsp.putString("Note", strNote);
-            }
         }
         int DateIndex = objReadrowCursor.getColumnIndex(CK_TABLE.COLUMN_InputDate);
         String strDate = objReadrowCursor.getString(DateIndex);
@@ -360,12 +392,15 @@ public class EditDescript extends AppCompatActivity {
         Log.d("AbsolutePath","EditPath = "+ strPathPhoto);
         PathPhoto = Edsp.getString("EditPathPhoto",null);
         if (PathPhoto != null){
-            Bitmap bitmap = BitmapFactory.decodeFile(PathPhoto);
-            ImgPathPhotoTest.setImageBitmap(bitmap);
+            /*Bitmap bitmap = BitmapFactory.decodeFile(PathPhoto);
+            ImgPathPhotoTest.setImageBitmap(bitmap);*/
+            setPicMore(PathPhoto);
         }else {
             if (strPathPhoto!=null){
-                Bitmap bitmap = BitmapFactory.decodeFile(strPathPhoto);
-                ImgPathPhotoTest.setImageBitmap(bitmap);
+               /* Bitmap bitmap = BitmapFactory.decodeFile(strPathPhoto);
+                ImgPathPhotoTest.setImageBitmap(bitmap);*/
+                //Picasso.with(this).load(strPathPhoto).into(ImgPathPhotoTest);
+                setPicMore(strPathPhoto);
             }
         }
 
@@ -427,6 +462,8 @@ public class EditDescript extends AppCompatActivity {
         if (mCurrentPhotoPath != null) {
             Log.d("AbsolutePath","handleBigCameraPhoto= "+mCurrentPhotoPath);
             setPic();
+            edit_Edsp.putString("EditDesPathOfPhoto", mCurrentPhotoPath);
+            edit_Edsp.commit();
             galleryAddPic();
             mCurrentPhotoPath = null;
         }
@@ -514,11 +551,11 @@ public class EditDescript extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Date = TxtDatepicker.getText().toString();
-        String strPlace;
+
         if (NamePlace!=null) {
-            strPlace = NamePlace.toString();
+            Place = NamePlace.toString();
         }else {
-            strPlace = null;
+            Place = null;
         }
         if (Date == null) {
             Date = Edsp.getString("Date", null);
@@ -526,6 +563,10 @@ public class EditDescript extends AppCompatActivity {
         Note = edtNote.getText().toString();
         if (Note == null) {
             Note = Edsp.getString("Note", null);
+        }
+        PathPhoto = Edsp.getString("EditPathPhoto", null);
+        if (PathPhoto!=null){
+            strPathPhoto = PathPhoto;
         }
         Double douMoney = Double.parseDouble(Money);
         String strcheckM = edtMonney.getText().toString();
@@ -542,14 +583,14 @@ public class EditDescript extends AppCompatActivity {
 
             case R.id.OK:
                 if (intChecktab == 2) {
-                    ck_table.EditRowDataIncome(Date, strCate, strCateId, Note, douMoney, strPhoto,strPlace,null,strRowId);
+                    ck_table.EditRowDataIncome(Date, strCate, strCateId, Note, douMoney, strPhoto,Place,strPathPhoto,strRowId);
                     Toast.makeText(this, "CLick", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(this, MainActivity.class);
                     edit_Edsp.clear();
                     edit_Edsp.commit();
                     startActivity(intent);
                 } else if (intChecktab == 1 || intChecktab == 0) {
-                    ck_table.EditRowDataOutcome(Date, strCate, strCateId, Note, douMoney, strPhoto,strPlace,null, strRowId);
+                    ck_table.EditRowDataOutcome(Date, strCate, strCateId, Note, douMoney, strPhoto,Place,strPathPhoto, strRowId);
                     Toast.makeText(this, "CLick", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(this, MainActivity.class);
                     edit_Edsp.clear();

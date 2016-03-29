@@ -41,10 +41,10 @@ public class Overview extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private View v;
     private Handler handler;
-    private SharedPreferences sp;
+    private SharedPreferences sp,Edsp;
     private SharedPreferences Outsp;
     private SharedPreferences.Editor Outeditor;
-    private SharedPreferences.Editor editor;
+    private SharedPreferences.Editor editor,edit_Edsp;
     private static final String DESC = "SELECT * FROM CK_TABLE ORDER BY DESC";
 
 
@@ -68,6 +68,10 @@ public class Overview extends Fragment {
         Outsp = getActivity().getSharedPreferences("OutcomeData", Context.MODE_PRIVATE);
         editor = sp.edit();
         Outeditor = Outsp.edit();
+        Edsp = getActivity().getSharedPreferences("EditRowOverData",Context.MODE_PRIVATE);
+        edit_Edsp = Edsp.edit();
+        edit_Edsp.clear();
+        edit_Edsp.commit();
         editor.clear();
         editor.commit();
         Outeditor.clear();
