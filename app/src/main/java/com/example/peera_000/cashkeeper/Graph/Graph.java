@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -25,6 +26,7 @@ import com.example.peera_000.cashkeeper.MainCode.Overview;
 import com.example.peera_000.cashkeeper.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -44,14 +46,17 @@ import java.util.Arrays;
 
 public class Graph extends Fragment {
     //Explicit
-    private BarChart_Graph objBarChart;
-    private android.support.v4.app.FragmentTransaction fragmentTransaction;
+    private BarChart_Graph FragBarChart;
+    private PieChart_Graph FragPieChart;
+    private android.support.v4.app.FragmentTransaction fragTran;
+    private android.support.v4.app.FragmentTransaction fragTranP;
     private android.support.v4.app.FragmentManager fragmentManager;
     private Spinner spinnerTypeGraph;
     private ArrayAdapter<CharSequence> arrayAdapterGraph;
     private SpinnerAdapter spinnerAdapter;
     private TextView TxtGraphType;
     private Typeface customFont;
+
     public static Overview newInstance() {
         Overview TabFrag2 = new Overview();
         return TabFrag2;
@@ -67,21 +72,40 @@ public class Graph extends Fragment {
         spinnerTypeGraph = (Spinner) v.findViewById(R.id.SpinnerGraph);
         TxtGraphType = (TextView) v.findViewById(R.id.TxtTypeGraph);
         TxtGraphType.setTypeface(customFont);
-        spinnerAdapter = new SpinnerAdapter(getContext(),android.R.layout.simple_spinner_item
+        spinnerAdapter = new SpinnerAdapter(getContext(), android.R.layout.simple_spinner_item
                 , Arrays.asList(getResources().getStringArray(R.array.GraphType_Array)));
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         /*arrayAdapterGraph = ArrayAdapter.createFromResource(getContext(),R.array.GraphType_Array,android.R.layout.simple_spinner_item);
         arrayAdapterGraph.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
         spinnerTypeGraph.setAdapter(spinnerAdapter);
-        objBarChart = new BarChart_Graph();
+        FragBarChart = new BarChart_Graph();
+        FragPieChart = new PieChart_Graph();
         fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.FragRelaGraph,objBarChart);
-        fragmentTransaction.commit();
+
+        spinnerTypeGraph.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position==0){
+                    fragTran = fragmentManager.beginTransaction();
+                    fragTran.replace(R.id.FragRelaGraph, FragBarChart);
+                    fragTran.commit();
+                }else if(position ==1){
+                    getFragmentManager().beginTransaction().remove(FragBarChart).commit();
+                    fragTranP = fragmentManager.beginTransaction();
+                    fragTranP.replace(R.id.FragRelaGraph,FragPieChart);
+                    fragTranP.commit();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         return v;
     }
-
-
 
 
 }

@@ -103,7 +103,6 @@ public class AdMoney extends AppCompatActivity {
         TabAdmoney.addTab(outcome, 0, true);
         TabAdmoney.addTab(income, 1, false);
 
-
         /*
         Setting Title text for our tabs respectively
          */
@@ -134,13 +133,11 @@ public class AdMoney extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-
                 VPAdmoney.setCurrentItem(tab.getPosition());
 
                 if (position == 0) {
                     CheckTab = 1;
                     editor.putInt("CheckTab", CheckTab);
-
                     TxIn.setTextColor(getResources().getColorStateList(R.color.selector));
                     Log.d("CheckTab", "=" + CheckTab);
                 } else if (position == 1) {

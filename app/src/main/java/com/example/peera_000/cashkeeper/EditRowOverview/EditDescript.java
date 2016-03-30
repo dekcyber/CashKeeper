@@ -81,6 +81,7 @@ public class EditDescript extends AppCompatActivity {
     private String strPathPhoto;
     private CharSequence NamePlace;
     private int imgPhoto;
+    private int IntCheckEditTab;
     private CK_TABLE ck_table;
     double douMoney;
     private String Nameid;
@@ -312,10 +313,11 @@ public class EditDescript extends AppCompatActivity {
         //Log.d("Edit", "MoneyOut = " + strOutcomeM);
         if (strIncomeM == null) {
             Money = strOutcomeM;
-
+            IntCheckEditTab = 1;
             Log.d("Edit", "MoneyOut = " + strOutcomeM);
         } else {
             Money = strIncomeM;
+            IntCheckEditTab = 2;
             Log.d("Edit", "MoneyIn = " + strIncomeM);
         }
         MoneyComp = Edsp.getString("IncomeMChange", null);
@@ -578,18 +580,31 @@ public class EditDescript extends AppCompatActivity {
         String strPhoto = Integer.toString(imgPhoto);
         String strRowId = strID;
         int intChecktab = Edsp.getInt("EditCheckTab", 0);
+
+        if (intChecktab ==2){
+            IntCheckEditTab = intChecktab;
+            Log.d("Edit", "CheckTab = " + intChecktab);
+            Log.d("Edit", "CheckTabNew = " + IntCheckEditTab);
+        }else if (intChecktab == 1){
+            IntCheckEditTab = intChecktab;
+            Log.d("Edit", "CheckTab = " + intChecktab);
+            Log.d("Edit", "CheckTabNew = " + IntCheckEditTab);
+        }else {
+            Log.d("Edit", "CheckTab = " + intChecktab);
+            Log.d("Edit", "CheckTabNew = " + IntCheckEditTab);
+        }
         Log.d("Edit", "CheckTab = " + intChecktab);
         switch (item.getItemId()) {
 
             case R.id.OK:
-                if (intChecktab == 2) {
+                if (IntCheckEditTab == 2) {
                     ck_table.EditRowDataIncome(Date, strCate, strCateId, Note, douMoney, strPhoto,Place,strPathPhoto,strRowId);
                     Toast.makeText(this, "CLick", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(this, MainActivity.class);
                     edit_Edsp.clear();
                     edit_Edsp.commit();
                     startActivity(intent);
-                } else if (intChecktab == 1 || intChecktab == 0) {
+                } else if (IntCheckEditTab == 1) {
                     ck_table.EditRowDataOutcome(Date, strCate, strCateId, Note, douMoney, strPhoto,Place,strPathPhoto, strRowId);
                     Toast.makeText(this, "CLick", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(this, MainActivity.class);

@@ -37,6 +37,13 @@ public class BarChart_Graph extends Fragment {
     private ArrayList<Integer> arrayListMoney;
     private Button buttonTest;
 
+    public static BarChart_Graph newInstance(){
+        BarChart_Graph barChart_graph = new BarChart_Graph();
+
+
+        return barChart_graph;
+    }
+
 
     public BarChart_Graph() {
         // Required empty public constructor
@@ -48,12 +55,12 @@ public class BarChart_Graph extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_bar_chart__graph,container,false);
+        mChart = (BarChart) v.findViewById(R.id.chart);
         objCK_Table = new CK_TABLE(getContext());
-
         arrayListCate = objCK_Table.PickCateForGraph();
         arrayListMoney = objCK_Table.PickMoneyForGraph();
-        mChart = (BarChart) v.findViewById(R.id.chart);
-
+        mChart.notifyDataSetChanged();
+        mChart.invalidate();
         mChart.setDescription("");
 
         // if more than 60 entries are displayed in the chart, no values will be
@@ -79,7 +86,15 @@ public class BarChart_Graph extends Fragment {
         setData();
         Log.d("ArrayList", "Size = " + arrayListCate.size());
         return v;
+    }//Oncreate
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
     }
+
     private void setData() {
         ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
         for (int i = 0; i < arrayListMoney.size(); i++) {
@@ -98,4 +113,15 @@ public class BarChart_Graph extends Fragment {
 
     }//SetData
 
+    @Override
+    public void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
 }//MainClass
