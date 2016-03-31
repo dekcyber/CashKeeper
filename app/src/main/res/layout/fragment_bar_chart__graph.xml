@@ -3,11 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.peera_000.cashkeeper.Graph.BarChart_Graph">
-
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/BarSwiprefesh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>

@@ -89,6 +89,7 @@ public class Graph extends Fragment {
                     fragTran = fragmentManager.beginTransaction();
                     fragTran.replace(R.id.FragRelaGraph, FragBarChart);
                     fragTran.commit();
+                    
                 }else if(position ==1){
                     getFragmentManager().beginTransaction().remove(FragBarChart).commit();
                     fragTranP = fragmentManager.beginTransaction();

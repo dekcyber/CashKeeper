@@ -1,12 +1,17 @@
 package com.example.peera_000.cashkeeper.Adapter;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.example.peera_000.cashkeeper.Database.CK_TABLE;
+import com.example.peera_000.cashkeeper.Graph.PieChart_Graph;
 import com.example.peera_000.cashkeeper.MainCode.Overview;
 import com.example.peera_000.cashkeeper.Graph.Graph;
+
+import java.util.ArrayList;
 
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter{
@@ -32,10 +37,12 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter{
         {
             Overview overview = new Overview();
 
+
             return overview;
         } else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
         {
             Graph graph = new Graph();
+
             return graph;
         }
 

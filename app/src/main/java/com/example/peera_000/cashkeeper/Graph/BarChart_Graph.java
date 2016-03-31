@@ -3,6 +3,7 @@ package com.example.peera_000.cashkeeper.Graph;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.peera_000.cashkeeper.Database.CK_TABLE;
 import com.example.peera_000.cashkeeper.R;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -35,7 +37,7 @@ public class BarChart_Graph extends Fragment {
     private CK_TABLE objCK_Table ;
     private ArrayList<String>arrayListCate;
     private ArrayList<Integer> arrayListMoney;
-    private Button buttonTest;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public static BarChart_Graph newInstance(){
         BarChart_Graph barChart_graph = new BarChart_Graph();
@@ -56,6 +58,7 @@ public class BarChart_Graph extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_bar_chart__graph,container,false);
         mChart = (BarChart) v.findViewById(R.id.chart);
+        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.BarSwiprefesh);
         objCK_Table = new CK_TABLE(getContext());
         arrayListCate = objCK_Table.PickCateForGraph();
         arrayListMoney = objCK_Table.PickMoneyForGraph();
@@ -85,6 +88,17 @@ public class BarChart_Graph extends Fragment {
         mChart.getLegend().setEnabled(false);
         setData();
         Log.d("ArrayList", "Size = " + arrayListCate.size());
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mChart.animateY(2000);
+                setData();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
+                R.color.colorPrimary, R.color.Crimson);
         return v;
     }//Oncreate
 
@@ -106,7 +120,7 @@ public class BarChart_Graph extends Fragment {
             xVals.add(arrayListCate.get(i));
         }
         BarDataSet dataSet = new BarDataSet(yVals, "Make Share");
-        dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
+        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         BarData data = new BarData(xVals,dataSet);
         mChart.setData(data);
         mChart.invalidate();

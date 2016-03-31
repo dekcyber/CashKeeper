@@ -90,6 +90,8 @@ public class RowDataAdp extends RecyclerSwipeAdapter<RowDataAdp.RowDataHolder> {
                                String strid = (String) holder.Txtid.getText();
                                Log.d("IDROW", "=" + strid);
                                objCkTable.DeleteRowData(strid);
+                               notifyDataSetChanged();
+
                                //updateList(lRowData);
                            }
                        });

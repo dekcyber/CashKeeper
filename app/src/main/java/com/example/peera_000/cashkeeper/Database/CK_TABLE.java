@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.method.TextKeyListener;
 import android.util.Log;
 
+import com.example.peera_000.cashkeeper.Adapter.ViewPagerAdapter;
 import com.example.peera_000.cashkeeper.Database.CK_OpHelper;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class CK_TABLE {
         readDB = objCK_OpHelper.getReadableDatabase();
 
     }//Constructor
+
 
     public Cursor readAllData() {
         Cursor objCursor = readDB.query(TABLE_CK, new String[]{COLUMN_ID, COLUMN_InputDate, COLUMN_Name, COLUMN_Cate, COLUMN_Note, COLUMN_Income, COLUMN_Outcome, COLUMN_CPhoto}, null, null, null, null, null);

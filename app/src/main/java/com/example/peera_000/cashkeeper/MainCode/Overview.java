@@ -1,5 +1,6 @@
 package com.example.peera_000.cashkeeper.MainCode;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,8 @@ import android.view.ViewGroup;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.example.peera_000.cashkeeper.Adapter.RowDataAdp;
 import com.example.peera_000.cashkeeper.Database.CK_TABLE;
+import com.example.peera_000.cashkeeper.Graph.BarChart_Graph;
+import com.example.peera_000.cashkeeper.Graph.PieChart_Graph;
 import com.example.peera_000.cashkeeper.R;
 import com.example.peera_000.cashkeeper.Rowdata.RowData;
 
@@ -37,6 +40,10 @@ public class Overview extends Fragment {
     private RecyclerView RvRowdata;
     private RowDataAdp RowDataAdp;
     private CK_TABLE objCK_TABLE;
+    private BarChart_Graph FragBarChart;
+    private PieChart_Graph FragPieChart;
+    private ArrayList<String> arrayListCate;
+    private ArrayList<Integer> arrayListMoney;
     private FloatingActionButton fabAd;
     private SwipeRefreshLayout swipeRefreshLayout;
     private View v;
@@ -68,7 +75,7 @@ public class Overview extends Fragment {
         Outsp = getActivity().getSharedPreferences("OutcomeData", Context.MODE_PRIVATE);
         editor = sp.edit();
         Outeditor = Outsp.edit();
-        Edsp = getActivity().getSharedPreferences("EditRowOverData",Context.MODE_PRIVATE);
+        Edsp = getActivity().getSharedPreferences("EditRowOverData", Context.MODE_PRIVATE);
         edit_Edsp = Edsp.edit();
         edit_Edsp.clear();
         edit_Edsp.commit();
